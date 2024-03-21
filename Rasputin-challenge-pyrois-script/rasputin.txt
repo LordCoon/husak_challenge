@@ -1,0 +1,116 @@
+include("include/SOVIETInstructions.txt");
+include("yearlyReport.txt");
+include("monthlyCheck.txt");
+
+defineVariable(vec3, vector);
+defineVariable(StatRecord, _thisYearStatRecord);
+
+defineVariable(int, _immigrantsSoviet);
+defineVariable(int, _immigrantsAfrica);
+defineVariable(int, _immigrantsScore);
+
+defineVariable(int, Day);
+defineVariable(int, Month);
+defineVariable(int, Year);
+
+defineVariable(char, _isImigrationBlocked);
+
+defineFunction(main, void)
+{
+	Notification_CreateNewStringPic(
+		"Rasputin challenge",
+		"Deliver all resources for your redemption! Rules will be validated each month. You will see objectives in yearly reports or using script show_objectives",
+		"previewimage.png",
+		vector);
+
+	while( 1 ? 1)
+	{
+	_isImigrationBlocked = 0;
+	
+	InitConstants();
+	
+	Date_GetCurrentDate_DMY(Day, Month, Year);
+	
+	if(Month ? 1 & Day ? 1)
+	{
+		RunYearlyReport();
+	}
+	MonthlyCheck(Day, Month, Year);
+	
+	Permissions_ResourcesAllowSellUSD(1, 1, 0);
+	Permissions_ResourcesAllowSellRUB(1, 1, 0);
+	
+	// check start date
+	
+	//block imigration
+	if(! _isImigrationBlocked)
+	{
+		// get imigration stats
+		_thisYearStatRecord.GetFromPresentToDate_DMY(1,1,Year);
+		
+		_immigrantsSoviet = _thisYearStatRecord.Citizens_ImigrantSoviet;
+		_immigrantsAfrica = _thisYearStatRecord.Citizens_ImigrantAfrica;
+		_immigrantsScore = _immigrantsSoviet * 3;
+		_immigrantsScore = _immigrantsScore + _immigrantsAfrica;
+		
+		if(_immigrantsScore > 360)
+		{
+			if(Year > 1960)
+			{
+				Window_ShowText("Imigration allert");
+				Permissions_ImmigrantAllowPurchaseUSD(0, 1.0);
+				Permissions_ImmigrantAllowPurchaseRUB(0, 1.0);
+				_isImigrationBlocked = 1;
+				Window_ShowText("Immigration limit for this year exceeded");
+			}
+			else()
+			{
+				if(_immigrantsScore > 1500)
+				{
+					Window_ShowText("Imigration allert");
+					Permissions_ImmigrantAllowPurchaseUSD(0, 1.0);
+					Permissions_ImmigrantAllowPurchaseRUB(0, 1.0);
+					_isImigrationBlocked = 1;
+					Window_ShowText("Immigration limit for this year exceeded");
+				}
+			}		
+		}
+	}
+	
+	// reset imigration at the start of the new year
+	if(Month ? 1 & Day ? 1)
+	{
+		Permissions_ImmigrantAllowPurchaseUSD(1, 1.0);
+		Permissions_ImmigrantAllowPurchaseRUB(1, 1.0);
+		_isImigrationBlocked = 0;
+		Window_ShowText("Immigration limit reset");
+	}
+	
+	if(Year ? 1991 & Month ? 2 & Day ? 1)
+	{
+		Window_ShowText("Soviet union is about to collapse. Buy missing blueprints and change your export routes!");
+	}
+	
+	// Close borders after sovier union collapse
+	if(Year ? 1991 & Month ? 12 & Day ? 26)
+	{
+		vector.x = 0;
+		vector.y = 0;
+		vector.z = 0;
+		Notification_CreateNewStringPic(
+		"Soviet union collapse!",
+		"Who do we sell uranium to now?",
+		"images/sovietcollapse.png",
+		vector);
+		Window_ShowText("Soviet borders closed. You can no longer buy vehicles. You can invite tourists. Starting from 1992.");
+	
+		Permissions_VehicleAllowPurchaseUSD(0, 0, 0, 0, 0);
+		Permissions_VehicleAllowPurchaseRUB(0, 0, 0, 0, 0);
+		Permissions_ResourcesAllowPurchaseRUB(0, 0, 1.0);
+		Permissions_ResourcesAllowSellRUB(0, 0, 0);
+	}
+	Script_Sleep(50.0);
+	
+	}
+	end();
+}
