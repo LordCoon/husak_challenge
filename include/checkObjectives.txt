@@ -1,0 +1,63 @@
+defineFunction(CheckObjectives, void)
+{	
+	// Initialize objectives
+	Objectives_CreateNewString("ore", "Ore and Raw minerals");
+	AddExportObjective(0, "ore", 100000.0, RESOURCE_RAWBAUXITE);
+	AddExportObjective(0, "ore", 100000.0, RESOURCE_WOOD);
+	AddExportObjective(0, "ore", 100000.0, RESOURCE_RAWGRAVEL);
+	AddExportObjective(0, "ore", 100000.0, RESOURCE_PLANTS);
+	AddExportObjective(0, "ore", 100000.0, RESOURCE_OIL);
+	AddExportObjective(0, "ore", 100000.0, RESOURCE_RAWCOAL);
+	AddExportObjective(0, "ore", 100000.0, RESOURCE_RAWIRON);
+	AddExportObjective(0, "ore", 100000.0, RESOURCE_URANIUM);
+
+	Objectives_CreateNewString("primaryproducts", "Primary products");
+	AddExportObjective(1, "primaryproducts", 25000.0, RESOURCE_ALCOHOL);
+	AddExportObjective(1, "primaryproducts", 50000.0, RESOURCE_BAUXITE);
+	AddExportObjective(1, "primaryproducts", 25000.0, RESOURCE_BITUMEN);
+	AddExportObjective(1, "primaryproducts", 100000.0, RESOURCE_BRICKS);
+	AddExportObjective(1, "primaryproducts", 100000.0, RESOURCE_BOARDS);
+	AddExportObjective(1, "primaryproducts", 50000.0, RESOURCE_LIVESTOCK);
+	AddExportObjective(1, "primaryproducts", 50000.0, RESOURCE_FOOD);
+	AddExportObjective(1, "primaryproducts", 25000.0, RESOURCE_FABRIC);
+	AddExportObjective(1, "primaryproducts", 25000.0, RESOURCE_FUEL);
+	AddExportObjective(1, "primaryproducts", 50000.0, RESOURCE_GRAVEL);
+	AddExportObjective(1, "primaryproducts", 50000.0, RESOURCE_COAL);
+	AddExportObjective(1, "primaryproducts", 50000.0, RESOURCE_IRON);
+
+	Objectives_CreateNewString("secondaryproducts", "Secondary products");
+	AddExportObjective(2, "secondaryproducts", 25000.0, RESOURCE_CEMENT);
+	AddExportObjective(2, "secondaryproducts", 25000.0, RESOURCE_ALUMINIUM);
+	AddExportObjective(2, "secondaryproducts", 10000.0, RESOURCE_CHEMICALS);
+	AddExportObjective(2, "secondaryproducts", 25000.0, RESOURCE_MEAT);
+	AddExportObjective(2, "secondaryproducts", 25000.0, RESOURCE_CLOTHES);
+	AddExportObjective(2, "secondaryproducts", 100000.0, RESOURCE_STEEL);
+	AddExportObjective(2, "secondaryproducts", 5000.0, RESOURCE_ALUMINA);
+	AddExportObjective(2, "secondaryproducts", 25000.0, RESOURCE_FERTILISER);
+	AddExportObjective(2, "secondaryproducts", 100000.0, RESOURCE_PREFABPANELS);
+	AddExportObjective(2, "secondaryproducts", 25000.0, RESOURCE_FERTILISERLIQUID);
+
+	Objectives_CreateNewString("advancedproducts", "Advanced products");
+	AddExportObjective(3, "advancedproducts", 10000.0, RESOURCE_ECOMPONENTS);
+	AddExportObjective(3, "advancedproducts", 10000.0, RESOURCE_ELETRONICS);
+	AddExportObjective(3, "advancedproducts", 10000.0, RESOURCE_MCOMPONENTS);
+	AddExportObjective(3, "advancedproducts", 10000.0, RESOURCE_PLASTICS);
+	AddExportObjective(3, "advancedproducts", 25000.0, RESOURCE_EXPLOSIVES);
+
+	Objectives_CreateNewString("electricity", "Electricity");
+	AddExportObjective(4, "electricity", 1000000.0, RESOURCE_ELETRIC);
+
+	Objectives_CreateNewString("nuclear", "Nuclear");
+	AddExportObjective(5, "nuclear", 500.0, RESOURCE_NUCLEARFUEL);
+	AddExportObjective(5, "nuclear", 100.0, RESOURCE_NUCLEARFUELBURNED);
+	AddExportObjective(5, "nuclear", 5000.0, RESOURCE_YELLOWCAKE);
+	AddExportObjective(5, "nuclear", 500.0, RESOURCE_UF);
+
+	// Update objectives
+    UpdateExportObjectiveAll();
+
+	Script_Sleep(10.0);
+	Objectives_ClearAll();
+
+	returnVoid();
+}

@@ -1,0 +1,11 @@
+include("include/SOVIETInstructions.txt");
+
+defineFunction(main, void)
+{
+	InitConstants();
+
+	Permissions_VehicleAllowPurchaseUSD(1,1,1,1,1);
+    Permissions_VehicleAllowPurchaseRUB(1,1,1,1,1);
+
+	end();
+}

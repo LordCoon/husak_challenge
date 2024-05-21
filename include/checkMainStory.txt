@@ -1,0 +1,409 @@
+defineVariable(StatRecord, _MonthlyCheck_statRecord);
+defineVariable(StatRecord, _SpecificDataRange_statRecord);
+
+defineVariable(Resources, _tons_RUB);
+defineVariable(Resources, _tons_USD);
+defineVariable(Resources, _tonsProduced);
+
+//Specific properties
+defineVariable(int, _numberOfActiveHotels);
+defineVariable(int, _numberOfActiveOrphanage);
+defineVariable(float, _importedPrefabs);
+defineVariable(int, _notEnoughtLoyaltyRequirement);
+defineVariable(int, _researchIncreaseNationalityCompleted);
+defineVariable(int, _researchIncreaseNationalityInProgress);
+
+//Helper properties
+defineVariable(int, _numberOfVehicles);
+defineVariable(Vehicle, _vehicle);
+defineVariable(int, i);
+
+defineVariable(int, _numberOfBuildings);
+defineVariable(Building, _building);
+defineVariable(int, j);
+
+defineVariable(vec3, _vectorMainStory);
+
+defineVariable(int, _messageMinLoyalty);
+defineVariable(int, _messageMinServed);
+defineVariable(int, _messageTouristRestriction);
+defineVariable(int, _messageAllowNato);
+defineVariable(int, _messageDisallowUSSR);
+
+
+defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: currentYear, int: firstStart)
+{
+    if(firstStart ? 0)
+    {
+        _messageMinLoyalty = 0;
+        _messageMinServed = 0;
+        _messageTouristRestriction = 0;
+        _messageAllowNato = 0;
+        _messageDisallowUSSR = 0;
+    }
+
+    _vectorMainStory.x = 0;
+    _vectorMainStory.y = 0;
+    _vectorMainStory.z = 0;
+
+    // Collect import/export statistics
+    _MonthlyCheck_statRecord.GetPresent();
+
+    _importedPrefabs = _MonthlyCheck_statRecord.ImportTonsRUB.prefabpanels + _MonthlyCheck_statRecord.ImportTonsUSD.prefabpanels;
+
+    // Collect building information (don't iterrate everytime when we need info)
+    Building_GetNumberOfBuildings(_numberOfBuildings);
+    _numberOfActiveHotels = 0;
+    _numberOfActiveOrphanage = 0;
+    _notEnoughtLoyaltyRequirement = 0;
+
+    if(currentYear < 1991 & currentYear > 1967)
+    {
+        for(i = 0, i < _numberOfBuildings, i = i + 1)
+        {
+            _building.GetDataByIndex(i);
+
+            if(_building.nType ? BUILDINGTYPE_HOTEL & _building.nWorkersNum > 0 & _building.fPercFinished > 0.9999)
+            {
+                inc(_numberOfActiveHotels);
+            }
+
+            if(_building.nType ? BUILDINGTYPE_ORPHANAGE & _building.nWorkersNum > 0 & _building.fPercFinished > 0.9999)
+            {
+                inc(_numberOfActiveOrphanage);
+            }
+
+            if(_building.nType ? BUILDINGTYPE_UNIVERSITY & _building.nWorkersNum > 0 & _building.fPercFinished > 0.9999)
+            {
+                if(_building.fLoyalty_RequirementStudents < 0.5 | _building.fLoyalty_Requirement < 0.5)
+                {
+                    inc(_notEnoughtLoyaltyRequirement);
+                }
+            }
+        }
+    }
+
+    // 900 people needs to left country
+    if(currentYear ? 1970 & currentMonth ? 1 & currentDay > 1)
+    {
+        _SpecificDataRange_statRecord.GetFromDateToDate_DMY(21, 8, 1968, 1, 1, 1970);
+
+        if(_SpecificDataRange_statRecord.Citizens_Dead + _SpecificDataRange_statRecord.Citizens_Escaped < 900)
+        {
+            Window_ShowText("Not enought people left your contry. Mark failed quest to your map.");
+        }
+    }
+
+    // Minimal loyalty
+    if(_messageMinLoyalty ? 0 & currentYear ? 1970 & currentMonth ? 6)
+    {
+        _messageMinLoyalty = 1;
+        Window_ShowText("All your building needs to have loyalty set to minimum 50% from 01/09/1970. You need to have at least one orphanage and at least started research of 'Higher birth rate' in 31/12/1973.");
+    }
+
+    if((currentYear > 1970 | (currentYear ? 1970 & currentMonth ? 9)) & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
+    {
+        if(_notEnoughtLoyaltyRequirement > 0)
+        {
+            Window_ShowText("Your buildings don't have minumum loyalty set to 50%.");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vectorMainStory);
+            returnVoid();
+
+        }
+    }
+
+    // Husak Children
+    if(currentYear ? 1974 & currentMonth ? 1)
+    {
+        if(_numberOfActiveOrphanage < 1)
+        {
+            Window_ShowText("Not enought active orhanages in your contry. Mark failed quest to your map.");
+        }
+
+        Research_IsCompleted("increase_natality", _researchIncreaseNationalityCompleted);
+        Research_CurrentlyResearched("increase_natality", _researchIncreaseNationalityInProgress);
+
+        // Not able to get research status.
+        if(!(_researchIncreaseNationalityCompleted ? 1) & !(_researchIncreaseNationalityInProgress ? 1))
+        {
+            Window_ShowText("Research of Increase birdth rate is not done. Mark failed quest to your map.");
+        }
+    }
+
+    if(_messageMinServed ? 0 & currentYear ? 1976 & currentMonth ? 9)
+    {
+        _messageMinServed = 1;
+        Window_ShowText("You have to set minimum time served in Court house to 5/6/7 years (small/medium/serious crime) from 01/01/1977.");
+    }
+
+    // Charta 77
+    if(currentYear > 1976 & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
+    {
+        // not able to get jail parameters
+    }
+
+    // Import prefabs
+    if(_importedPrefabs > 85)
+    {
+        Window_ShowText("Only 85 tons of prefabs are allowed to import.");
+        Notification_CreateNewStringPic(
+            "You failed",
+            "You broke the rules.",
+            "fail.png",
+            _vectorMainStory);
+        returnVoid();
+    }
+
+    //Exports to Nato
+    if(currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12))
+    {
+        if((_MonthlyCheck_statRecord.ExportTonsUSD.vehicles +
+            _MonthlyCheck_statRecord.ExportTonsUSD.trains +
+            _MonthlyCheck_statRecord.ExportTonsUSD.heat +
+            _MonthlyCheck_statRecord.ExportTonsUSD.gravel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.rawgravel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.plants +
+            _MonthlyCheck_statRecord.ExportTonsUSD.steel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.aluminium +
+            _MonthlyCheck_statRecord.ExportTonsUSD.prefabpanels +
+            _MonthlyCheck_statRecord.ExportTonsUSD.bricks +
+            _MonthlyCheck_statRecord.ExportTonsUSD.wood +
+            _MonthlyCheck_statRecord.ExportTonsUSD.oil +
+            _MonthlyCheck_statRecord.ExportTonsUSD.chemicals +
+            _MonthlyCheck_statRecord.ExportTonsUSD.coal +
+            _MonthlyCheck_statRecord.ExportTonsUSD.rawcoal +
+            _MonthlyCheck_statRecord.ExportTonsUSD.iron +
+            _MonthlyCheck_statRecord.ExportTonsUSD.rawiron +
+            _MonthlyCheck_statRecord.ExportTonsUSD.bauxite +
+            _MonthlyCheck_statRecord.ExportTonsUSD.rawbauxite +
+            _MonthlyCheck_statRecord.ExportTonsUSD.bitumen +
+            _MonthlyCheck_statRecord.ExportTonsUSD.boards +
+            _MonthlyCheck_statRecord.ExportTonsUSD.uranium +
+            _MonthlyCheck_statRecord.ExportTonsUSD.yellowcake +
+            _MonthlyCheck_statRecord.ExportTonsUSD.uf6 +
+            _MonthlyCheck_statRecord.ExportTonsUSD.nuclearfuel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.nuclearfuelburned +
+            _MonthlyCheck_statRecord.ExportTonsUSD.fuel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.fabric +
+            _MonthlyCheck_statRecord.ExportTonsUSD.alcohol +
+            _MonthlyCheck_statRecord.ExportTonsUSD.cement +
+            _MonthlyCheck_statRecord.ExportTonsUSD.alumina +
+            _MonthlyCheck_statRecord.ExportTonsUSD.food +
+            _MonthlyCheck_statRecord.ExportTonsUSD.clothes +
+            _MonthlyCheck_statRecord.ExportTonsUSD.meat +
+            _MonthlyCheck_statRecord.ExportTonsUSD.livestock +
+            _MonthlyCheck_statRecord.ExportTonsUSD.asphalt +
+            _MonthlyCheck_statRecord.ExportTonsUSD.concrete +
+            _MonthlyCheck_statRecord.ExportTonsUSD.water +
+            _MonthlyCheck_statRecord.ExportTonsUSD.usagewater +
+            _MonthlyCheck_statRecord.ExportTonsUSD.fertiliser_liquid +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_gravel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_steel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_aluminium +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_plastic +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_bio +
+            _MonthlyCheck_statRecord.ExportTonsUSD.fertiliser +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_burnable +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_toxic +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_other +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_ash +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_mixed +
+            _MonthlyCheck_statRecord.ExportTonsUSD.service_material) > 0)
+        {
+            Window_ShowText("You cannot export not advanced products to NATO before 1989.");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vectorMainStory);
+            returnVoid();
+        }
+    }
+
+    // Tourist restriction
+    if(_messageTouristRestriction ? 0 & currentYear ? 1968 & currentMonth ? 5)
+    {
+        _messageTouristRestriction = 1;
+        Window_ShowText("Restriction for tourists starts from 21/08/1968). Only one active hotel and all tourists only from soviet. 900 people needs to leave or die until 1970.");
+    }
+
+    if(((currentYear > 1968) | (currentYear ? 1968 & currentMonth > 8) | (currentYear ? 1968 & currentMonth ? 8 & currentDay > 20) ) & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
+    {
+        _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(20, 8, 1968);
+
+        if(_MonthlyCheck_statRecord.Tourism_ToursitEnteredRUB > 0)
+        {
+            Window_ShowText("No tourists allowed from NATO, you failed");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vectorMainStory);
+            returnVoid();
+        }
+
+        if(_numberOfActiveHotels > 1)
+        {
+            Window_ShowText("Only one active hotel is allowed, you failed");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vectorMainStory);
+            returnVoid();
+        }
+    }
+
+    if(_messageAllowNato ? 0 & currentYear ? 1989 & currentMonth ? 12)
+    {
+        _messageAllowNato = 1;
+        Window_ShowText("You can trade with NATO, open more hotels and invite turists from NATO from now. However, your loyalty still needs to be at least 50%.");
+    }
+
+    if(_messageDisallowUSSR ? 0 & currentYear ? 1990 & currentMonth ? 6)
+    {
+        _messageDisallowUSSR = 1;
+        Window_ShowText("You will need to stop trade with USSR in 01/01/1991. You can sell only vehicles older than 5 years. Invite tourists, trade elecricity and buy blueprints and vehicles.");
+    }
+
+    if(currentYear > 1990)
+    {
+        _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(1, 1, 1991);
+
+        if((_MonthlyCheck_statRecord.ExportTonsRUB.heat +
+            _MonthlyCheck_statRecord.ExportTonsRUB.gravel +
+            _MonthlyCheck_statRecord.ExportTonsRUB.rawgravel +
+            _MonthlyCheck_statRecord.ExportTonsRUB.plants +
+            _MonthlyCheck_statRecord.ExportTonsRUB.steel +
+            _MonthlyCheck_statRecord.ExportTonsRUB.aluminium +
+            _MonthlyCheck_statRecord.ExportTonsRUB.prefabpanels +
+            _MonthlyCheck_statRecord.ExportTonsRUB.bricks +
+            _MonthlyCheck_statRecord.ExportTonsRUB.wood +
+            _MonthlyCheck_statRecord.ExportTonsRUB.oil +
+            _MonthlyCheck_statRecord.ExportTonsRUB.chemicals +
+            _MonthlyCheck_statRecord.ExportTonsRUB.coal +
+            _MonthlyCheck_statRecord.ExportTonsRUB.rawcoal +
+            _MonthlyCheck_statRecord.ExportTonsRUB.iron +
+            _MonthlyCheck_statRecord.ExportTonsRUB.rawiron +
+            _MonthlyCheck_statRecord.ExportTonsRUB.bauxite +
+            _MonthlyCheck_statRecord.ExportTonsRUB.rawbauxite +
+            _MonthlyCheck_statRecord.ExportTonsRUB.bitumen +
+            _MonthlyCheck_statRecord.ExportTonsRUB.boards +
+            _MonthlyCheck_statRecord.ExportTonsRUB.uranium +
+            _MonthlyCheck_statRecord.ExportTonsRUB.yellowcake +
+            _MonthlyCheck_statRecord.ExportTonsRUB.uf6 +
+            _MonthlyCheck_statRecord.ExportTonsRUB.nuclearfuel +
+            _MonthlyCheck_statRecord.ExportTonsRUB.nuclearfuelburned +
+            _MonthlyCheck_statRecord.ExportTonsRUB.fuel +
+            _MonthlyCheck_statRecord.ExportTonsRUB.fabric +
+            _MonthlyCheck_statRecord.ExportTonsRUB.alcohol +
+            _MonthlyCheck_statRecord.ExportTonsRUB.cement +
+            _MonthlyCheck_statRecord.ExportTonsRUB.alumina +
+            _MonthlyCheck_statRecord.ExportTonsRUB.food +
+            _MonthlyCheck_statRecord.ExportTonsRUB.clothes +
+            _MonthlyCheck_statRecord.ExportTonsRUB.meat +
+            _MonthlyCheck_statRecord.ExportTonsRUB.livestock +
+            _MonthlyCheck_statRecord.ExportTonsRUB.asphalt +
+            _MonthlyCheck_statRecord.ExportTonsRUB.concrete +
+            _MonthlyCheck_statRecord.ExportTonsRUB.ecomponents +
+            _MonthlyCheck_statRecord.ExportTonsRUB.mcomponents +
+            _MonthlyCheck_statRecord.ExportTonsRUB.plastics +
+            _MonthlyCheck_statRecord.ExportTonsRUB.eletronics +
+            _MonthlyCheck_statRecord.ExportTonsRUB.explosives +
+            _MonthlyCheck_statRecord.ExportTonsRUB.water +
+            _MonthlyCheck_statRecord.ExportTonsRUB.usagewater +
+            _MonthlyCheck_statRecord.ExportTonsRUB.fertiliser_liquid +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_gravel +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_steel +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_aluminium +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_plastic +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_bio +
+            _MonthlyCheck_statRecord.ExportTonsRUB.fertiliser +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_burnable +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_toxic +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_other +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_ash +
+            _MonthlyCheck_statRecord.ExportTonsRUB.waste_mixed +
+            _MonthlyCheck_statRecord.ExportTonsRUB.service_material) > 0)
+        {
+            Window_ShowText("You cannot export products to USSR after 01/01/1991.");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vectorMainStory);
+            returnVoid();
+        }
+
+        if((_MonthlyCheck_statRecord.ImportTonsRUB.heat +
+            _MonthlyCheck_statRecord.ImportTonsRUB.gravel +
+            _MonthlyCheck_statRecord.ImportTonsRUB.rawgravel +
+            _MonthlyCheck_statRecord.ImportTonsRUB.plants +
+            _MonthlyCheck_statRecord.ImportTonsRUB.steel +
+            _MonthlyCheck_statRecord.ImportTonsRUB.aluminium +
+            _MonthlyCheck_statRecord.ImportTonsRUB.prefabpanels +
+            _MonthlyCheck_statRecord.ImportTonsRUB.bricks +
+            _MonthlyCheck_statRecord.ImportTonsRUB.wood +
+            _MonthlyCheck_statRecord.ImportTonsRUB.oil +
+            _MonthlyCheck_statRecord.ImportTonsRUB.chemicals +
+            _MonthlyCheck_statRecord.ImportTonsRUB.coal +
+            _MonthlyCheck_statRecord.ImportTonsRUB.rawcoal +
+            _MonthlyCheck_statRecord.ImportTonsRUB.iron +
+            _MonthlyCheck_statRecord.ImportTonsRUB.rawiron +
+            _MonthlyCheck_statRecord.ImportTonsRUB.bauxite +
+            _MonthlyCheck_statRecord.ImportTonsRUB.rawbauxite +
+            _MonthlyCheck_statRecord.ImportTonsRUB.bitumen +
+            _MonthlyCheck_statRecord.ImportTonsRUB.boards +
+            _MonthlyCheck_statRecord.ImportTonsRUB.uranium +
+            _MonthlyCheck_statRecord.ImportTonsRUB.yellowcake +
+            _MonthlyCheck_statRecord.ImportTonsRUB.uf6 +
+            _MonthlyCheck_statRecord.ImportTonsRUB.nuclearfuel +
+            _MonthlyCheck_statRecord.ImportTonsRUB.nuclearfuelburned +
+            _MonthlyCheck_statRecord.ImportTonsRUB.fuel +
+            _MonthlyCheck_statRecord.ImportTonsRUB.fabric +
+            _MonthlyCheck_statRecord.ImportTonsRUB.alcohol +
+            _MonthlyCheck_statRecord.ImportTonsRUB.cement +
+            _MonthlyCheck_statRecord.ImportTonsRUB.alumina +
+            _MonthlyCheck_statRecord.ImportTonsRUB.food +
+            _MonthlyCheck_statRecord.ImportTonsRUB.clothes +
+            _MonthlyCheck_statRecord.ImportTonsRUB.meat +
+            _MonthlyCheck_statRecord.ImportTonsRUB.livestock +
+            _MonthlyCheck_statRecord.ImportTonsRUB.asphalt +
+            _MonthlyCheck_statRecord.ImportTonsRUB.concrete +
+            _MonthlyCheck_statRecord.ImportTonsRUB.ecomponents +
+            _MonthlyCheck_statRecord.ImportTonsRUB.mcomponents +
+            _MonthlyCheck_statRecord.ImportTonsRUB.plastics +
+            _MonthlyCheck_statRecord.ImportTonsRUB.eletronics + 
+            _MonthlyCheck_statRecord.ImportTonsRUB.explosives +
+            _MonthlyCheck_statRecord.ImportTonsRUB.water +
+            _MonthlyCheck_statRecord.ImportTonsRUB.usagewater +
+            _MonthlyCheck_statRecord.ImportTonsRUB.fertiliser_liquid +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_gravel +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_steel +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_aluminium +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_plastic +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_bio +
+            _MonthlyCheck_statRecord.ImportTonsRUB.fertiliser +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_burnable +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_toxic +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_other +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_ash +
+            _MonthlyCheck_statRecord.ImportTonsRUB.waste_mixed +
+            _MonthlyCheck_statRecord.ImportTonsRUB.service_material) > 0)
+        {
+            Window_ShowText("You cannot export products to USSR after 01/01/1991.");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vectorMainStory);
+            returnVoid();
+        }
+    }
+
+    returnVoid();
+};

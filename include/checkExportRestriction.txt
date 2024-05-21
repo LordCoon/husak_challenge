@@ -1,0 +1,1297 @@
+defineVariable(StatRecord, _stRec);
+defineVariable(float, _expMat);
+defineVariable(float, _prodMat_1);
+defineVariable(float, _prodMat_2);
+defineVariable(float, _prodMat_3);
+defineVariable(float, _prodMat_4);
+defineVariable(float, _prodMat_5);
+defineVariable(vec3, _vector);
+
+defineFunction(CheckExportRestriction, void)
+{
+    _vector.x = 0;
+    _vector.y = 0;
+    _vector.z = 0;
+
+    _stRec.GetFromPresentToDate_DMY(1,1,1960);
+
+    // rawgravel
+    _expMat = _stRec.ExportTonsRUB.rawgravel + _stRec.ExportTonsUSD.rawgravel;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.rawgravel)
+        {
+            Window_ShowText("Your raw gravel export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // gravel
+    _expMat = _stRec.ExportTonsRUB.gravel + _stRec.ExportTonsUSD.gravel;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.gravel)
+        {
+            Window_ShowText("Your gravel export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.7 * _stRec.SpendFactories.waste_gravel);
+        _prodMat_2 = (0.7 * _stRec.ResourcesProduced.iron);
+
+        if((_expMat - _prodMat_1) > _prodMat_2)
+        {
+            Window_ShowText("Your gravel export is bigger than your raw gravel production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // plants
+    _expMat = _stRec.ExportTonsRUB.plants + _stRec.ExportTonsUSD.plants;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.plants)
+        {
+            Window_ShowText("Your plants export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // steel
+    _expMat = _stRec.ExportTonsRUB.steel + _stRec.ExportTonsUSD.steel;
+
+    Log_PrintWarning("Steel export");
+    Log_PrintInfo(_expMat);
+    Log_PrintWarning("Steel Produced");
+    _prodMat_5 = _stRec.ResourcesProduced.steel;
+    Log_PrintInfo(_prodMat_5);
+
+
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.steel)
+        {
+            Window_ShowText("Your steel export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.5 * _stRec.SpendFactories.waste_steel);
+        _prodMat_2 = (0.22 * _stRec.ResourcesProduced.iron);
+        _prodMat_3 = (0.13 * _stRec.ResourcesProduced.coal);
+
+        if((_expMat - _prodMat_1) > _prodMat_2)
+        {
+            Window_ShowText("Your steel export is bigger than your iron production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if((_expMat - _prodMat_1) > _prodMat_3)
+        {
+            Window_ShowText("Your steel export is bigger than your coal production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // aluminium
+    _expMat = _stRec.ExportTonsRUB.aluminium + _stRec.ExportTonsUSD.aluminium;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.aluminium)
+        {
+            Window_ShowText("Your aluminium export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.5 * _stRec.SpendFactories.waste_aluminium);
+        _prodMat_2 = (0.58 * _stRec.ResourcesProduced.alumina);
+        _prodMat_3 = (12 * _stRec.ResourcesProduced.chemicals);
+
+        if((_expMat - _prodMat_1) > _prodMat_2)
+        {
+            Window_ShowText("Your aluminium export is bigger than your alumina production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if((_expMat - _prodMat_1) > _prodMat_3)
+        {
+            Window_ShowText("Your aluminium export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // prefabpanels
+    _expMat = _stRec.ExportTonsRUB.prefabpanels + _stRec.ExportTonsUSD.prefabpanels;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.prefabpanels)
+        {
+            Window_ShowText("Your prefab panels export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (7.3 * _stRec.ResourcesProduced.cement);
+        _prodMat_2 = (1.1 * _stRec.ResourcesProduced.gravel);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your prefab panels export is bigger than your cement production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your prefab panels export is bigger than your gravel production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // bricks
+    _expMat = _stRec.ExportTonsRUB.bricks + _stRec.ExportTonsUSD.bricks;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.bricks)
+        {
+            Window_ShowText("Your bricks export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (1.6 * _stRec.ResourcesProduced.coal);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your bricks export is bigger than your coal production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // wood
+    _expMat = _stRec.ExportTonsRUB.wood + _stRec.ExportTonsUSD.wood;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.wood)
+        {
+            Window_ShowText("Your wood export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // oil
+    _expMat = _stRec.ExportTonsRUB.oil + _stRec.ExportTonsUSD.oil;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.oil)
+        {
+            Window_ShowText("Your oil export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // chemicals
+    _expMat = _stRec.ExportTonsRUB.chemicals + _stRec.ExportTonsUSD.chemicals;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.chemicals)
+        {
+            Window_ShowText("Your chemicals export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (1.2 * _stRec.ResourcesProduced.gravel);
+        _prodMat_2 = (1.1 * _stRec.ResourcesProduced.plants);
+        _prodMat_3 = (0.96 * _stRec.ResourcesProduced.wood);
+        _prodMat_4 = (0.68 * _stRec.ResourcesProduced.oil);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your chemicals export is bigger than your gravel production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your chemicals export is bigger than your plant production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_3)
+        {
+            Window_ShowText("Your chemicals export is bigger than your wood production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_4)
+        {
+            Window_ShowText("Your chemicals export is bigger than your oil production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // coal
+    _expMat = _stRec.ExportTonsRUB.coal + _stRec.ExportTonsUSD.coal;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.coal)
+        {
+            Window_ShowText("Your coal export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.6 * _stRec.ResourcesProduced.rawcoal);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your coal export is bigger than your raw coal production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // rawcoal
+    _expMat = _stRec.ExportTonsRUB.rawcoal + _stRec.ExportTonsUSD.rawcoal;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.rawcoal)
+        {
+            Window_ShowText("Your raw coal export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // iron
+    _expMat = _stRec.ExportTonsRUB.iron + _stRec.ExportTonsUSD.iron;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.iron)
+        {
+            Window_ShowText("Your iron export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.5 * _stRec.ResourcesProduced.rawiron);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your iron export is bigger than your raw iron production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // rawiron
+    _expMat = _stRec.ExportTonsRUB.rawiron + _stRec.ExportTonsUSD.rawiron;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.rawiron)
+        {
+            Window_ShowText("Your raw iron export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // bauxite
+    _expMat = _stRec.ExportTonsRUB.bauxite + _stRec.ExportTonsUSD.bauxite;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.bauxite)
+        {
+            Window_ShowText("Your bauxite export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.65 * _stRec.ResourcesProduced.rawbauxite);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your bauxite export is bigger than your raw bauxite production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // rawbauxite
+    _expMat = _stRec.ExportTonsRUB.rawbauxite + _stRec.ExportTonsUSD.rawbauxite;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.rawbauxite)
+        {
+            Window_ShowText("Your raw bauxite export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // bitumen
+    _expMat = _stRec.ExportTonsRUB.bitumen + _stRec.ExportTonsUSD.bitumen;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.bitumen)
+        {
+            Window_ShowText("Your bitumen export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.35 * _stRec.ResourcesProduced.oil);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your bitumen export is bigger than your oil production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // boards
+    _expMat = _stRec.ExportTonsRUB.boards + _stRec.ExportTonsUSD.boards;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.boards)
+        {
+            Window_ShowText("Your boards export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.8 * _stRec.ResourcesProduced.wood);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your boards export is bigger than your wood production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // uranium
+    _expMat = _stRec.ExportTonsRUB.uranium + _stRec.ExportTonsUSD.uranium;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.uranium)
+        {
+            Window_ShowText("Your uranium export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // yellowcake
+    _expMat = _stRec.ExportTonsRUB.yellowcake + _stRec.ExportTonsUSD.yellowcake;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.yellowcake)
+        {
+            Window_ShowText("Your yellowcake export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.05 * _stRec.ResourcesProduced.uranium);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your yellowcake export is bigger than your uranium production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // uf6
+    _expMat = _stRec.ExportTonsRUB.uf6 + _stRec.ExportTonsUSD.uf6;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.uf6)
+        {
+            Window_ShowText("Your uf6 export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.50 * _stRec.ResourcesProduced.yellowcake);
+        _prodMat_2 = (4.6 * _stRec.ResourcesProduced.chemicals);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your uf6 export is bigger than your yellowcake production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your uf6 export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // nuclearfuel
+    _expMat = _stRec.ExportTonsRUB.nuclearfuel + _stRec.ExportTonsUSD.nuclearfuel;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.nuclearfuel)
+        {
+            Window_ShowText("Your nuclear fuel export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.24 * _stRec.ResourcesProduced.uf6);
+        _prodMat_2 = (0.13 * _stRec.ResourcesProduced.chemicals);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your nuclear fuel export is bigger than your uf6 production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your nuclear fuel export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // nuclearfuelburned
+    _expMat = _stRec.ExportTonsRUB.nuclearfuelburned + _stRec.ExportTonsUSD.nuclearfuelburned;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.nuclearfuelburned)
+        {
+            Window_ShowText("Your burned nuclear fuel export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.55 * _stRec.ResourcesProduced.nuclearfuel);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your burned nuclear fuel export is bigger than your nuclear fuel production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // fuel
+    _expMat = _stRec.ExportTonsRUB.fuel + _stRec.ExportTonsUSD.fuel;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.fuel)
+        {
+            Window_ShowText("Your fuel export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.55 * _stRec.ResourcesProduced.oil);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your fuel export is bigger than your oil production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // fabric
+    _expMat = _stRec.ExportTonsRUB.fabric + _stRec.ExportTonsUSD.fabric;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.fabric)
+        {
+            Window_ShowText("Your fabric export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.3 * _stRec.ResourcesProduced.plants);
+        _prodMat_2 = (10.5 * _stRec.ResourcesProduced.chemicals);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your fabric export is bigger than your plants production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your fabric export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // alcohol
+    _expMat = _stRec.ExportTonsRUB.alcohol + _stRec.ExportTonsUSD.alcohol;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.alcohol)
+        {
+            Window_ShowText("Your alcohol export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.25 * _stRec.ResourcesProduced.plants);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your alcohol export is bigger than your plants production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // cement
+    _expMat = _stRec.ExportTonsRUB.cement + _stRec.ExportTonsUSD.cement;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.cement)
+        {
+            Window_ShowText("Your cement export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (3.9 * _stRec.ResourcesProduced.coal);
+        _prodMat_2 = (0.5 * _stRec.ResourcesProduced.gravel);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your cement export is bigger than your coal production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your cement export is bigger than your gravel production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // alumina
+    _expMat = _stRec.ExportTonsRUB.alumina + _stRec.ExportTonsUSD.alumina;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.alumina)
+        {
+            Window_ShowText("Your alumina export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.45 * _stRec.ResourcesProduced.bauxite);
+        _prodMat_2 = (12.75 * _stRec.ResourcesProduced.chemicals);
+        _prodMat_3 = (1.15 * _stRec.ResourcesProduced.coal);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your alumina export is bigger than your bauxite production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your alumina export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_3)
+        {
+            Window_ShowText("Your alumina export is bigger than your coal production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // food
+    _expMat = _stRec.ExportTonsRUB.food + _stRec.ExportTonsUSD.food;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.food)
+        {
+            Window_ShowText("Your food export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.5 * _stRec.ResourcesProduced.plants);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your food export is bigger than your plants production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // clothes
+    _expMat = _stRec.ExportTonsRUB.clothes + _stRec.ExportTonsUSD.clothes;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.clothes)
+        {
+            Window_ShowText("Your clothes export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.55 * _stRec.ResourcesProduced.fabric);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your clothes export is bigger than your fabric production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // meat
+    _expMat = _stRec.ExportTonsRUB.meat + _stRec.ExportTonsUSD.meat;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.meat)
+        {
+            Window_ShowText("Your meat export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.45 * _stRec.ResourcesProduced.livestock);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your meat export is bigger than your livestock production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // livestock
+    _expMat = _stRec.ExportTonsRUB.livestock + _stRec.ExportTonsUSD.livestock;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.livestock)
+        {
+            Window_ShowText("Your livestock export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.55 * _stRec.ResourcesProduced.plants);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your livestock export is bigger than your plants production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // ecomponents
+    _expMat = _stRec.ExportTonsRUB.ecomponents + _stRec.ExportTonsUSD.ecomponents;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.ecomponents)
+        {
+            Window_ShowText("Your electronic components export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (2.55 * _stRec.ResourcesProduced.plastics);
+        _prodMat_2 = (3.2 * _stRec.ResourcesProduced.chemicals);
+        _prodMat_3 = (2.55 * _stRec.ResourcesProduced.steel);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your electronic components export is bigger than your plastics production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your electronic components export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_3)
+        {
+            Window_ShowText("Your electronic components export is bigger than your steel production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // mcomponents
+    _expMat = _stRec.ExportTonsRUB.mcomponents + _stRec.ExportTonsUSD.mcomponents;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.mcomponents)
+        {
+            Window_ShowText("Your mechanical components export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.7 * _stRec.ResourcesProduced.steel);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your mechanical components export is bigger than your steel production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // plastics
+    _expMat = _stRec.ExportTonsRUB.plastics + _stRec.ExportTonsUSD.plastics;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.plastics)
+        {
+            Window_ShowText("Your plastics export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (2.5 * _stRec.ResourcesProduced.chemicals);
+        _prodMat_2 = (0.3 * _stRec.ResourcesProduced.oil);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your plastics export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your plastics export is bigger than your oil production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // eletronics
+    _expMat = _stRec.ExportTonsRUB.eletronics + _stRec.ExportTonsUSD.eletronics;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.eletronics)
+        {
+            Window_ShowText("Your eletronics export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (3.1 * _stRec.ResourcesProduced.ecomponents);
+        _prodMat_2 = (3.1 * _stRec.ResourcesProduced.mcomponents);
+        _prodMat_3 = (2 * _stRec.ResourcesProduced.plastics);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your eletronics export is bigger than your eletronic components production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your eletronics export is bigger than your mechanical components production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_3)
+        {
+            Window_ShowText("Your eletronics export is bigger than your plastics production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // explosives
+    _expMat = _stRec.ExportTonsRUB.explosives + _stRec.ExportTonsUSD.explosives;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.explosives)
+        {
+            Window_ShowText("Your explosives export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (1.5 * _stRec.ResourcesProduced.chemicals);
+        _prodMat_2 = (0.8 * _stRec.ResourcesProduced.wood);
+        _prodMat_3 = (0.5 * _stRec.ResourcesProduced.gravel);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your explosives export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your explosives export is bigger than your wood production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_3)
+        {
+            Window_ShowText("Your explosives export is bigger than your gravel production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // fertiliser_liquid
+    _expMat = _stRec.ExportTonsRUB.fertiliser_liquid + _stRec.ExportTonsUSD.fertiliser_liquid;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.fertiliser_liquid)
+        {
+            Window_ShowText("Your liquid fertiliser export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (55 * _stRec.ResourcesProduced.chemicals);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your liquid fertiliser export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // fertiliser
+    _expMat = _stRec.ExportTonsRUB.fertiliser + _stRec.ExportTonsUSD.fertiliser;
+    if(_expMat > 0)
+    {
+        if(_expMat > _stRec.ResourcesProduced.fertiliser)
+        {
+            Window_ShowText("Your fertiliser export is bigger than your production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _prodMat_1 = (0.85 * _stRec.ResourcesProduced.waste_bio);
+        _prodMat_2 = (334 * _stRec.ResourcesProduced.chemicals);
+
+        if(_expMat > _prodMat_1)
+        {
+            Window_ShowText("Your fertiliser export is bigger than your biological waste production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        if(_expMat > _prodMat_2)
+        {
+            Window_ShowText("Your fertiliser export is bigger than your chemicals production. Where did you get it?");
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules.",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    returnVoid();
+};

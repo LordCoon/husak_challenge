@@ -1,0 +1,151 @@
+include("include/SOVIETInstructions.txt");
+include("include/checkMainStory.txt");
+
+defineVariable(int, _testInt);
+defineVariable(float, _testFloat);
+defineArray(char[64], _testString);
+defineVariable(Building, _currentTestBuilding);
+
+defineVariable(GameSetting, _currentGameSettings);
+
+
+defineVariable(float, _prodI);
+
+defineVariable(int, _checkNumberOfBuildings);
+defineVariable(Building, _checkBuilding);
+defineVariable(float, _steelFromTrash);
+defineVariable(Resources, _checkResources);
+
+defineVariable(int, _currentDay);
+defineVariable(int, _currentMonth);
+defineVariable(int, _currentYear);
+
+
+defineFunction(main, void)
+{
+	InitConstants();
+
+    Date_GetCurrentDate_DMY(_currentDay, _currentMonth, _currentYear);
+
+    CheckMainStory(_currentDay, _currentMonth, _currentYear);
+
+
+    // Log_PrintWarning("Test");
+
+    // _currentTestBuilding.GetDataByIndex(46);
+
+    // _testFloat = _currentTestBuilding.fMinorCrime;
+    // Log_PrintInfo(_testFloat);
+
+    // Research_CurrentlyResearched("decrease_natality", _researchCompleted);
+    // Research_GetNumOfCompleted(_researchCompleted);
+    // Log_PrintInfo(_researchCompleted);
+
+    // Research_GetIncompletByIndex(5, _researchCompletedTest);
+    // Log_PrintInfo(_researchCompletedTest);
+    // Window_ShowCharArray(_researchCompletedTest);
+
+    // Building_GetNumberOfBuildings(_checkNumberOfBuildings);
+
+    // _steelFromTrash = 0;
+
+    // for (_prodI = 0, _prodI < _checkNumberOfBuildings, _prodI = _prodI + 1)
+    // {
+    //     _checkBuilding.GetDataByIndex(_prodI);
+
+    //     if(_checkBuilding.nType ? BUILDINGTYPE_FACTORY)
+    //     {
+    //         _testInt = _checkBuilding.nSubType;
+    //         Log_PrintInfo(_testInt);
+    //     }
+    // }
+
+    // _checkBuilding.GetDataByIndex(2525);
+
+    // _currentGameSettings.GetCurrentGameSettigns();
+
+
+    // Log_PrintWarning("Realistic");
+    // _testInt = _currentGameSettings.Realistic;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("Research");
+    // _testInt = _currentGameSettings.Research;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("Trafic");
+    // _testInt = _currentGameSettings.Trafic;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("EletricityLevel");
+    // _testInt = _currentGameSettings.EletricityLevel;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("WaterManagement");
+    // _testInt = _currentGameSettings.WaterManagement;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("WasteManagement");
+    // _testInt = _currentGameSettings.WasteManagement;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("Maintenance");
+    // _testInt = _currentGameSettings.Maintenance;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("SeasonsEnabled");
+    // _testInt = _currentGameSettings.SeasonsEnabled;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("DayNightEnabled");
+    // _testInt = _currentGameSettings.DayNightEnabled;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("WorkerDemandsLevel");
+    // _testInt = _currentGameSettings.WorkerDemandsLevel;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("EventsEnabled");
+    // _testInt = _currentGameSettings.EventsEnabled;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("FiresEnabled");
+    // _testInt = _currentGameSettings.FiresEnabled;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("PollutionEnabled");
+    // _testInt = _currentGameSettings.PollutionEnabled;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("VehicleLock");
+    // _testInt = _currentGameSettings.VehicleLock;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("EducationLevel");
+    // _testInt = _currentGameSettings.EducationLevel;
+    // Log_PrintInfo(_testInt);
+
+    // Log_PrintWarning("CrimeEnabled");
+    // _testInt = _currentGameSettings.CrimeEnabled;
+    // Log_PrintInfo(_testInt);
+
+
+    // Log_PrintWarning("SubType");
+    // _testInt = _checkBuilding.nSubType;
+    // Log_PrintInfo(_testInt);
+
+
+    // Log_PrintWarning("MineType");
+    // _testInt = _checkBuilding.nMineType;
+    // Log_PrintInfo(_testInt);
+
+    // _checkResources.GetProductionFromBuilding(2525);
+
+    // Log_PrintWarning("Steel");
+    // _testFloat = _checkResources.steel;
+    // Log_PrintInfo(_testFloat);
+
+        
+
+	end();
+}

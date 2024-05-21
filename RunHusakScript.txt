@@ -1,0 +1,139 @@
+include("include/SOVIETInstructions.txt");
+include("include/checkMainStory.txt");
+include("include/checkExportRestriction.txt");
+
+defineVariable(int, _previousDay);
+defineVariable(int, _previousMonth);
+defineVariable(int, _previousYear);
+
+defineVariable(int, _currentDay);
+defineVariable(int, _currentMonth);
+defineVariable(int, _currentYear);
+
+defineVariable(int, _firstRun);
+
+defineVariable(GameSetting, _currentGameSettings);
+
+defineVariable(vec3, vector);
+
+defineVariable(char, _husakRunning);
+defineVariable(char, _scriptRunningCheckObjectives);
+
+defineFunction(main, void)
+{
+	InitConstants();
+
+	Permissions_VehicleAllowPurchaseUSD(1,0,0,0,1);
+    Permissions_VehicleAllowPurchaseRUB(1,0,0,0,1);
+
+    Notification_CreateNewStringPic(
+		"Husak challenge",
+		"Deliver all resources for your redemption! Rules will be validated each day and export restriction each month. You will see objectives in yearly reports or using script Run Check Objectives",
+		"previewimage.png",
+		vector);
+
+	_currentGameSettings.GetCurrentGameSettigns();
+
+	if(
+		!(_currentGameSettings.Realistic ? 1) | 
+		!(_currentGameSettings.Research ? 1) | 
+		!(_currentGameSettings.Trafic ? 1) | 
+		!(_currentGameSettings.EletricityLevel ? 2) | 
+		!(_currentGameSettings.WaterManagement ? 1) | 
+		!(_currentGameSettings.WasteManagement ? 2) | 
+		!(_currentGameSettings.Maintenance ? 1) | 
+		!(_currentGameSettings.SeasonsEnabled ? 1) | 
+		!(_currentGameSettings.DayNightEnabled ? 2) | 
+		!(_currentGameSettings.WorkerDemandsLevel ? 2) | 
+		!(_currentGameSettings.EventsEnabled ? 2) | 
+		!(_currentGameSettings.FiresEnabled ? 2) | 
+		!(_currentGameSettings.PollutionEnabled ? 1) | 
+		!(_currentGameSettings.VehicleLock ? 1) | 
+		!(_currentGameSettings.EducationLevel ? 0) | 
+		!(_currentGameSettings.CrimeEnabled ? 1))
+	{
+		Window_ShowText("Some of your game settings are not correct.");
+		Notification_CreateNewStringPic(
+			"You failed",
+			"You broke the rules.",
+			"fail.png",
+			_vector);
+		end();
+	}
+
+	Date_GetCurrentDate_DMY(_currentDay, _currentMonth, _currentYear);
+
+
+	_currentMonth = 0;
+	_previousDay = 999;
+	_previousYear = _currentYear;
+	_firstRun = 0;
+
+	while( 1 ? 1)
+	{
+		Date_GetCurrentDate_DMY(_currentDay, _currentMonth, _currentYear);
+
+        if(!(_currentDay ? _previousDay))
+        {
+            _previousDay = _currentDay;
+
+            CheckMainStory(_currentDay, _currentMonth, _currentYear, _firstRun);
+
+			_firstRun = 1;
+        }
+
+		if(!(_currentMonth ? _previousMonth))
+        {
+            _previousMonth = _currentMonth;
+
+            CheckExportRestriction();
+        }
+
+		if(!(_currentYear ? _previousYear))
+        {
+            _currentGameSettings.GetCurrentGameSettigns();
+
+            if(
+                !(_currentGameSettings.Realistic ? 1) | 
+            !(_currentGameSettings.Research ? 1) | 
+            !(_currentGameSettings.Trafic ? 1) | 
+            !(_currentGameSettings.EletricityLevel ? 2) | 
+            !(_currentGameSettings.WaterManagement ? 1) | 
+            !(_currentGameSettings.WasteManagement ? 2) | 
+            !(_currentGameSettings.Maintenance ? 1) | 
+            !(_currentGameSettings.SeasonsEnabled ? 1) | 
+            !(_currentGameSettings.DayNightEnabled ? 2) | 
+            !(_currentGameSettings.WorkerDemandsLevel ? 2) | 
+            !(_currentGameSettings.EventsEnabled ? 2) | 
+            !(_currentGameSettings.FiresEnabled ? 2) | 
+            !(_currentGameSettings.PollutionEnabled ? 1) | 
+            !(_currentGameSettings.VehicleLock ? 1) | 
+            !(_currentGameSettings.EducationLevel ? 0) | 
+            !(_currentGameSettings.CrimeEnabled ? 1))
+            {
+                Window_ShowText("Some of your game settings are not correct.");
+                Notification_CreateNewStringPic(
+                    "You failed",
+                    "You broke the rules.",
+                    "fail.png",
+                    _vector);
+                end();
+            }
+
+            _previousYear = _currentYear;
+
+			Script_Exists("RunCheckObjectives.txt", _scriptRunningCheckObjectives);
+
+			if(!(_scriptRunningCheckObjectives ? 1))
+			{
+				Script_StartNew("RunCheckObjectives.txt");
+			}
+        }
+
+        Script_Sleep(10.0);
+	}
+
+	Window_ShowText("Script Ended because of error.");
+	
+	end();
+}

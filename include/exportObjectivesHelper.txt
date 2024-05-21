@@ -1,0 +1,554 @@
+defineStruct(ExportObjective, 200)
+{
+	defineStructVariable(ExportObjective, int, groupNameId);
+	defineStructVariable(ExportObjective, int, index);
+	defineStructVariable(ExportObjective, string, name);
+	defineStructVariable(ExportObjective, float, target);
+	defineStructVariable(ExportObjective, int, uniqueId);
+	defineStructVariable(ExportObjective, int, isDone);
+};
+
+defineStruct(ExportObjectiveGroup, 201)
+{
+	defineStructVariable(ExportObjectiveGroup, int, count);
+	defineStructVariable(ExportObjectiveGroup, string, name);
+	defineStructVariable(ExportObjectiveGroup, int, completedCount);
+};
+
+defineVariable(int, _testTestTest);
+defineVariable(string, _testTestTestString);
+
+defineArray(ExportObjective[70], _exportObjectives);
+defineArray(ExportObjectiveGroup[70], _exportObjectiveGroups);
+
+defineVariable(ExportObjective, _currentExportObjective);
+defineVariable(ExportObjectiveGroup, _currentExportObjectiveGroup);
+
+defineVariable(int, _wholeExportObjective);
+
+defineVariable(int, _globalIndexExportObjective);
+defineVariable(int, _globalIndexExportObjectiveGroup);
+
+
+defineVariable(string, _currentExportObjectiveImageName);
+defineVariable(float, _currentExportObjectiveCurrentValue);
+defineVariable(StatRecord, _statRecord);
+
+defineVariable(int, _helperI);
+
+defineVariable(int, RESOURCE_RAWBAUXITE);
+defineVariable(int, RESOURCE_WOOD);
+defineVariable(int, RESOURCE_RAWGRAVEL);
+defineVariable(int, RESOURCE_PLANTS);
+defineVariable(int, RESOURCE_OIL);
+defineVariable(int, RESOURCE_RAWCOAL);
+defineVariable(int, RESOURCE_RAWIRON);
+defineVariable(int, RESOURCE_URANIUM);
+defineVariable(int, RESOURCE_ALCOHOL);
+defineVariable(int, RESOURCE_BAUXITE);
+defineVariable(int, RESOURCE_BITUMEN);
+defineVariable(int, RESOURCE_BRICKS);
+defineVariable(int, RESOURCE_BOARDS);
+defineVariable(int, RESOURCE_LIVESTOCK);
+defineVariable(int, RESOURCE_FOOD);
+defineVariable(int, RESOURCE_FABRIC);
+defineVariable(int, RESOURCE_FUEL);
+defineVariable(int, RESOURCE_GRAVEL);
+defineVariable(int, RESOURCE_COAL);
+defineVariable(int, RESOURCE_IRON);
+defineVariable(int, RESOURCE_CEMENT);
+defineVariable(int, RESOURCE_ALUMINIUM);
+defineVariable(int, RESOURCE_CHEMICALS);
+defineVariable(int, RESOURCE_MEAT);
+defineVariable(int, RESOURCE_CLOTHES);
+defineVariable(int, RESOURCE_STEEL);
+defineVariable(int, RESOURCE_ALUMINA);
+defineVariable(int, RESOURCE_FERTILISER);
+defineVariable(int, RESOURCE_PREFABPANELS);
+defineVariable(int, RESOURCE_FERTILISERLIQUID);
+defineVariable(int, RESOURCE_ECOMPONENTS);
+defineVariable(int, RESOURCE_ELETRONICS);
+defineVariable(int, RESOURCE_MCOMPONENTS);
+defineVariable(int, RESOURCE_PLASTICS);
+defineVariable(int, RESOURCE_EXPLOSIVES);
+defineVariable(int, RESOURCE_ELETRIC);
+defineVariable(int, RESOURCE_NUCLEARFUEL);
+defineVariable(int, RESOURCE_NUCLEARFUELBURNED);
+defineVariable(int, RESOURCE_YELLOWCAKE);
+defineVariable(int, RESOURCE_UF);
+
+defineFunction(InitScriptConstants, void)
+{
+    RESOURCE_RAWBAUXITE = 101;
+    RESOURCE_WOOD = 102;
+    RESOURCE_RAWGRAVEL = 103;
+    RESOURCE_PLANTS = 104;
+    RESOURCE_OIL = 105;
+    RESOURCE_RAWCOAL = 106;
+    RESOURCE_RAWIRON = 107;
+    RESOURCE_URANIUM = 108;
+    RESOURCE_ALCOHOL = 109;
+    RESOURCE_BAUXITE = 110;
+    RESOURCE_BITUMEN = 111;
+    RESOURCE_BRICKS = 112;
+    RESOURCE_BOARDS = 113;
+    RESOURCE_LIVESTOCK = 114;
+    RESOURCE_FOOD = 115;
+    RESOURCE_FABRIC = 116;
+    RESOURCE_FUEL = 117;
+    RESOURCE_GRAVEL = 118;
+    RESOURCE_COAL = 119;
+    RESOURCE_IRON = 120;
+    RESOURCE_CEMENT = 121;
+    RESOURCE_ALUMINIUM = 122;
+    RESOURCE_CHEMICALS = 123;
+    RESOURCE_MEAT = 124;
+    RESOURCE_CLOTHES = 125;
+    RESOURCE_STEEL = 126;
+    RESOURCE_ALUMINA = 127;
+    RESOURCE_FERTILISER = 128;
+    RESOURCE_PREFABPANELS = 129;
+    RESOURCE_FERTILISERLIQUID = 130;
+    RESOURCE_ECOMPONENTS = 131;
+    RESOURCE_ELETRONICS = 132;
+    RESOURCE_MCOMPONENTS = 133;
+    RESOURCE_PLASTICS = 134;
+    RESOURCE_EXPLOSIVES = 135;
+    RESOURCE_ELETRIC = 136;
+    RESOURCE_NUCLEARFUEL = 137;
+    RESOURCE_NUCLEARFUELBURNED = 138;
+    RESOURCE_YELLOWCAKE = 139;
+    RESOURCE_UF = 140;
+
+    _globalIndexExportObjective = 0;
+    _globalIndexExportObjectiveGroup = 0;
+    _wholeExportObjective = 0;
+
+
+    returnVoid();
+};
+
+defineVariable(float, _wholeExportStatsExportById);
+
+defineFunction(GetExportById, float, int: resourceUniqueIdExport)
+{
+    if(resourceUniqueIdExport ? RESOURCE_WOOD )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.wood + _statRecord.ExportTonsUSD.wood;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_RAWGRAVEL )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawgravel + _statRecord.ExportTonsUSD.rawgravel;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_PLANTS )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.plants + _statRecord.ExportTonsUSD.plants;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_OIL )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.oil + _statRecord.ExportTonsUSD.oil;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_RAWCOAL )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawcoal + _statRecord.ExportTonsUSD.rawcoal;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_RAWIRON )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawiron + _statRecord.ExportTonsUSD.rawiron;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_URANIUM )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.uranium + _statRecord.ExportTonsUSD.uranium;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_ALCOHOL )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.alcohol + _statRecord.ExportTonsUSD.alcohol;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_BAUXITE )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.bauxite + _statRecord.ExportTonsUSD.bauxite;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_BITUMEN )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.bitumen + _statRecord.ExportTonsUSD.bitumen;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_BRICKS )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.bricks + _statRecord.ExportTonsUSD.bricks;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_BOARDS )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.boards + _statRecord.ExportTonsUSD.boards;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_LIVESTOCK )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.livestock + _statRecord.ExportTonsUSD.livestock;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_FOOD )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.food + _statRecord.ExportTonsUSD.food;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_FABRIC )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fabric + _statRecord.ExportTonsUSD.fabric;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_FUEL )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fuel + _statRecord.ExportTonsUSD.fuel;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_GRAVEL )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.gravel + _statRecord.ExportTonsUSD.gravel;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_COAL )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.coal + _statRecord.ExportTonsUSD.coal;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_IRON )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.iron + _statRecord.ExportTonsUSD.iron;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_CEMENT )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.cement + _statRecord.ExportTonsUSD.cement;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_ALUMINIUM )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.aluminium + _statRecord.ExportTonsUSD.aluminium;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_CHEMICALS )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.chemicals + _statRecord.ExportTonsUSD.chemicals;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_MEAT )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.meat + _statRecord.ExportTonsUSD.meat;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_CLOTHES )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.clothes + _statRecord.ExportTonsUSD.clothes;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_STEEL )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.steel + _statRecord.ExportTonsUSD.steel;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_ALUMINA )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.alumina + _statRecord.ExportTonsUSD.alumina;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_FERTILISER )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fertiliser + _statRecord.ExportTonsUSD.fertiliser;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_PREFABPANELS )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.prefabpanels + _statRecord.ExportTonsUSD.prefabpanels;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_FERTILISERLIQUID )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fertiliser_liquid + _statRecord.ExportTonsUSD.fertiliser_liquid;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_ECOMPONENTS )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.ecomponents + _statRecord.ExportTonsUSD.ecomponents;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_ELETRONICS )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.eletronics + _statRecord.ExportTonsUSD.eletronics;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_MCOMPONENTS )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.mcomponents + _statRecord.ExportTonsUSD.mcomponents;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_PLASTICS )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.plastics + _statRecord.ExportTonsUSD.plastics;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_EXPLOSIVES )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.explosives + _statRecord.ExportTonsUSD.explosives;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_ELETRIC )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.eletric + _statRecord.ExportTonsUSD.eletric;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_NUCLEARFUEL )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.nuclearfuel + _statRecord.ExportTonsUSD.nuclearfuel;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_NUCLEARFUELBURNED )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.nuclearfuelburned + _statRecord.ExportTonsUSD.nuclearfuelburned;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_YELLOWCAKE )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.yellowcake + _statRecord.ExportTonsUSD.yellowcake;
+    }
+    if(resourceUniqueIdExport ? RESOURCE_UF )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.uf6 + _statRecord.ExportTonsUSD.uf6;
+    }
+
+    return(_wholeExportStatsExportById);
+};
+
+defineVariable(string, _imagePathExportImageById);
+
+defineFunction(GetExportImageById, string, int: resourceUniqueIdImage)
+{
+    if(resourceUniqueIdImage ? RESOURCE_RAWBAUXITE )
+    { 
+        _imagePathExportImageById = "resources/rawbauxite.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_WOOD )
+    { 
+        _imagePathExportImageById = "resources/wood.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_RAWGRAVEL )
+    { 
+        _imagePathExportImageById = "resources/rawgravel.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_PLANTS )
+    { 
+        _imagePathExportImageById = "resources/plants.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_OIL )
+    { 
+        _imagePathExportImageById = "resources/oil.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_RAWCOAL )
+    { 
+        _imagePathExportImageById = "resources/rawcoal.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_RAWIRON )
+    { 
+        _imagePathExportImageById = "resources/rawiron.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_URANIUM )
+    { 
+        _imagePathExportImageById = "resources/uranium.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_ALCOHOL )
+    { 
+        _imagePathExportImageById = "resources/alcohol.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_BAUXITE )
+    { 
+        _imagePathExportImageById = "resources/bauxite.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_BITUMEN )
+    { 
+        _imagePathExportImageById = "resources/bitumen.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_BRICKS )
+    { 
+        _imagePathExportImageById = "resources/bricks.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_BOARDS )
+    { 
+        _imagePathExportImageById = "resources/boards.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_LIVESTOCK )
+    { 
+        _imagePathExportImageById = "resources/livestock.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_FOOD )
+    { 
+        _imagePathExportImageById = "resources/food.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_FABRIC )
+    { 
+        _imagePathExportImageById = "resources/fabric.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_FUEL )
+    { 
+        _imagePathExportImageById = "resources/fuel.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_GRAVEL )
+    { 
+        _imagePathExportImageById = "resources/gravel.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_COAL )
+    { 
+        _imagePathExportImageById = "resources/coal.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_IRON )
+    { 
+        _imagePathExportImageById = "resources/iron.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_CEMENT )
+    { 
+        _imagePathExportImageById = "resources/cement.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_ALUMINIUM )
+    { 
+        _imagePathExportImageById = "resources/aluminium.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_CHEMICALS )
+    { 
+        _imagePathExportImageById = "resources/chemicals.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_MEAT )
+    { 
+        _imagePathExportImageById = "resources/meat.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_CLOTHES )
+    { 
+        _imagePathExportImageById = "resources/clothes.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_STEEL )
+    { 
+        _imagePathExportImageById = "resources/steel.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_ALUMINA )
+    { 
+        _imagePathExportImageById = "resources/alumina.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_FERTILISER )
+    { 
+        _imagePathExportImageById = "resources/fertiliser.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_PREFABPANELS )
+    { 
+        _imagePathExportImageById = "resources/prefabpanels.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_FERTILISERLIQUID )
+    { 
+        _imagePathExportImageById = "resources/fertiliser_liquid.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_ECOMPONENTS )
+    { 
+        _imagePathExportImageById = "resources/ecomponents.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_ELETRONICS )
+    { 
+        _imagePathExportImageById = "resources/eletronics.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_MCOMPONENTS )
+    { 
+        _imagePathExportImageById = "resources/mcomponents.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_PLASTICS )
+    { 
+        _imagePathExportImageById = "resources/plastics.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_EXPLOSIVES )
+    { 
+        _imagePathExportImageById = "resources/explosives.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_ELETRIC )
+    { 
+        _imagePathExportImageById = "resources/eletric.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_NUCLEARFUEL )
+    { 
+        _imagePathExportImageById = "resources/nuclearfuel.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_NUCLEARFUELBURNED )
+    { 
+        _imagePathExportImageById = "resources/nuclearfuelburned.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_YELLOWCAKE )
+    { 
+        _imagePathExportImageById = "resources/yellowcake.png";
+    }
+    if(resourceUniqueIdImage ? RESOURCE_UF )
+    { 
+        _imagePathExportImageById = "resources/uf6.png";
+    }
+
+    return(_imagePathExportImageById);
+};
+
+defineFunction(UpdateExportObjective, void, int: globalIndexUpdateExport)
+{
+    _currentExportObjective = _exportObjectives[globalIndexUpdateExport];
+
+    _currentExportObjectiveCurrentValue = GetExportById(_currentExportObjective.uniqueId);
+
+    if(_currentExportObjective.target > _currentExportObjectiveCurrentValue)
+    {
+        Objective_UpdateRequirement(_currentExportObjective.name, _currentExportObjective.index, _currentExportObjectiveCurrentValue);
+    }
+    else()
+    {
+        Objective_UpdateRequirementToTarget(_currentExportObjective.name, _currentExportObjective.index);
+        _currentExportObjective.isDone = 1;
+        _exportObjectives[globalIndexUpdateExport].isDone = 1;
+    }
+
+    returnVoid();
+};
+
+
+defineFunction(AddExportObjective, void, int: groupNameId, string: name, float: target, int: uniqueId)
+{
+    if(_exportObjectiveGroups[groupNameId].count > 0)
+    {
+        _exportObjectiveGroups[groupNameId].count = _exportObjectiveGroups[groupNameId].count + 1;
+    }
+    else()
+    {
+        _exportObjectiveGroups[groupNameId].count = 1;
+        _exportObjectiveGroups[groupNameId].name = name;
+        _exportObjectiveGroups[groupNameId].completedCount = 0;
+        inc(_globalIndexExportObjectiveGroup);
+    }
+
+    _exportObjectives[_globalIndexExportObjective].index = _exportObjectiveGroups[groupNameId].count - 1;
+    _exportObjectives[_globalIndexExportObjective].groupNameId = groupNameId;
+    _exportObjectives[_globalIndexExportObjective].name = name;
+    _exportObjectives[_globalIndexExportObjective].target = target;
+    _exportObjectives[_globalIndexExportObjective].uniqueId = uniqueId;
+    _exportObjectives[_globalIndexExportObjective].isDone = 0;
+
+    _currentExportObjective = _exportObjectives[_globalIndexExportObjective];
+    _currentExportObjectiveImageName = GetExportImageById(_currentExportObjective.uniqueId);
+
+    Objective_AddRequirement(_currentExportObjective.name, _currentExportObjective.target, _currentExportObjectiveImageName);
+
+    inc(_globalIndexExportObjective);
+
+    returnVoid();
+};
+
+defineFunction(UpdateExportObjectiveAll, void)
+{
+	_statRecord.GetFromPresentToDate_DMY(1,1,1960);
+    for (_helperI = 0, _helperI < _globalIndexExportObjective, _helperI = _helperI + 1)
+    {
+        UpdateExportObjective(_helperI);
+    }
+
+    for (_helperI = 0, _helperI < _globalIndexExportObjective, _helperI = _helperI + 1)
+    {
+        _currentExportObjective = _exportObjectives[_helperI];
+        if(_currentExportObjective.isDone ? 1)
+        {
+            _exportObjectiveGroups[_currentExportObjective.groupNameId].completedCount = _exportObjectiveGroups[_currentExportObjective.groupNameId].completedCount + 1;
+        }
+    }
+
+    for (_helperI = 0, _helperI < _globalIndexExportObjectiveGroup, _helperI = _helperI + 1)
+    {
+        _currentExportObjectiveGroup = _exportObjectiveGroups[_helperI];
+
+        if(_currentExportObjectiveGroup.count ? _currentExportObjectiveGroup.completedCount)
+        {
+            Objective_SetComplete(_currentExportObjectiveGroup.name);
+            inc(_wholeExportObjective);
+        }
+    }
+
+    if(_wholeExportObjective ? _globalIndexExportObjectiveGroup)
+    {
+        Window_ShowText("You win");
+        // Notification_CreateNewStringPic(
+		// "You win!",
+		// "Congratulations! You beat the curse! Contact with author to get into leader board and show your year of end and screenshots.",
+		// "images/win.png",
+		// _vector);
+    }
+
+    returnVoid();
+};
