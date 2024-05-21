@@ -88,7 +88,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     {
         _SpecificDataRange_statRecord.GetFromDateToDate_DMY(21, 8, 1968, 1, 1, 1970);
 
-        if(_SpecificDataRange_statRecord.Citizens_Dead + _SpecificDataRange_statRecord.Citizens_Escaped < 900)
+        if(_SpecificDataRange_statRecord.Citizens_Dead + _SpecificDataRange_statRecord.Citizens_Escaped < 600)
         {
             Window_ShowText("Not enought people left your contry. Mark failed quest to your map.");
         }
@@ -228,7 +228,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     if(_messageTouristRestriction ? 0 & currentYear ? 1968 & currentMonth ? 5)
     {
         _messageTouristRestriction = 1;
-        Window_ShowText("Restriction for tourists starts from 21/08/1968). Only one active hotel and all tourists only from soviet. 900 people needs to leave or die until 1970.");
+        Window_ShowText("Restriction for tourists starts from 21/08/1968). Only one active hotel and all tourists only from soviet. 600 people needs to leave or die until 1970.");
     }
 
     if(((currentYear > 1968) | (currentYear ? 1968 & currentMonth > 8) | (currentYear ? 1968 & currentMonth ? 8 & currentDay > 20) ) & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
