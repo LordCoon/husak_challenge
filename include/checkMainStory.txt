@@ -25,6 +25,7 @@ defineVariable(int, j);
 defineVariable(vec3, _vectorMainStory);
 
 defineVariable(int, _messageMinLoyalty);
+defineVariable(int, _messagePeopleNeedLeft);
 defineVariable(int, _messageMinServed);
 defineVariable(int, _messageTouristRestriction);
 defineVariable(int, _messageAllowNato);
@@ -36,6 +37,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     if(firstStart ? 0)
     {
         _messageMinLoyalty = 0;
+        _messagePeopleNeedLeft = 0;
         _messageMinServed = 0;
         _messageTouristRestriction = 0;
         _messageAllowNato = 0;
@@ -84,8 +86,10 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     }
 
     // 900 people needs to left country
-    if(currentYear ? 1970 & currentMonth ? 1 & currentDay > 1)
+    if(_messagePeopleNeedLeft ? 0 & currentYear ? 1970 & currentMonth ? 1 & currentDay > 1)
     {
+        _messagePeopleNeedLeft = 1;
+
         _SpecificDataRange_statRecord.GetFromDateToDate_DMY(21, 8, 1968, 1, 1, 1970);
 
         if(_SpecificDataRange_statRecord.Citizens_Dead + _SpecificDataRange_statRecord.Citizens_Escaped < 600)
@@ -161,9 +165,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     //Exports to Nato
     if(currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12))
     {
-        if((_MonthlyCheck_statRecord.ExportTonsUSD.vehicles +
-            _MonthlyCheck_statRecord.ExportTonsUSD.trains +
-            _MonthlyCheck_statRecord.ExportTonsUSD.heat +
+        if((_MonthlyCheck_statRecord.ExportTonsUSD.heat +
             _MonthlyCheck_statRecord.ExportTonsUSD.gravel +
             _MonthlyCheck_statRecord.ExportTonsUSD.rawgravel +
             _MonthlyCheck_statRecord.ExportTonsUSD.plants +
@@ -235,7 +237,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     {
         _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(20, 8, 1968);
 
-        if(_MonthlyCheck_statRecord.Tourism_ToursitEnteredRUB > 0)
+        if(_MonthlyCheck_statRecord.Tourism_ToursitEnteredUSD > 0)
         {
             Window_ShowText("No tourists allowed from NATO, you failed");
             Notification_CreateNewStringPic(
