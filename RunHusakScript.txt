@@ -82,12 +82,12 @@ defineFunction(main, void)
 			_firstRun = 1;
         }
 
-		if(!(_currentMonth ? _previousMonth))
-        {
-            _previousMonth = _currentMonth;
+		// if(!(_currentMonth ? _previousMonth))
+        // {
+        //     _previousMonth = _currentMonth;
 
-            CheckExportRestriction();
-        }
+        //     CheckExportRestriction();
+        // }
 
 		if(!(_currentYear ? _previousYear))
         {
