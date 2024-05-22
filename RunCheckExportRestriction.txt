@@ -1,10 +1,10 @@
 include("include/SOVIETInstructions.txt");
-include("include/checkExportRestriction.txt");
+include("include/checkExportRestrictionNew.txt");
 
 defineFunction(main, void)
 {
 	InitConstants();
 
-	CheckExportRestriction();
+	CheckExportRestrictionNew();
 	end();
 }

@@ -56,8 +56,5 @@ defineFunction(CheckObjectives, void)
 	// Update objectives
     UpdateExportObjectiveAll();
 
-	Script_Sleep(10.0);
-	Objectives_ClearAll();
-
 	returnVoid();
 }

@@ -1,0 +1,12 @@
+include("include/SOVIETInstructions.txt");
+include("include/exportObjectivesHelper.txt");
+include("include/checkObjectives.txt");
+
+defineFunction(main, void)
+{
+	InitConstants();
+	InitScriptConstants();
+
+	CheckObjectives();
+	end();
+}

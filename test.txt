@@ -25,9 +25,22 @@ defineFunction(main, void)
 {
 	InitConstants();
 
-    Date_GetCurrentDate_DMY(_currentDay, _currentMonth, _currentYear);
+    // Notification_CreateNewStringPic(
+    //             "Test notification",
+    //             "Test notification.",
+    //             "notification.png",
+    //             _vectorMainStory);
 
-    CheckMainStory(_currentDay, _currentMonth, _currentYear);
+    // Notification_CreateNewStringPic(
+    //             "Test warning",
+    //             "Test warning.",
+    //             "warning.png",
+    //             _vectorMainStory);
+
+
+    // Date_GetCurrentDate_DMY(_currentDay, _currentMonth, _currentYear);
+
+    // CheckMainStory(_currentDay, _currentMonth, _currentYear);
 
 
     // Log_PrintWarning("Test");

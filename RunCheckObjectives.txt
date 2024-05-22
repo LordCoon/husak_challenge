@@ -8,5 +8,9 @@ defineFunction(main, void)
 	InitScriptConstants();
 
 	CheckObjectives();
+
+	Script_Sleep(30.0);
+	Objectives_ClearAll();
+	
 	end();
 }

@@ -732,10 +732,6 @@ defineFunction(CheckExportRestrictionNew, void)
         }
     }
 
-
-
-
-
     // waste_gravel
     if(_expMat_waste_gravel > 0)
     {

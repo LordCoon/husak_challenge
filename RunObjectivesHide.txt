@@ -1,0 +1,10 @@
+include("include/SOVIETInstructions.txt");
+
+defineFunction(main, void)
+{
+	InitConstants();
+
+	Objectives_ClearAll();
+
+	end();
+}
