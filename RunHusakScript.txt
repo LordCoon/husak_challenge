@@ -49,7 +49,7 @@ defineFunction(main, void)
 		!(_currentGameSettings.EventsEnabled ? 2) | 
 		!(_currentGameSettings.FiresEnabled ? 2) | 
 		!(_currentGameSettings.PollutionEnabled ? 1) | 
-		!(_currentGameSettings.VehicleLock ? 2) | 
+		!(_currentGameSettings.VehicleLock ? 1 | _currentGameSettings.VehicleLock ? 2) | 
 		!(_currentGameSettings.EducationLevel ? 0) | 
 		!(_currentGameSettings.CrimeEnabled ? 1))
 	{
@@ -107,7 +107,7 @@ defineFunction(main, void)
             !(_currentGameSettings.EventsEnabled ? 2) | 
             !(_currentGameSettings.FiresEnabled ? 2) | 
             !(_currentGameSettings.PollutionEnabled ? 1) | 
-            !(_currentGameSettings.VehicleLock ? 2) | 
+            !(_currentGameSettings.VehicleLock ? 1 | _currentGameSettings.VehicleLock ? 2) | 
             !(_currentGameSettings.EducationLevel ? 0) | 
             !(_currentGameSettings.CrimeEnabled ? 1))
             {
