@@ -3,8 +3,9 @@ include("include/checkMainStory.txt");
 
 defineVariable(int, _testInt);
 defineVariable(float, _testFloat);
-defineArray(char[64], _testString);
+defineArray(char[200], _testString);
 defineVariable(Building, _currentTestBuilding);
+defineVariable(char, NEWLINE);
 
 defineVariable(GameSetting, _currentGameSettings);
 
@@ -21,15 +22,41 @@ defineVariable(int, _currentMonth);
 defineVariable(int, _currentYear);
 
 
+defineArray(char[200][2], objectives_2_text);
+
+
+
 defineFunction(main, void)
 {
-	InitConstants();
+    // NEWLINE = 10; // ASCII LF
+	// InitConstants();
 
-    // Notification_CreateNewStringPic(
+    // Scenario_ObjectiveDestroy("exportObjectives-primary");
+
+    // strcpy(_testString, "");
+
+    // strcat(_testString, "This is test");
+    // strcat(_testString, NEWLINE);
+    // strcat(_testString, "Which was never working before");
+
+
+
+    // // Scenario_WindowWithImageTopLeft("Failed", "You broke rules.", "warning.png", 3);
+
+    // // Scenario_GetUserInput();
+
+    // objectives_2_text[0] = _testString;
+    // objectives_2_text[1] = "test objec 2";
+
+    // Scenario_ObjectiveCreate("exportObjectives-primary", "Export objectives - Primary products", "");
+    // Scenario_ObjectiveSetObjectives("exportObjectives-primary", objectives_2_text);
+
+
+    // Scenario_WindowWithImageLeft(
     //             "Test notification",
-    //             "Test notification.",
+    //             _testString,
     //             "notification.png",
-    //             _vectorMainStory);
+    //             2);
 
     // Notification_CreateNewStringPic(
     //             "Test warning",

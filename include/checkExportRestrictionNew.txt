@@ -2,7 +2,6 @@ defineVariable(StatRecord, _stRec);
 defineVariable(vec3, _vector);
 
 // defining _expMap variables
-#pragma region
 defineVariable(float, _expMat_rawbauxite);
 defineVariable(float, _expMat_wood);
 defineVariable(float, _expMat_rawgravel);
@@ -54,7 +53,6 @@ defineVariable(float, _expMat_waste_toxic);
 defineVariable(float, _expMat_waste_other);
 defineVariable(float, _expMat_waste_ash);
 defineVariable(float, _expMat_waste_mixed);
-#pragma endregion
 
 defineFunction(CheckExportRestrictionNew, void)
 {
@@ -65,7 +63,6 @@ defineFunction(CheckExportRestrictionNew, void)
     _stRec.GetFromPresentToDate_DMY(1,1,1960);
 
     // Sum USD and RUB exports
-    #pragma region 
     _expMat_rawbauxite = _stRec.ExportTonsRUB.rawbauxite + _stRec.ExportTonsUSD.rawbauxite;
     _expMat_wood = _stRec.ExportTonsRUB.wood + _stRec.ExportTonsUSD.wood;
     _expMat_rawgravel = _stRec.ExportTonsRUB.rawgravel + _stRec.ExportTonsUSD.rawgravel;
@@ -118,7 +115,11 @@ defineFunction(CheckExportRestrictionNew, void)
     _expMat_waste_ash = _stRec.ExportTonsRUB.waste_ash + _stRec.ExportTonsUSD.waste_ash;
     _expMat_waste_mixed = _stRec.ExportTonsRUB.waste_mixed + _stRec.ExportTonsUSD.waste_mixed;
 
-    #pragma endregion  
+    // substruct production from waste
+    _expMat_steel = _expMat_steel - _stRec.SpendFactories.waste_steel * 0.5277777778;
+    _expMat_gravel = _expMat_gravel - _stRec.SpendFactories.waste_gravel * 0.6666666667;
+    _expMat_aluminium = _expMat_aluminium - _stRec.SpendFactories.waste_aluminium * 0.48;
+    _expMat_plastics = _expMat_plastics - _stRec.SpendFactories.waste_plastic * 0.2;
 
     // explosives
     if(_expMat_explosives > 0)
@@ -127,7 +128,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your explosives export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of explosives is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -145,7 +146,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your eletronics export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of eletronics is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -163,7 +164,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your eletronic components export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of eletronic components or products from them is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -181,7 +182,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your mechanical components export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of mechanical components or products from them is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -197,7 +198,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your steel export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of steel or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -214,7 +215,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your iron export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of iron or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -230,11 +231,27 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your iron ore export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of iron ore or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
         }
+    }
+
+    // nuclearfuelburned
+    if(_expMat_nuclearfuelburned > 0)
+    {
+        if(_expMat_nuclearfuelburned > _stRec.ResourcesProduced.nuclearfuelburned)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your export of burned nuclear fuel is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_nuclearfuel = _expMat_nuclearfuel + _expMat_nuclearfuelburned * 1.956521739;
     }
 
     // nuclearfuel
@@ -244,7 +261,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your nuclear fuel export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of nuclear fuel or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -261,7 +278,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your UF6 export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of UF6 or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -278,7 +295,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your uranium oxide export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of uranium oxide or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -294,7 +311,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your uranium ore export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of uranium ore or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -308,7 +325,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your aluminium export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of aluminium or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -325,7 +342,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your alumina export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of alumina or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -343,7 +360,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your bauxite export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of bauxite or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -359,7 +376,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your bauxite ore export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of bauxite ore or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -373,7 +390,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your plastics export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of plastics or products from them is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -390,7 +407,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your clothes export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of clothes is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -406,7 +423,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your fabric export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of fabrics or products from them is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -423,7 +440,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your liquid fertiliser export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of liquid fertiliser is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -439,13 +456,13 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your fertiliser export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of fertiliser is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
         }
 
-        _expMat_waste_bio = _expMat_waste_bio + _expMat_fertiliser * 1,2;
+        _expMat_waste_bio = _expMat_waste_bio + _expMat_fertiliser * 1.2;
         _expMat_chemicals = _expMat_chemicals + _expMat_fertiliser * 0.003;
     }
 
@@ -456,7 +473,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your chemicals export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of chemicals or products from them is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -475,7 +492,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your food export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of food is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -491,7 +508,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your alcohol export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of alcohol is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -507,7 +524,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your meat export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of meat is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -523,7 +540,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your livestock export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of livestock or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -539,7 +556,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your plants export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of plants or products from them is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -553,7 +570,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your boards export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of boards is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -569,7 +586,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your wood export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of wood or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -579,11 +596,11 @@ defineFunction(CheckExportRestrictionNew, void)
     // prefabpanels
     if(_expMat_prefabpanels > 0)
     {
-        if(_expMat_xxxxx > _stRec.ResourcesProduced.prefabpanels)
+        if(_expMat_prefabpanels > _stRec.ResourcesProduced.prefabpanels)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your prefab panels export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of prefab panels is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -600,7 +617,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your cement export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of cement or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -617,7 +634,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your bricks export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of bricks is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -633,7 +650,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your fuel export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of fuel is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -649,7 +666,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your eletronics export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of bitumen is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -665,7 +682,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your coal export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of coal or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -681,7 +698,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your coal ore export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of coal ore or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -695,7 +712,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your gravel export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of gravel or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -711,7 +728,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your gravel ore export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of gravel ore or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -725,7 +742,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your oil export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of oil or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -739,7 +756,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your construction waste export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of construction waste is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -753,7 +770,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your iron waste export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of iron waste is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -767,7 +784,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your aluminium waste export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of aluminium waste is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -781,7 +798,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your plastic waste export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of plastic waste is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -795,7 +812,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your bio waste export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of bio waste is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -809,7 +826,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your hazardous waste export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of hazardous waste is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -823,7 +840,7 @@ defineFunction(CheckExportRestrictionNew, void)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your mixed waste export is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of mixed waste is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -833,26 +850,26 @@ defineFunction(CheckExportRestrictionNew, void)
 
 
     // template
-    if(_expMat_xxxxx > 0)
-    {
-        if(_expMat_xxxxx > _stRec.ResourcesProduced.xxxxxxx)
-        {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your eletronics export is bigger than your production. Where did you get it?",
-                "fail.png",
-                _vector);
-            returnVoid();
-        }
+    // if(_expMat_xxxxx > 0)
+    // {
+    //     if(_expMat_xxxxx > _stRec.ResourcesProduced.xxxxxxx)
+    //     {
+    //         Notification_CreateNewStringPic(
+    //             "You failed",
+    //             "You broke the rules. Your export of eletronics is bigger than your production. Where did you get it?",
+    //             "fail.png",
+    //             _vector);
+    //         returnVoid();
+    //     }
 
-        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
-        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
-        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
-        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
-        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
-        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
-        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
-    }
+    //     _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+    //     _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+    //     _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+    //     _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+    //     _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+    //     _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+    //     _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+    // }
 
 
 
