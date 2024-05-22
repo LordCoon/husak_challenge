@@ -85,7 +85,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
         }
     }
 
-    // 900 people needs to left country
+    // 600 people needs to left country
     if(_messagePeopleNeedLeft ? 0 & currentYear ? 1970 & currentMonth ? 1 & currentDay > 1)
     {
         _messagePeopleNeedLeft = 1;
@@ -94,7 +94,11 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
 
         if(_SpecificDataRange_statRecord.Citizens_Dead + _SpecificDataRange_statRecord.Citizens_Escaped < 600)
         {
-            Window_ShowText("Not enought people left your contry. Mark failed quest to your map.");
+            Notification_CreateNewStringPic(
+                "You failed quest.",
+                "Not enought people left your contry. Mark failed quest to your map.",
+                "warning.png",
+                _vectorMainStory);
         }
     }
 
@@ -102,17 +106,20 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     if(_messageMinLoyalty ? 0 & currentYear ? 1970 & currentMonth ? 6)
     {
         _messageMinLoyalty = 1;
-        Window_ShowText("All your building needs to have loyalty set to minimum 50% from 01/09/1970. You need to have at least one orphanage and at least started research of 'Higher birth rate' in 31/12/1973.");
+        Notification_CreateNewStringPic(
+                "New story event will start soon.",
+                "All your building needs to have loyalty set to minimum 50% from 01/09/1970. You need to have at least one orphanage and at least started research of 'Higher birth rate' in 31/12/1973.",
+                "notification.png",
+                _vectorMainStory);
     }
 
     if((currentYear > 1970 | (currentYear ? 1970 & currentMonth ? 9)) & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
     {
         if(_notEnoughtLoyaltyRequirement > 0)
         {
-            Window_ShowText("Your buildings don't have minumum loyalty set to 50%.");
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules.",
+                "You broke the rules. Your buildings don't have minumum loyalty set to 50%.",
                 "fail.png",
                 _vectorMainStory);
             returnVoid();
@@ -125,7 +132,12 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     {
         if(_numberOfActiveOrphanage < 1)
         {
-            Window_ShowText("Not enought active orhanages in your contry. Mark failed quest to your map.");
+            Notification_CreateNewStringPic(
+                "You failed quest.",
+                "Not enought active orhanages in your contry. Mark failed quest to your map.",
+                "warning.png",
+                _vectorMainStory);
+
         }
 
         Research_IsCompleted("increase_natality", _researchIncreaseNationalityCompleted);
@@ -134,14 +146,22 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
         // Not able to get research status.
         if(!(_researchIncreaseNationalityCompleted ? 1) & !(_researchIncreaseNationalityInProgress ? 1))
         {
-            Window_ShowText("Research of Increase birdth rate is not done. Mark failed quest to your map.");
+            Notification_CreateNewStringPic(
+                "You failed quest.",
+                "Research of Increase birdth rate is not done. Mark failed quest to your map.",
+                "warning.png",
+                _vectorMainStory);
         }
     }
 
     if(_messageMinServed ? 0 & currentYear ? 1976 & currentMonth ? 9)
     {
         _messageMinServed = 1;
-        Window_ShowText("You have to set minimum time served in Court house to 5/6/7 years (small/medium/serious crime) from 01/01/1977.");
+        Notification_CreateNewStringPic(
+                "New story event will start soon.",
+                "You have to set minimum time served in Court house to 5/6/7 years (small/medium/serious crime) from 01/01/1977.",
+                "notification.png",
+                _vectorMainStory);
     }
 
     // Charta 77
@@ -153,10 +173,9 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     // Import prefabs
     if(_importedPrefabs > 85)
     {
-        Window_ShowText("Only 85 tons of prefabs are allowed to import.");
         Notification_CreateNewStringPic(
             "You failed",
-            "You broke the rules.",
+            "You broke the rules. Only 85 tons of prefabs are allowed to import.",
             "fail.png",
             _vectorMainStory);
         returnVoid();
@@ -216,10 +235,9 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
             _MonthlyCheck_statRecord.ExportTonsUSD.waste_mixed +
             _MonthlyCheck_statRecord.ExportTonsUSD.service_material) > 0)
         {
-            Window_ShowText("You cannot export not advanced products to NATO before 1989.");
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules.",
+                "You broke the rules. You cannot export not advanced products to NATO before 1989.",
                 "fail.png",
                 _vectorMainStory);
             returnVoid();
@@ -230,7 +248,11 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     if(_messageTouristRestriction ? 0 & currentYear ? 1968 & currentMonth ? 5)
     {
         _messageTouristRestriction = 1;
-        Window_ShowText("Restriction for tourists starts from 21/08/1968). Only one active hotel and all tourists only from soviet. 600 people needs to leave or die until 1970.");
+        Notification_CreateNewStringPic(
+                "New story event will start soon.",
+                "Restriction for tourists starts from 21/08/1968). Only one active hotel and all tourists only from soviet. 600 people needs to leave or die until 1970.",
+                "notification.png",
+                _vectorMainStory);
     }
 
     if(((currentYear > 1968) | (currentYear ? 1968 & currentMonth > 8) | (currentYear ? 1968 & currentMonth ? 8 & currentDay > 20) ) & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
@@ -239,10 +261,9 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
 
         if(_MonthlyCheck_statRecord.Tourism_ToursitEnteredUSD > 0)
         {
-            Window_ShowText("No tourists allowed from NATO, you failed");
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules.",
+                "You broke the rules. No tourists allowed from NATO, you failed",
                 "fail.png",
                 _vectorMainStory);
             returnVoid();
@@ -250,10 +271,9 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
 
         if(_numberOfActiveHotels > 1)
         {
-            Window_ShowText("Only one active hotel is allowed, you failed");
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules.",
+                "You broke the rules. Only one active hotel is allowed, you failed",
                 "fail.png",
                 _vectorMainStory);
             returnVoid();
@@ -263,13 +283,21 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     if(_messageAllowNato ? 0 & currentYear ? 1989 & currentMonth ? 12)
     {
         _messageAllowNato = 1;
-        Window_ShowText("You can trade with NATO, open more hotels and invite turists from NATO from now. However, your loyalty still needs to be at least 50%.");
+        Notification_CreateNewStringPic(
+                "New story event will start soon.",
+                "You can trade with NATO, open more hotels and invite turists from NATO from now. However, your loyalty still needs to be at least 50%.",
+                "notification.png",
+                _vectorMainStory);
     }
 
     if(_messageDisallowUSSR ? 0 & currentYear ? 1990 & currentMonth ? 6)
     {
         _messageDisallowUSSR = 1;
-        Window_ShowText("You will need to stop trade with USSR in 01/01/1991. You can sell only vehicles older than 5 years. Invite tourists, trade elecricity and buy blueprints and vehicles.");
+        Notification_CreateNewStringPic(
+                "New story event will start soon.",
+                "You will need to stop trade with USSR in 01/01/1991. You can sell only vehicles older than 5 years. Invite tourists, trade elecricity and buy blueprints and vehicles.",
+                "notification.png",
+                _vectorMainStory);
     }
 
     if(currentYear > 1990)
@@ -332,10 +360,9 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
             _MonthlyCheck_statRecord.ExportTonsRUB.waste_mixed +
             _MonthlyCheck_statRecord.ExportTonsRUB.service_material) > 0)
         {
-            Window_ShowText("You cannot export products to USSR after 01/01/1991.");
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules.",
+                "You broke the rules. You cannot export products to USSR after 01/01/1991.",
                 "fail.png",
                 _vectorMainStory);
             returnVoid();
@@ -397,10 +424,9 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
             _MonthlyCheck_statRecord.ImportTonsRUB.waste_mixed +
             _MonthlyCheck_statRecord.ImportTonsRUB.service_material) > 0)
         {
-            Window_ShowText("You cannot export products to USSR after 01/01/1991.");
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules.",
+                "You broke the rules. You cannot export products to USSR after 01/01/1991.",
                 "fail.png",
                 _vectorMainStory);
             returnVoid();
