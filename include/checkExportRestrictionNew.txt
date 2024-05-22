@@ -1,0 +1,864 @@
+defineVariable(StatRecord, _stRec);
+defineVariable(vec3, _vector);
+
+// defining _expMap variables
+#pragma region
+defineVariable(float, _expMat_rawbauxite);
+defineVariable(float, _expMat_wood);
+defineVariable(float, _expMat_rawgravel);
+defineVariable(float, _expMat_plants);
+defineVariable(float, _expMat_oil);
+defineVariable(float, _expMat_rawcoal);
+defineVariable(float, _expMat_rawiron);
+defineVariable(float, _expMat_uranium);
+defineVariable(float, _expMat_alcohol);
+defineVariable(float, _expMat_bauxite);
+defineVariable(float, _expMat_bitumen);
+defineVariable(float, _expMat_bricks);
+defineVariable(float, _expMat_boards);
+defineVariable(float, _expMat_livestock);
+defineVariable(float, _expMat_food);
+defineVariable(float, _expMat_fabric);
+defineVariable(float, _expMat_fuel);
+defineVariable(float, _expMat_gravel);
+defineVariable(float, _expMat_coal);
+defineVariable(float, _expMat_iron);
+defineVariable(float, _expMat_cement);
+defineVariable(float, _expMat_aluminium);
+defineVariable(float, _expMat_chemicals);
+defineVariable(float, _expMat_meat);
+defineVariable(float, _expMat_clothes);
+defineVariable(float, _expMat_steel);
+defineVariable(float, _expMat_alumina);
+defineVariable(float, _expMat_fertiliser);
+defineVariable(float, _expMat_prefabpanels);
+defineVariable(float, _expMat_fertiliser_liquid);
+defineVariable(float, _expMat_ecomponents);
+defineVariable(float, _expMat_eletronics);
+defineVariable(float, _expMat_mcomponents);
+defineVariable(float, _expMat_plastics);
+defineVariable(float, _expMat_explosives);
+defineVariable(float, _expMat_eletric);
+defineVariable(float, _expMat_nuclearfuel);
+defineVariable(float, _expMat_nuclearfuelburned);
+defineVariable(float, _expMat_yellowcake);
+defineVariable(float, _expMat_uf6);
+
+defineVariable(float, _expMat_waste_gravel);
+defineVariable(float, _expMat_waste_steel);
+defineVariable(float, _expMat_waste_aluminium);
+defineVariable(float, _expMat_waste_plastic);
+defineVariable(float, _expMat_waste_bio);
+defineVariable(float, _expMat_waste_burnable);
+defineVariable(float, _expMat_waste_toxic);
+defineVariable(float, _expMat_waste_other);
+defineVariable(float, _expMat_waste_ash);
+defineVariable(float, _expMat_waste_mixed);
+#pragma endregion
+
+defineFunction(CheckExportRestrictionNew, void)
+{
+    _vector.x = 0;
+    _vector.y = 0;
+    _vector.z = 0;
+
+    _stRec.GetFromPresentToDate_DMY(1,1,1960);
+
+    // Sum USD and RUB exports
+    #pragma region 
+    _expMat_rawbauxite = _stRec.ExportTonsRUB.rawbauxite + _stRec.ExportTonsUSD.rawbauxite;
+    _expMat_wood = _stRec.ExportTonsRUB.wood + _stRec.ExportTonsUSD.wood;
+    _expMat_rawgravel = _stRec.ExportTonsRUB.rawgravel + _stRec.ExportTonsUSD.rawgravel;
+    _expMat_plants = _stRec.ExportTonsRUB.plants + _stRec.ExportTonsUSD.plants;
+    _expMat_oil = _stRec.ExportTonsRUB.oil + _stRec.ExportTonsUSD.oil;
+    _expMat_rawcoal = _stRec.ExportTonsRUB.rawcoal + _stRec.ExportTonsUSD.rawcoal;
+    _expMat_rawiron = _stRec.ExportTonsRUB.rawiron + _stRec.ExportTonsUSD.rawiron;
+    _expMat_uranium = _stRec.ExportTonsRUB.uranium + _stRec.ExportTonsUSD.uranium;
+    _expMat_alcohol = _stRec.ExportTonsRUB.alcohol + _stRec.ExportTonsUSD.alcohol;
+    _expMat_bauxite = _stRec.ExportTonsRUB.bauxite + _stRec.ExportTonsUSD.bauxite;
+    _expMat_bitumen = _stRec.ExportTonsRUB.bitumen + _stRec.ExportTonsUSD.bitumen;
+    _expMat_bricks = _stRec.ExportTonsRUB.bricks + _stRec.ExportTonsUSD.bricks;
+    _expMat_boards = _stRec.ExportTonsRUB.boards + _stRec.ExportTonsUSD.boards;
+    _expMat_livestock = _stRec.ExportTonsRUB.livestock + _stRec.ExportTonsUSD.livestock;
+    _expMat_food = _stRec.ExportTonsRUB.food + _stRec.ExportTonsUSD.food;
+    _expMat_fabric = _stRec.ExportTonsRUB.fabric + _stRec.ExportTonsUSD.fabric;
+    _expMat_fuel = _stRec.ExportTonsRUB.fuel + _stRec.ExportTonsUSD.fuel;
+    _expMat_gravel = _stRec.ExportTonsRUB.gravel + _stRec.ExportTonsUSD.gravel;
+    _expMat_coal = _stRec.ExportTonsRUB.coal + _stRec.ExportTonsUSD.coal;
+    _expMat_iron = _stRec.ExportTonsRUB.iron + _stRec.ExportTonsUSD.iron;
+    _expMat_cement = _stRec.ExportTonsRUB.cement + _stRec.ExportTonsUSD.cement;
+    _expMat_aluminium = _stRec.ExportTonsRUB.aluminium + _stRec.ExportTonsUSD.aluminium;
+    _expMat_chemicals = _stRec.ExportTonsRUB.chemicals + _stRec.ExportTonsUSD.chemicals;
+    _expMat_meat = _stRec.ExportTonsRUB.meat + _stRec.ExportTonsUSD.meat;
+    _expMat_clothes = _stRec.ExportTonsRUB.clothes + _stRec.ExportTonsUSD.clothes;
+    _expMat_steel = _stRec.ExportTonsRUB.steel + _stRec.ExportTonsUSD.steel;
+    _expMat_alumina = _stRec.ExportTonsRUB.alumina + _stRec.ExportTonsUSD.alumina;
+    _expMat_fertiliser = _stRec.ExportTonsRUB.fertiliser + _stRec.ExportTonsUSD.fertiliser;
+    _expMat_prefabpanels = _stRec.ExportTonsRUB.prefabpanels + _stRec.ExportTonsUSD.prefabpanels;
+    _expMat_fertiliser_liquid = _stRec.ExportTonsRUB.fertiliser_liquid + _stRec.ExportTonsUSD.fertiliser_liquid;
+    _expMat_ecomponents = _stRec.ExportTonsRUB.ecomponents + _stRec.ExportTonsUSD.ecomponents;
+    _expMat_eletronics = _stRec.ExportTonsRUB.eletronics + _stRec.ExportTonsUSD.eletronics;
+    _expMat_mcomponents = _stRec.ExportTonsRUB.mcomponents + _stRec.ExportTonsUSD.mcomponents;
+    _expMat_plastics = _stRec.ExportTonsRUB.plastics + _stRec.ExportTonsUSD.plastics;
+    _expMat_explosives = _stRec.ExportTonsRUB.explosives + _stRec.ExportTonsUSD.explosives;
+    _expMat_eletric = _stRec.ExportTonsRUB.eletric + _stRec.ExportTonsUSD.eletric;
+    _expMat_nuclearfuel = _stRec.ExportTonsRUB.nuclearfuel + _stRec.ExportTonsUSD.nuclearfuel;
+    _expMat_nuclearfuelburned = _stRec.ExportTonsRUB.nuclearfuelburned + _stRec.ExportTonsUSD.nuclearfuelburned;
+    _expMat_yellowcake = _stRec.ExportTonsRUB.yellowcake + _stRec.ExportTonsUSD.yellowcake;
+    _expMat_uf6 = _stRec.ExportTonsRUB.uf6 + _stRec.ExportTonsUSD.uf6;
+
+    _expMat_waste_gravel = _stRec.ExportTonsRUB.waste_gravel + _stRec.ExportTonsUSD.waste_gravel;
+    _expMat_waste_steel = _stRec.ExportTonsRUB.waste_steel + _stRec.ExportTonsUSD.waste_steel;
+    _expMat_waste_aluminium = _stRec.ExportTonsRUB.waste_aluminium + _stRec.ExportTonsUSD.waste_aluminium;
+    _expMat_waste_plastic = _stRec.ExportTonsRUB.waste_plastic + _stRec.ExportTonsUSD.waste_plastic;
+    _expMat_waste_bio = _stRec.ExportTonsRUB.waste_bio + _stRec.ExportTonsUSD.waste_bio;
+    _expMat_waste_burnable = _stRec.ExportTonsRUB.waste_burnable + _stRec.ExportTonsUSD.waste_burnable;
+    _expMat_waste_toxic = _stRec.ExportTonsRUB.waste_toxic + _stRec.ExportTonsUSD.waste_toxic;
+    _expMat_waste_other = _stRec.ExportTonsRUB.waste_other + _stRec.ExportTonsUSD.waste_other;
+    _expMat_waste_ash = _stRec.ExportTonsRUB.waste_ash + _stRec.ExportTonsUSD.waste_ash;
+    _expMat_waste_mixed = _stRec.ExportTonsRUB.waste_mixed + _stRec.ExportTonsUSD.waste_mixed;
+
+    #pragma endregion  
+
+    // explosives
+    if(_expMat_explosives > 0)
+    {
+        if(_expMat_explosives > _stRec.ResourcesProduced.explosives)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your explosives export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_chemicals = _expMat_chemicals + _expMat_explosives * 0.6818181818;
+        _expMat_gravel = _expMat_gravel + _expMat_explosives * 2.090909091;
+        _expMat_wood = _expMat_wood + _expMat_explosives * 1.363636364;
+    }
+
+    // eletronics
+    if(_expMat_eletronics > 0)
+    {
+        if(_expMat_eletronics > _stRec.ResourcesProduced.eletronics)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your eletronics export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_ecomponents = _expMat_ecomponents + _expMat_eletronics * 0.3333333333;
+        _expMat_plastics = _expMat_plastics + _expMat_eletronics * 0.5111111111;
+        _expMat_mcomponents = _expMat_mcomponents + _expMat_eletronics * 0.3333333333;
+    }
+
+    // ecomponents
+    if(_expMat_ecomponents > 0)
+    {
+        if(_expMat_ecomponents > _stRec.ResourcesProduced.ecomponents)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your eletronic components export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_plastics = _expMat_plastics + _expMat_ecomponents * 0.3947368421;
+        _expMat_steel = _expMat_steel + _expMat_ecomponents * 0.3947368421;
+        _expMat_chemicals = _expMat_chemicals + _expMat_ecomponents * 0.3157894737;
+    }
+
+    // mcomponents
+    if(_expMat_mcomponents > 0)
+    {
+        if(_expMat_mcomponents > _stRec.ResourcesProduced.mcomponents)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your mechanical components export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_steel = _expMat_steel + _expMat_mcomponents * 1.466666667;
+    }
+
+    // steel
+    if(_expMat_steel > 0)
+    {
+        if(_expMat_steel > _stRec.ResourcesProduced.steel)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your steel export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_coal = _expMat_coal + _expMat_steel * 8.720930233;
+        _expMat_iron = _expMat_iron + _expMat_steel * 4.651162791;
+    }
+
+    // iron
+    if(_expMat_iron > 0)
+    {
+        if(_expMat_iron > _stRec.ResourcesProduced.iron)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your iron export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_rawiron = _expMat_rawiron + _expMat_iron * 2.142857143;
+    }
+
+    // rawiron
+    if(_expMat_rawiron > 0)
+    {
+        if(_expMat_rawiron > _stRec.ResourcesProduced.rawiron)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your iron ore export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // nuclearfuel
+    if(_expMat_nuclearfuel > 0)
+    {
+        if(_expMat_nuclearfuel > _stRec.ResourcesProduced.nuclearfuel)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your nuclear fuel export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_uf6 = _expMat_uf6 + _expMat_nuclearfuel * 4.210526316;
+        _expMat_chemicals = _expMat_chemicals + _expMat_nuclearfuel * 7.894736842;
+    }
+
+    // uf6
+    if(_expMat_uf6 > 0)
+    {
+        if(_expMat_uf6 > _stRec.ResourcesProduced.uf6)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your UF6 export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_yellowcake = _expMat_yellowcake + _expMat_uf6 * 2.083333333;
+        _expMat_chemicals = _expMat_chemicals + _expMat_uf6 * 0.21875;
+    }
+
+    // yellowcake
+    if(_expMat_yellowcake > 0)
+    {
+        if(_expMat_yellowcake > _stRec.ResourcesProduced.yellowcake)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your uranium oxide export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_uranium = _expMat_uranium + _expMat_yellowcake * 21.17647059;
+    }
+
+    // uranium
+    if(_expMat_uranium > 0)
+    {
+        if(_expMat_uranium > _stRec.ResourcesProduced.uranium)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your uranium ore export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // aluminium
+    if(_expMat_aluminium > 0)
+    {
+        if(_expMat_aluminium > _stRec.ResourcesProduced.aluminium)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your aluminium export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_alumina = _expMat_alumina + _expMat_aluminium * 1.733333333;
+        _expMat_chemicals = _expMat_chemicals + _expMat_aluminium * 0.08333333333;
+    }
+
+    // alumina
+    if(_expMat_alumina > 0)
+    {
+        if(_expMat_alumina > _stRec.ResourcesProduced.alumina)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your alumina export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_bauxite = _expMat_bauxite + _expMat_alumina * 2.333333333;
+        _expMat_coal = _expMat_coal + _expMat_alumina * 0.8787878788;
+        _expMat_chemicals = _expMat_chemicals + _expMat_alumina * 0.07878787879;
+    }
+
+    // bauxite
+    if(_expMat_bauxite > 0)
+    {
+        if(_expMat_bauxite > _stRec.ResourcesProduced.bauxite)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your bauxite export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_rawbauxite = _expMat_rawbauxite + _expMat_bauxite * 1.666666667;
+    }
+
+    // rawbauxite
+    if(_expMat_rawbauxite > 0)
+    {
+        if(_expMat_rawbauxite > _stRec.ResourcesProduced.rawbauxite)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your bauxite ore export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // plastics
+    if(_expMat_plastics > 0)
+    {
+        if(_expMat_plastics > _stRec.ResourcesProduced.plastics)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your plastics export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_chemicals = _expMat_chemicals + _expMat_plastics * 0.4545454545;
+        _expMat_oil = _expMat_oil + _expMat_plastics * 4.090909091;
+    }
+
+    // clothes
+    if(_expMat_clothes > 0)
+    {
+        if(_expMat_clothes > _stRec.ResourcesProduced.clothes)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your clothes export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_fabric = _expMat_fabric + _expMat_clothes * 2;
+    }
+
+    // fabric
+    if(_expMat_fabric > 0)
+    {
+        if(_expMat_fabric > _stRec.ResourcesProduced.fabric)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your fabric export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_plants = _expMat_plants + _expMat_fabric * 4;
+        _expMat_chemicals = _expMat_chemicals + _expMat_fabric * 0.1;
+    }
+
+    // fertiliser_liquid
+    if(_expMat_fertiliser_liquid > 0)
+    {
+        if(_expMat_fertiliser_liquid > _stRec.ResourcesProduced.fertiliser_liquid)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your liquid fertiliser export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_chemicals = _expMat_chemicals + _expMat_fertiliser_liquid * 0.01823529412;
+    }
+
+    // fertiliser
+    if(_expMat_fertiliser > 0)
+    {
+        if(_expMat_fertiliser > _stRec.ResourcesProduced.fertiliser)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your fertiliser export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_waste_bio = _expMat_waste_bio + _expMat_fertiliser * 1,2;
+        _expMat_chemicals = _expMat_chemicals + _expMat_fertiliser * 0.003;
+    }
+
+    // chemicals
+    if(_expMat_chemicals > 0)
+    {
+        if(_expMat_chemicals > _stRec.ResourcesProduced.chemicals)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your chemicals export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_gravel = _expMat_gravel + _expMat_chemicals * 0.8888888889;
+        _expMat_wood = _expMat_wood + _expMat_chemicals * 1.037037037;
+        _expMat_plants = _expMat_plants + _expMat_chemicals * 0.962962963;
+        _expMat_oil = _expMat_oil + _expMat_chemicals * 1.481481481;
+    }
+
+    // food
+    if(_expMat_food > 0)
+    {
+        if(_expMat_food > _stRec.ResourcesProduced.food)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your food export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_plants = _expMat_plants + _expMat_food * 2.1;
+    }
+
+    // alcohol
+    if(_expMat_alcohol > 0)
+    {
+        if(_expMat_alcohol > _stRec.ResourcesProduced.alcohol)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your alcohol export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_plants = _expMat_plants + _expMat_alcohol * 5;
+    }
+
+    // meat
+    if(_expMat_meat > 0)
+    {
+        if(_expMat_meat > _stRec.ResourcesProduced.meat)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your meat export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_livestock = _expMat_livestock + _expMat_meat * 2.5;
+    }
+
+    // livestock
+    if(_expMat_livestock > 0)
+    {
+        if(_expMat_livestock > _stRec.ResourcesProduced.livestock)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your livestock export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_plants = _expMat_plants + _expMat_livestock * 2;
+    }
+
+    // plants
+    if(_expMat_plants > 0)
+    {
+        if(_expMat_plants > _stRec.ResourcesProduced.plants)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your plants export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // boards
+    if(_expMat_boards > 0)
+    {
+        if(_expMat_boards > _stRec.ResourcesProduced.boards)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your boards export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_wood = _expMat_wood + _expMat_boards * 0;
+    }
+
+    // wood
+    if(_expMat_wood > 0)
+    {
+        if(_expMat_wood > _stRec.ResourcesProduced.wood)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your wood export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // prefabpanels
+    if(_expMat_prefabpanels > 0)
+    {
+        if(_expMat_xxxxx > _stRec.ResourcesProduced.prefabpanels)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your prefab panels export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_cement = _expMat_cement + _expMat_prefabpanels * 0.138028169;
+        _expMat_gravel = _expMat_gravel + _expMat_prefabpanels * 0.9154929577;
+    }
+
+    // cement
+    if(_expMat_cement > 0)
+    {
+        if(_expMat_cement > _stRec.ResourcesProduced.cement)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your cement export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_coal = _expMat_coal + _expMat_cement * 0.2592592593;
+        _expMat_gravel = _expMat_gravel + _expMat_cement * 2.222222222;
+    }
+
+    // bricks
+    if(_expMat_bricks > 0)
+    {
+        if(_expMat_bricks > _stRec.ResourcesProduced.bricks)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your bricks export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_coal = _expMat_coal + _expMat_bricks * 0.6470588235;
+    }
+
+    // fuel
+    if(_expMat_fuel > 0)
+    {
+        if(_expMat_fuel > _stRec.ResourcesProduced.fuel)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your fuel export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_oil = _expMat_oil + _expMat_fuel * 2;
+    }
+
+    // bitumen
+    if(_expMat_bitumen > 0)
+    {
+        if(_expMat_bitumen > _stRec.ResourcesProduced.bitumen)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your eletronics export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_oil = _expMat_oil + _expMat_bitumen * 3.333333333;
+    }
+
+    // coal
+    if(_expMat_coal > 0)
+    {
+        if(_expMat_coal > _stRec.ResourcesProduced.coal)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your coal export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_rawcoal = _expMat_rawcoal + _expMat_coal * 1.75;
+    }
+
+    // rawcoal
+    if(_expMat_rawcoal > 0)
+    {
+        if(_expMat_rawcoal > _stRec.ResourcesProduced.rawcoal)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your coal ore export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // gravel
+    if(_expMat_gravel > 0)
+    {
+        if(_expMat_gravel > _stRec.ResourcesProduced.gravel)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your gravel export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_rawgravel = _expMat_rawgravel + _expMat_gravel * 1.463414634;
+    }
+
+    // rawgravel
+    if(_expMat_rawgravel > 0)
+    {
+        if(_expMat_rawgravel > _stRec.ResourcesProduced.rawgravel)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your gravel ore export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // oil
+    if(_expMat_oil > 0)
+    {
+        if(_expMat_oil > _stRec.ResourcesProduced.oil)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your oil export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+
+
+
+
+    // waste_gravel
+    if(_expMat_waste_gravel > 0)
+    {
+        if(_expMat_waste_gravel > _stRec.ResourcesProduced.waste_gravel)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your construction waste export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // waste_steel
+    if(_expMat_waste_steel > 0)
+    {
+        if(_expMat_waste_steel > _stRec.ResourcesProduced.waste_steel)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your iron waste export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // waste_aluminium
+    if(_expMat_waste_aluminium > 0)
+    {
+        if(_expMat_waste_aluminium > _stRec.ResourcesProduced.waste_aluminium)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your aluminium waste export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // waste_plastic
+    if(_expMat_waste_plastic > 0)
+    {
+        if(_expMat_waste_plastic > _stRec.ResourcesProduced.waste_plastic)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your plastic waste export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // waste_bio
+    if(_expMat_waste_bio > 0)
+    {
+        if(_expMat_waste_bio > _stRec.ResourcesProduced.waste_bio)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your bio waste export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // waste_toxic
+    if(_expMat_waste_toxic > 0)
+    {
+        if(_expMat_waste_toxic > _stRec.ResourcesProduced.waste_toxic)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your hazardous waste export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+    // waste_mixed
+    if(_expMat_waste_mixed > 0)
+    {
+        if(_expMat_waste_mixed > _stRec.ResourcesProduced.waste_mixed)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your mixed waste export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+    }
+
+
+
+    // template
+    if(_expMat_xxxxx > 0)
+    {
+        if(_expMat_xxxxx > _stRec.ResourcesProduced.xxxxxxx)
+        {
+            Notification_CreateNewStringPic(
+                "You failed",
+                "You broke the rules. Your eletronics export is bigger than your production. Where did you get it?",
+                "fail.png",
+                _vector);
+            returnVoid();
+        }
+
+        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+        _expMat_ = _expMat_ + _expMat_xxxxx * 0;
+    }
+
+
+
+    returnVoid();
+}
