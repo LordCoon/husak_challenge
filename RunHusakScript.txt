@@ -11,6 +11,7 @@ defineVariable(int, _currentMonth);
 defineVariable(int, _currentYear);
 
 defineVariable(int, _firstRun);
+defineVariable(int, _showExportRestrictionSucessMessage);
 
 defineVariable(GameSetting, _currentGameSettings);
 
@@ -68,6 +69,7 @@ defineFunction(main, void)
 	_previousDay = 999;
 	_previousYear = _currentYear;
 	_firstRun = 0;
+	_showExportRestrictionSucessMessage = 0;
 
 	while( 1 ? 1)
 	{
@@ -84,9 +86,16 @@ defineFunction(main, void)
 
 		// if(!(_currentMonth ? _previousMonth))
         // {
+		// 	_showExportRestrictionSucessMessage = 0;
+
+		// 	if(!(_currentYear ? _previousYear))
+		// 	{
+		// 		_showExportRestrictionSucessMessage = 1;
+		// 	}
+
         //     _previousMonth = _currentMonth;
 
-        //     CheckExportRestriction();
+        //     CheckExportRestriction(_showExportRestrictionSucessMessage);
         // }
 
 		if(!(_currentYear ? _previousYear))
@@ -102,7 +111,7 @@ defineFunction(main, void)
             !(_currentGameSettings.WasteManagement ? 2) | 
             !(_currentGameSettings.Maintenance ? 1) | 
             !(_currentGameSettings.SeasonsEnabled ? 1) | 
-            !(_currentGameSettings.DayNightEnabled ? 2) | 
+            !(_currentGameSettings.DayNightEnabled ? 2) |
             !(_currentGameSettings.WorkerDemandsLevel ? 2) | 
             !(_currentGameSettings.EventsEnabled ? 2) | 
             !(_currentGameSettings.FiresEnabled ? 2) | 
