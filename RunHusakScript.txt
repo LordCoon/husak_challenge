@@ -84,19 +84,19 @@ defineFunction(main, void)
 			_firstRun = 1;
         }
 
-		// if(!(_currentMonth ? _previousMonth))
-        // {
-		// 	_showExportRestrictionSucessMessage = 0;
+		if(!(_currentMonth ? _previousMonth))
+        {
+			_showExportRestrictionSucessMessage = 0;
 
-		// 	if(!(_currentYear ? _previousYear))
-		// 	{
-		// 		_showExportRestrictionSucessMessage = 1;
-		// 	}
+			if(!(_currentYear ? _previousYear))
+			{
+				_showExportRestrictionSucessMessage = 1;
+			}
 
-        //     _previousMonth = _currentMonth;
+            _previousMonth = _currentMonth;
 
-        //     CheckExportRestriction(_showExportRestrictionSucessMessage);
-        // }
+            CheckExportRestriction(_showExportRestrictionSucessMessage);
+        }
 
 		if(!(_currentYear ? _previousYear))
         {
