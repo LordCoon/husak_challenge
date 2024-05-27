@@ -134,159 +134,159 @@ defineFunction(GetExportById, float, int: resourceUniqueIdExport)
 {
     if(resourceUniqueIdExport ? RESOURCE_WOOD )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.wood + _statRecord.ExportTonsUSD.wood;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.wood + _statRecord.ExportTonsUSD.wood + _statRecord.ExportInternationalTonsRUB.wood + _statRecord.ExportInternationalTonsUSD.wood + _statRecord.ExportInternationalTonsRUB.wood + _statRecord.ExportInternationalTonsUSD.wood;
     }
     if(resourceUniqueIdExport ? RESOURCE_RAWGRAVEL )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawgravel + _statRecord.ExportTonsUSD.rawgravel;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawgravel + _statRecord.ExportTonsUSD.rawgravel + _statRecord.ExportInternationalTonsRUB.rawgravel + _statRecord.ExportInternationalTonsUSD.rawgravel;
     }
     if(resourceUniqueIdExport ? RESOURCE_PLANTS )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.plants + _statRecord.ExportTonsUSD.plants;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.plants + _statRecord.ExportTonsUSD.plants + _statRecord.ExportInternationalTonsRUB.plants + _statRecord.ExportInternationalTonsUSD.plants;
     }
     if(resourceUniqueIdExport ? RESOURCE_OIL )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.oil + _statRecord.ExportTonsUSD.oil;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.oil + _statRecord.ExportTonsUSD.oil + _statRecord.ExportInternationalTonsRUB.oil + _statRecord.ExportInternationalTonsUSD.oil;
     }
     if(resourceUniqueIdExport ? RESOURCE_RAWCOAL )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawcoal + _statRecord.ExportTonsUSD.rawcoal;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawcoal + _statRecord.ExportTonsUSD.rawcoal + _statRecord.ExportInternationalTonsRUB.rawcoal + _statRecord.ExportInternationalTonsUSD.rawcoal;
     }
     if(resourceUniqueIdExport ? RESOURCE_RAWIRON )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawiron + _statRecord.ExportTonsUSD.rawiron;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawiron + _statRecord.ExportTonsUSD.rawiron + _statRecord.ExportInternationalTonsRUB.rawiron + _statRecord.ExportInternationalTonsUSD.rawiron;
     }
     if(resourceUniqueIdExport ? RESOURCE_URANIUM )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.uranium + _statRecord.ExportTonsUSD.uranium;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.uranium + _statRecord.ExportTonsUSD.uranium + _statRecord.ExportInternationalTonsRUB.uranium + _statRecord.ExportInternationalTonsUSD.uranium;
     }
     if(resourceUniqueIdExport ? RESOURCE_ALCOHOL )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.alcohol + _statRecord.ExportTonsUSD.alcohol;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.alcohol + _statRecord.ExportTonsUSD.alcohol + _statRecord.ExportInternationalTonsRUB.alcohol + _statRecord.ExportInternationalTonsUSD.alcohol;
     }
     if(resourceUniqueIdExport ? RESOURCE_BAUXITE )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.bauxite + _statRecord.ExportTonsUSD.bauxite;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.bauxite + _statRecord.ExportTonsUSD.bauxite + _statRecord.ExportInternationalTonsRUB.bauxite + _statRecord.ExportInternationalTonsUSD.bauxite;
     }
     if(resourceUniqueIdExport ? RESOURCE_BITUMEN )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.bitumen + _statRecord.ExportTonsUSD.bitumen;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.bitumen + _statRecord.ExportTonsUSD.bitumen + _statRecord.ExportInternationalTonsRUB.bitumen + _statRecord.ExportInternationalTonsUSD.bitumen;
     }
     if(resourceUniqueIdExport ? RESOURCE_BRICKS )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.bricks + _statRecord.ExportTonsUSD.bricks;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.bricks + _statRecord.ExportTonsUSD.bricks + _statRecord.ExportInternationalTonsRUB.bricks + _statRecord.ExportInternationalTonsUSD.bricks;
     }
     if(resourceUniqueIdExport ? RESOURCE_BOARDS )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.boards + _statRecord.ExportTonsUSD.boards;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.boards + _statRecord.ExportTonsUSD.boards + _statRecord.ExportInternationalTonsRUB.boards + _statRecord.ExportInternationalTonsUSD.boards;
     }
     if(resourceUniqueIdExport ? RESOURCE_LIVESTOCK )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.livestock + _statRecord.ExportTonsUSD.livestock;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.livestock + _statRecord.ExportTonsUSD.livestock + _statRecord.ExportInternationalTonsRUB.livestock + _statRecord.ExportInternationalTonsUSD.livestock;
     }
     if(resourceUniqueIdExport ? RESOURCE_FOOD )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.food + _statRecord.ExportTonsUSD.food;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.food + _statRecord.ExportTonsUSD.food + _statRecord.ExportInternationalTonsRUB.food + _statRecord.ExportInternationalTonsUSD.food;
     }
     if(resourceUniqueIdExport ? RESOURCE_FABRIC )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fabric + _statRecord.ExportTonsUSD.fabric;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fabric + _statRecord.ExportTonsUSD.fabric + _statRecord.ExportInternationalTonsRUB.fabric + _statRecord.ExportInternationalTonsUSD.fabric;
     }
     if(resourceUniqueIdExport ? RESOURCE_FUEL )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fuel + _statRecord.ExportTonsUSD.fuel;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fuel + _statRecord.ExportTonsUSD.fuel + _statRecord.ExportInternationalTonsRUB.fuel + _statRecord.ExportInternationalTonsUSD.fuel;
     }
     if(resourceUniqueIdExport ? RESOURCE_GRAVEL )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.gravel + _statRecord.ExportTonsUSD.gravel;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.gravel + _statRecord.ExportTonsUSD.gravel + _statRecord.ExportInternationalTonsRUB.gravel + _statRecord.ExportInternationalTonsUSD.gravel;
     }
     if(resourceUniqueIdExport ? RESOURCE_COAL )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.coal + _statRecord.ExportTonsUSD.coal;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.coal + _statRecord.ExportTonsUSD.coal + _statRecord.ExportInternationalTonsRUB.coal + _statRecord.ExportInternationalTonsUSD.coal;
     }
     if(resourceUniqueIdExport ? RESOURCE_IRON )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.iron + _statRecord.ExportTonsUSD.iron;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.iron + _statRecord.ExportTonsUSD.iron + _statRecord.ExportInternationalTonsRUB.iron + _statRecord.ExportInternationalTonsUSD.iron;
     }
     if(resourceUniqueIdExport ? RESOURCE_CEMENT )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.cement + _statRecord.ExportTonsUSD.cement;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.cement + _statRecord.ExportTonsUSD.cement + _statRecord.ExportInternationalTonsRUB.cement + _statRecord.ExportInternationalTonsUSD.cement;
     }
     if(resourceUniqueIdExport ? RESOURCE_ALUMINIUM )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.aluminium + _statRecord.ExportTonsUSD.aluminium;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.aluminium + _statRecord.ExportTonsUSD.aluminium + _statRecord.ExportInternationalTonsRUB.aluminium + _statRecord.ExportInternationalTonsUSD.aluminium;
     }
     if(resourceUniqueIdExport ? RESOURCE_CHEMICALS )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.chemicals + _statRecord.ExportTonsUSD.chemicals;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.chemicals + _statRecord.ExportTonsUSD.chemicals + _statRecord.ExportInternationalTonsRUB.chemicals + _statRecord.ExportInternationalTonsUSD.chemicals;
     }
     if(resourceUniqueIdExport ? RESOURCE_MEAT )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.meat + _statRecord.ExportTonsUSD.meat;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.meat + _statRecord.ExportTonsUSD.meat + _statRecord.ExportInternationalTonsRUB.meat + _statRecord.ExportInternationalTonsUSD.meat;
     }
     if(resourceUniqueIdExport ? RESOURCE_CLOTHES )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.clothes + _statRecord.ExportTonsUSD.clothes;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.clothes + _statRecord.ExportTonsUSD.clothes + _statRecord.ExportInternationalTonsRUB.clothes + _statRecord.ExportInternationalTonsUSD.clothes;
     }
     if(resourceUniqueIdExport ? RESOURCE_STEEL )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.steel + _statRecord.ExportTonsUSD.steel;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.steel + _statRecord.ExportTonsUSD.steel + _statRecord.ExportInternationalTonsRUB.steel + _statRecord.ExportInternationalTonsUSD.steel;
     }
     if(resourceUniqueIdExport ? RESOURCE_ALUMINA )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.alumina + _statRecord.ExportTonsUSD.alumina;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.alumina + _statRecord.ExportTonsUSD.alumina + _statRecord.ExportInternationalTonsRUB.alumina + _statRecord.ExportInternationalTonsUSD.alumina;
     }
     if(resourceUniqueIdExport ? RESOURCE_FERTILISER )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fertiliser + _statRecord.ExportTonsUSD.fertiliser;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fertiliser + _statRecord.ExportTonsUSD.fertiliser + _statRecord.ExportInternationalTonsRUB.fertiliser + _statRecord.ExportInternationalTonsUSD.fertiliser;
     }
     if(resourceUniqueIdExport ? RESOURCE_PREFABPANELS )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.prefabpanels + _statRecord.ExportTonsUSD.prefabpanels;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.prefabpanels + _statRecord.ExportTonsUSD.prefabpanels + _statRecord.ExportInternationalTonsRUB.prefabpanels + _statRecord.ExportInternationalTonsUSD.prefabpanels;
     }
     if(resourceUniqueIdExport ? RESOURCE_FERTILISERLIQUID )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fertiliser_liquid + _statRecord.ExportTonsUSD.fertiliser_liquid;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.fertiliser_liquid + _statRecord.ExportTonsUSD.fertiliser_liquid + _statRecord.ExportInternationalTonsRUB.fertiliser_liquid + _statRecord.ExportInternationalTonsUSD.fertiliser_liquid;
     }
     if(resourceUniqueIdExport ? RESOURCE_ECOMPONENTS )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.ecomponents + _statRecord.ExportTonsUSD.ecomponents;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.ecomponents + _statRecord.ExportTonsUSD.ecomponents + _statRecord.ExportInternationalTonsRUB.ecomponents + _statRecord.ExportInternationalTonsUSD.ecomponents;
     }
     if(resourceUniqueIdExport ? RESOURCE_ELETRONICS )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.eletronics + _statRecord.ExportTonsUSD.eletronics;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.eletronics + _statRecord.ExportTonsUSD.eletronics + _statRecord.ExportInternationalTonsRUB.eletronics + _statRecord.ExportInternationalTonsUSD.eletronics;
     }
     if(resourceUniqueIdExport ? RESOURCE_MCOMPONENTS )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.mcomponents + _statRecord.ExportTonsUSD.mcomponents;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.mcomponents + _statRecord.ExportTonsUSD.mcomponents + _statRecord.ExportInternationalTonsRUB.mcomponents + _statRecord.ExportInternationalTonsUSD.mcomponents;
     }
     if(resourceUniqueIdExport ? RESOURCE_PLASTICS )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.plastics + _statRecord.ExportTonsUSD.plastics;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.plastics + _statRecord.ExportTonsUSD.plastics + _statRecord.ExportInternationalTonsRUB.plastics + _statRecord.ExportInternationalTonsUSD.plastics;
     }
     if(resourceUniqueIdExport ? RESOURCE_EXPLOSIVES )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.explosives + _statRecord.ExportTonsUSD.explosives;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.explosives + _statRecord.ExportTonsUSD.explosives + _statRecord.ExportInternationalTonsRUB.explosives + _statRecord.ExportInternationalTonsUSD.explosives;
     }
     if(resourceUniqueIdExport ? RESOURCE_ELETRIC )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.eletric + _statRecord.ExportTonsUSD.eletric;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.eletric + _statRecord.ExportTonsUSD.eletric + _statRecord.ExportInternationalTonsRUB.eletric + _statRecord.ExportInternationalTonsUSD.eletric;
     }
     if(resourceUniqueIdExport ? RESOURCE_NUCLEARFUEL )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.nuclearfuel + _statRecord.ExportTonsUSD.nuclearfuel;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.nuclearfuel + _statRecord.ExportTonsUSD.nuclearfuel + _statRecord.ExportInternationalTonsRUB.nuclearfuel + _statRecord.ExportInternationalTonsUSD.nuclearfuel;
     }
     if(resourceUniqueIdExport ? RESOURCE_NUCLEARFUELBURNED )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.nuclearfuelburned + _statRecord.ExportTonsUSD.nuclearfuelburned;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.nuclearfuelburned + _statRecord.ExportTonsUSD.nuclearfuelburned + _statRecord.ExportInternationalTonsRUB.nuclearfuelburned + _statRecord.ExportInternationalTonsUSD.nuclearfuelburned;
     }
     if(resourceUniqueIdExport ? RESOURCE_YELLOWCAKE )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.yellowcake + _statRecord.ExportTonsUSD.yellowcake;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.yellowcake + _statRecord.ExportTonsUSD.yellowcake + _statRecord.ExportInternationalTonsRUB.yellowcake + _statRecord.ExportInternationalTonsUSD.yellowcake;
     }
     if(resourceUniqueIdExport ? RESOURCE_UF )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.uf6 + _statRecord.ExportTonsUSD.uf6;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.uf6 + _statRecord.ExportTonsUSD.uf6 + _statRecord.ExportInternationalTonsRUB.uf6 + _statRecord.ExportInternationalTonsUSD.uf6;
     }
 
     return(_wholeExportStatsExportById);
