@@ -30,7 +30,7 @@ defineFunction(main, void)
 
     Notification_CreateNewStringPic(
 		"Husak challenge",
-		"Deliver all resources for your redemption! Rules will be validated each day and export restriction each month. You will see objectives in yearly reports or using script Run Check Objectives",
+		"Deliver all resources for your redemption! Rules will be validated each day and export restriction each month. You will see objectives in yearly reports or using script Show Objectives",
 		"previewimage.png",
 		vector);
 
@@ -130,12 +130,11 @@ defineFunction(main, void)
 
             _previousYear = _currentYear;
 
-			Script_Exists("RunCheckObjectives.txt", _scriptRunningCheckObjectives);
-			Script_Exists("ShowObjectives.txt", _scriptRunningShowObjectives);
+			Script_Exists("RunObjectivesShow.txt", _scriptRunningCheckObjectives);
 
 			if(!(_scriptRunningCheckObjectives ? 1 | _scriptRunningShowObjectives ? 1))
 			{
-				Script_StartNew("RunCheckObjectives.txt");
+				Script_StartNew("RunObjectivesShow.txt");
 			}
         }
 

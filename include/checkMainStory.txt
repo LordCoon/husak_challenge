@@ -108,7 +108,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
         _messageMinLoyalty = 1;
         Notification_CreateNewStringPic(
                 "New story event will start soon.",
-                "All your building needs to have loyalty set to minimum 50% from 01/09/1970. You need to have at least one orphanage and at least started research of 'Higher birth rate' in 31/12/1973.",
+                "All your building needs to have loyalty set to minimum 50 percen from 01/09/1970. You need to have at least one orphanage and at least started research of 'Higher birth rate' in 31/12/1973.",
                 "notification.png",
                 _vectorMainStory);
     }
@@ -119,7 +119,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your buildings don't have minumum loyalty set to 50%.",
+                "You broke the rules. Your buildings don't have minumum loyalty set to 50 percen.",
                 "fail.png",
                 _vectorMainStory);
             returnVoid();

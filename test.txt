@@ -1,13 +1,15 @@
 include("include/SOVIETInstructions.txt");
-include("include/checkMainStory.txt");
 
 defineVariable(int, _testInt);
 defineVariable(float, _testFloat);
-defineArray(char[200], _testString);
+defineVariable(string, _testString1);
+defineArray(char[2000], _testString);
 defineVariable(Building, _currentTestBuilding);
 defineVariable(char, NEWLINE);
+defineVariable(char, TAB);
 
 defineVariable(GameSetting, _currentGameSettings);
+defineVariable(vec3, _vectorWindow);
 
 
 defineVariable(float, _prodI);
@@ -22,22 +24,58 @@ defineVariable(int, _currentMonth);
 defineVariable(int, _currentYear);
 
 
-defineArray(char[200][2], objectives_2_text);
+// defineArray(char[200][2], objectives_2_text);
 
 
 
 defineFunction(main, void)
 {
-    // NEWLINE = 10; // ASCII LF
-	// InitConstants();
+    NEWLINE = 10;
+    TAB = 20;
+
+    _vectorWindow.x = 0;
+    _vectorWindow.y = 0;
+    _vectorWindow.z = 0;
+	InitConstants();
+
+    _testInt = 150;
 
     // Scenario_ObjectiveDestroy("exportObjectives-primary");
 
-    // strcpy(_testString, "");
+    strcpy(_testString, "fggdf");
 
-    // strcat(_testString, "This is test");
+    strcat(_testString, "[fon=FontMedium2]Export Objectives");
     // strcat(_testString, NEWLINE);
+    strcat(_testString, NEWLINE);
+
     // strcat(_testString, "Which was never working before");
+
+    // strcat(_testString, NEWLINE);
+    strcat(_testString, "[col=red] [IM=resources/plants.png] ");
+    // strcat(_testString, TAB);
+    _testString1 = "Plants: ";
+    strcat(_testString, _testString1);
+    strcat(_testString, _testInt);
+    strcat(_testString, " / 3000");
+
+    strcat(_testString, NEWLINE);
+
+    // strcat(_testString, TAB);
+    strcat(_testString, "[IM=resources/wood.png] ");
+    strcat(_testString, "[col=red]Wood:0 / 100 000");
+
+    Scenario_WindowWithImageLeft(
+            "Test notification",
+            _testString,
+            "notification.png",
+            3);
+
+    // Notification_CreateNewStringPic(
+    //         "Test warning",
+    //         _testString,
+    //         "notification.png",
+    //         _vectorWindow);
+
 
 
 

@@ -6,6 +6,7 @@ defineStruct(ExportObjective, 200)
 	defineStructVariable(ExportObjective, float, target);
 	defineStructVariable(ExportObjective, int, uniqueId);
 	defineStructVariable(ExportObjective, int, isDone);
+	defineStructVariable(ExportObjective, int, currentValue);
 };
 
 defineStruct(ExportObjectiveGroup, 201)
@@ -29,12 +30,27 @@ defineVariable(int, _wholeExportObjective);
 defineVariable(int, _globalIndexExportObjective);
 defineVariable(int, _globalIndexExportObjectiveGroup);
 
+defineVariable(int, _previousExportGroupId);
 
 defineVariable(string, _currentExportObjectiveImageName);
+defineVariable(string, _currentExportGroupName);
+defineVariable(string, _currentExportObjectiveName);
 defineVariable(float, _currentExportObjectiveCurrentValue);
 defineVariable(StatRecord, _statRecord);
 
+defineVariable(char, NEWLINE);
+defineArray(char[4000], _windowMessage);
+defineVariable(float, _windowHelperFloat);
+
 defineVariable(int, _helperI);
+
+defineVariable(int, RESOURCE_GROUP_ORE_MINERALS);
+defineVariable(int, RESOURCE_GROUP_PRIMARY_PRODUCTS);
+defineVariable(int, RESOURCE_GROUP_SECONDARY_PRODUCTS);
+defineVariable(int, RESOURCE_GROUP_ADVANCED_PRODUCTS);
+defineVariable(int, RESOURCE_GROUP_ELECTRICITY);
+defineVariable(int, RESOURCE_GROUP_NUCLEAR);
+
 
 defineVariable(int, RESOURCE_RAWBAUXITE);
 defineVariable(int, RESOURCE_WOOD);
@@ -79,6 +95,15 @@ defineVariable(int, RESOURCE_UF);
 
 defineFunction(InitScriptConstants, void)
 {
+    NEWLINE = 10;
+
+    RESOURCE_GROUP_ORE_MINERALS = 0;
+    RESOURCE_GROUP_PRIMARY_PRODUCTS = 1;
+    RESOURCE_GROUP_SECONDARY_PRODUCTS = 2;
+    RESOURCE_GROUP_ADVANCED_PRODUCTS = 3;
+    RESOURCE_GROUP_ELECTRICITY = 4;
+    RESOURCE_GROUP_NUCLEAR = 5;
+
     RESOURCE_RAWBAUXITE = 101;
     RESOURCE_WOOD = 102;
     RESOURCE_RAWGRAVEL = 103;
@@ -296,6 +321,8 @@ defineVariable(string, _imagePathExportImageById);
 
 defineFunction(GetExportImageById, string, int: resourceUniqueIdImage)
 {
+    _imagePathExportImageById = "";
+
     if(resourceUniqueIdImage ? RESOURCE_RAWBAUXITE )
     { 
         _imagePathExportImageById = "resources/rawbauxite.png";
@@ -460,19 +487,234 @@ defineFunction(GetExportImageById, string, int: resourceUniqueIdImage)
     return(_imagePathExportImageById);
 };
 
+defineVariable(string, _nameExportNameById);
+
+defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
+{
+    _nameExportNameById = "No export name found.";
+
+    if(resourceUniqueIdName ? RESOURCE_RAWBAUXITE )
+    { 
+        _nameExportNameById = "Bauxite ore";
+    }
+    if(resourceUniqueIdName ? RESOURCE_WOOD )
+    { 
+        _nameExportNameById = "Wood";
+    }
+    if(resourceUniqueIdName ? RESOURCE_RAWGRAVEL )
+    { 
+        _nameExportNameById = "Gravel ore";
+    }
+    if(resourceUniqueIdName ? RESOURCE_PLANTS )
+    { 
+        _nameExportNameById = "Plants";
+    }
+    if(resourceUniqueIdName ? RESOURCE_OIL )
+    { 
+        _nameExportNameById = "Oil";
+    }
+    if(resourceUniqueIdName ? RESOURCE_RAWCOAL )
+    { 
+        _nameExportNameById = "Coal ore";
+    }
+    if(resourceUniqueIdName ? RESOURCE_RAWIRON )
+    { 
+        _nameExportNameById = "Iron ore";
+    }
+    if(resourceUniqueIdName ? RESOURCE_URANIUM )
+    { 
+        _nameExportNameById = "Uranium";
+    }
+    if(resourceUniqueIdName ? RESOURCE_ALCOHOL )
+    { 
+        _nameExportNameById = "Alcohol";
+    }
+    if(resourceUniqueIdName ? RESOURCE_BAUXITE )
+    { 
+        _nameExportNameById = "Bauxite";
+    }
+    if(resourceUniqueIdName ? RESOURCE_BITUMEN )
+    { 
+        _nameExportNameById = "Bitumen";
+    }
+    if(resourceUniqueIdName ? RESOURCE_BRICKS )
+    { 
+        _nameExportNameById = "Bricks";
+    }
+    if(resourceUniqueIdName ? RESOURCE_BOARDS )
+    { 
+        _nameExportNameById = "Boards";
+    }
+    if(resourceUniqueIdName ? RESOURCE_LIVESTOCK )
+    { 
+        _nameExportNameById = "Livestock";
+    }
+    if(resourceUniqueIdName ? RESOURCE_FOOD )
+    { 
+        _nameExportNameById = "Food";
+    }
+    if(resourceUniqueIdName ? RESOURCE_FABRIC )
+    { 
+        _nameExportNameById = "Fabric";
+    }
+    if(resourceUniqueIdName ? RESOURCE_FUEL )
+    { 
+        _nameExportNameById = "Fuel";
+    }
+    if(resourceUniqueIdName ? RESOURCE_GRAVEL )
+    { 
+        _nameExportNameById = "Gravel";
+    }
+    if(resourceUniqueIdName ? RESOURCE_COAL )
+    { 
+        _nameExportNameById = "Coal";
+    }
+    if(resourceUniqueIdName ? RESOURCE_IRON )
+    { 
+        _nameExportNameById = "Iron";
+    }
+    if(resourceUniqueIdName ? RESOURCE_CEMENT )
+    { 
+        _nameExportNameById = "Cement";
+    }
+    if(resourceUniqueIdName ? RESOURCE_ALUMINIUM )
+    { 
+        _nameExportNameById = "Aluminium";
+    }
+    if(resourceUniqueIdName ? RESOURCE_CHEMICALS )
+    { 
+        _nameExportNameById = "Chemicals";
+    }
+    if(resourceUniqueIdName ? RESOURCE_MEAT )
+    { 
+        _nameExportNameById = "Meat";
+    }
+    if(resourceUniqueIdName ? RESOURCE_CLOTHES )
+    { 
+        _nameExportNameById = "Clothes";
+    }
+    if(resourceUniqueIdName ? RESOURCE_STEEL )
+    { 
+        _nameExportNameById = "Steel";
+    }
+    if(resourceUniqueIdName ? RESOURCE_ALUMINA )
+    { 
+        _nameExportNameById = "Alumina";
+    }
+    if(resourceUniqueIdName ? RESOURCE_FERTILISER )
+    { 
+        _nameExportNameById = "Fertiliser";
+    }
+    if(resourceUniqueIdName ? RESOURCE_PREFABPANELS )
+    { 
+        _nameExportNameById = "Prefab panels";
+    }
+    if(resourceUniqueIdName ? RESOURCE_FERTILISERLIQUID )
+    { 
+        _nameExportNameById = "Liquid fertiliser";
+    }
+    if(resourceUniqueIdName ? RESOURCE_ECOMPONENTS )
+    { 
+        _nameExportNameById = "Eletronic components";
+    }
+    if(resourceUniqueIdName ? RESOURCE_ELETRONICS )
+    { 
+        _nameExportNameById = "Eletronics";
+    }
+    if(resourceUniqueIdName ? RESOURCE_MCOMPONENTS )
+    { 
+        _nameExportNameById = "Mechanical components";
+    }
+    if(resourceUniqueIdName ? RESOURCE_PLASTICS )
+    { 
+        _nameExportNameById = "Plastics";
+    }
+    if(resourceUniqueIdName ? RESOURCE_EXPLOSIVES )
+    { 
+        _nameExportNameById = "Explosives";
+    }
+    if(resourceUniqueIdName ? RESOURCE_ELETRIC )
+    { 
+        _nameExportNameById = "Eletric";
+    }
+    if(resourceUniqueIdName ? RESOURCE_NUCLEARFUEL )
+    { 
+        _nameExportNameById = "Nuclear fuel";
+    }
+    if(resourceUniqueIdName ? RESOURCE_NUCLEARFUELBURNED )
+    { 
+        _nameExportNameById = "Burned nuclear fuel";
+    }
+    if(resourceUniqueIdName ? RESOURCE_YELLOWCAKE )
+    { 
+        _nameExportNameById = "Uranium oxide";
+    }
+    if(resourceUniqueIdName ? RESOURCE_UF )
+    { 
+        _nameExportNameById = "UF6";
+    }
+
+    return(_nameExportNameById);
+};
+
+defineVariable(string, _nameExportGroupNameById);
+
+
+defineFunction(GetExportGroupNameById, string, int: resourceGroupUniqueIdName)
+{
+    _nameExportGroupNameById = "No export group found";
+
+    if(resourceGroupUniqueIdName ? RESOURCE_GROUP_ORE_MINERALS)
+    { 
+        _nameExportGroupNameById = "Ore and Raw minerals";
+    }
+
+    if(resourceGroupUniqueIdName ? RESOURCE_GROUP_PRIMARY_PRODUCTS)
+    { 
+        _nameExportGroupNameById = "Primary products";
+    }
+
+    if(resourceGroupUniqueIdName ? RESOURCE_GROUP_SECONDARY_PRODUCTS)
+    { 
+        _nameExportGroupNameById = "Secondary products";
+    }
+
+    if(resourceGroupUniqueIdName ? RESOURCE_GROUP_ADVANCED_PRODUCTS)
+    { 
+        _nameExportGroupNameById = "Advanced products";
+    }
+
+    if(resourceGroupUniqueIdName ? RESOURCE_GROUP_ELECTRICITY)
+    { 
+        _nameExportGroupNameById = "Electricity";
+    }
+
+    if(resourceGroupUniqueIdName ? RESOURCE_GROUP_NUCLEAR)
+    { 
+        _nameExportGroupNameById = "Nuclear";
+    }
+
+    return(_nameExportGroupNameById);
+}
+
+
+
 defineFunction(UpdateExportObjective, void, int: globalIndexUpdateExport)
 {
     _currentExportObjective = _exportObjectives[globalIndexUpdateExport];
 
     _currentExportObjectiveCurrentValue = GetExportById(_currentExportObjective.uniqueId);
+    _currentExportObjective.currentValue = _currentExportObjectiveCurrentValue;
+    _exportObjectives[globalIndexUpdateExport].currentValue = _currentExportObjectiveCurrentValue;
 
     if(_currentExportObjective.target > _currentExportObjectiveCurrentValue)
     {
-        Objective_UpdateRequirement(_currentExportObjective.name, _currentExportObjective.index, _currentExportObjectiveCurrentValue);
+        // Objective_UpdateRequirement(_currentExportObjective.name, _currentExportObjective.index, _currentExportObjectiveCurrentValue);
     }
     else()
     {
-        Objective_UpdateRequirementToTarget(_currentExportObjective.name, _currentExportObjective.index);
+        // Objective_UpdateRequirementToTarget(_currentExportObjective.name, _currentExportObjective.index);
+
         _currentExportObjective.isDone = 1;
         _exportObjectives[globalIndexUpdateExport].isDone = 1;
     }
@@ -501,16 +743,20 @@ defineFunction(AddExportObjective, void, int: groupNameId, string: name, float: 
     _exportObjectives[_globalIndexExportObjective].target = target;
     _exportObjectives[_globalIndexExportObjective].uniqueId = uniqueId;
     _exportObjectives[_globalIndexExportObjective].isDone = 0;
+    _exportObjectives[_globalIndexExportObjective].currentValue = 0;
 
     _currentExportObjective = _exportObjectives[_globalIndexExportObjective];
     _currentExportObjectiveImageName = GetExportImageById(_currentExportObjective.uniqueId);
 
-    Objective_AddRequirement(_currentExportObjective.name, _currentExportObjective.target, _currentExportObjectiveImageName);
+    // Objective_AddRequirement(_currentExportObjective.name, _currentExportObjective.target, _currentExportObjectiveImageName);
 
     inc(_globalIndexExportObjective);
 
     returnVoid();
 };
+
+// defineVariable(int, _windowHelperInt);
+
 
 defineFunction(UpdateExportObjectiveAll, void)
 {
@@ -535,10 +781,76 @@ defineFunction(UpdateExportObjectiveAll, void)
 
         if(_currentExportObjectiveGroup.count ? _currentExportObjectiveGroup.completedCount)
         {
-            Objective_SetComplete(_currentExportObjectiveGroup.name);
+            // Objective_SetComplete(_currentExportObjectiveGroup.name);
             inc(_wholeExportObjective);
         }
     }
+
+
+    _previousExportGroupId = 1000;
+    strcpy(_windowMessage, "[fon=FontMedium]You can see all of your exports here.");
+    strcat(_windowMessage, NEWLINE);
+    strcat(_windowMessage, "[fon=FontMedium2] [col=red]All not completed exports has red color. [col=black]Completed exports has black color. [col=black]Same apply to whole group name. ");
+
+
+    for (_helperI = 0, _helperI < _globalIndexExportObjective, _helperI = _helperI + 1)
+    {
+        _currentExportObjective = _exportObjectives[_helperI];
+        _currentExportObjectiveImageName = GetExportImageById(_currentExportObjective.uniqueId);
+        _currentExportObjectiveName = GetExportNameById(_currentExportObjective.uniqueId);
+        _currentExportGroupName = GetExportGroupNameById(_currentExportObjective.groupNameId);
+
+        _currentExportObjectiveGroup = _exportObjectiveGroups[_currentExportObjective.groupNameId];
+
+        if(!(_previousExportGroupId ? _currentExportObjective.groupNameId))
+        {
+            strcat(_windowMessage, NEWLINE);
+            
+            if(!(_currentExportObjectiveGroup.count ? _currentExportObjectiveGroup.completedCount))
+            {
+                strcat(_windowMessage, "[col=red] ");
+            }else()
+            {
+                strcat(_windowMessage, "[col=black] ");
+            }
+
+            strcat(_windowMessage, _currentExportGroupName);
+            strcat(_windowMessage, NEWLINE);
+        }
+
+        if(!(_currentExportObjective.isDone ? 1))
+        {
+            strcat(_windowMessage, "[col=red] ");
+        }else()
+        {
+            strcat(_windowMessage, "[col=black] ");
+        }
+
+        strcat(_windowMessage, " [IM=");
+        strcat(_windowMessage, _currentExportObjectiveImageName);
+        strcat(_windowMessage, "] ");
+       
+
+        strcat(_windowMessage, _currentExportObjectiveName);
+        strcat(_windowMessage, ": ");
+        _windowHelperFloat = _currentExportObjective.currentValue;
+        strcat(_windowMessage, _windowHelperFloat);
+        strcat(_windowMessage, " / ");
+        _windowHelperFloat = _currentExportObjective.target;
+        strcat(_windowMessage, _windowHelperFloat);
+
+        strcat(_windowMessage, NEWLINE);
+
+        _previousExportGroupId = _currentExportObjective.groupNameId;
+    }
+
+    Scenario_WindowWithImageTopLeft(
+            "Export objectives",
+            _windowMessage,
+            "export.png",
+            3);
+
+
 
     if(_wholeExportObjective ? _globalIndexExportObjectiveGroup)
     {
