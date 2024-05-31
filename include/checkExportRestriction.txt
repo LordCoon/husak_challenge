@@ -63,57 +63,57 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
     _stRec.GetFromPresentToDate_DMY(1,1,1960);
 
     // Sum USD and RUB exports
-    _expMat_rawbauxite = _stRec.ExportTonsRUB.rawbauxite + _stRec.ExportTonsUSD.rawbauxite;
-    _expMat_wood = _stRec.ExportTonsRUB.wood + _stRec.ExportTonsUSD.wood;
-    _expMat_rawgravel = _stRec.ExportTonsRUB.rawgravel + _stRec.ExportTonsUSD.rawgravel;
-    _expMat_plants = _stRec.ExportTonsRUB.plants + _stRec.ExportTonsUSD.plants;
-    _expMat_oil = _stRec.ExportTonsRUB.oil + _stRec.ExportTonsUSD.oil;
-    _expMat_rawcoal = _stRec.ExportTonsRUB.rawcoal + _stRec.ExportTonsUSD.rawcoal;
-    _expMat_rawiron = _stRec.ExportTonsRUB.rawiron + _stRec.ExportTonsUSD.rawiron;
-    _expMat_uranium = _stRec.ExportTonsRUB.uranium + _stRec.ExportTonsUSD.uranium;
-    _expMat_alcohol = _stRec.ExportTonsRUB.alcohol + _stRec.ExportTonsUSD.alcohol;
-    _expMat_bauxite = _stRec.ExportTonsRUB.bauxite + _stRec.ExportTonsUSD.bauxite;
-    _expMat_bitumen = _stRec.ExportTonsRUB.bitumen + _stRec.ExportTonsUSD.bitumen;
-    _expMat_bricks = _stRec.ExportTonsRUB.bricks + _stRec.ExportTonsUSD.bricks;
-    _expMat_boards = _stRec.ExportTonsRUB.boards + _stRec.ExportTonsUSD.boards;
-    _expMat_livestock = _stRec.ExportTonsRUB.livestock + _stRec.ExportTonsUSD.livestock;
-    _expMat_food = _stRec.ExportTonsRUB.food + _stRec.ExportTonsUSD.food;
-    _expMat_fabric = _stRec.ExportTonsRUB.fabric + _stRec.ExportTonsUSD.fabric;
-    _expMat_fuel = _stRec.ExportTonsRUB.fuel + _stRec.ExportTonsUSD.fuel;
-    _expMat_gravel = _stRec.ExportTonsRUB.gravel + _stRec.ExportTonsUSD.gravel;
-    _expMat_coal = _stRec.ExportTonsRUB.coal + _stRec.ExportTonsUSD.coal;
-    _expMat_iron = _stRec.ExportTonsRUB.iron + _stRec.ExportTonsUSD.iron;
-    _expMat_cement = _stRec.ExportTonsRUB.cement + _stRec.ExportTonsUSD.cement;
-    _expMat_aluminium = _stRec.ExportTonsRUB.aluminium + _stRec.ExportTonsUSD.aluminium;
-    _expMat_chemicals = _stRec.ExportTonsRUB.chemicals + _stRec.ExportTonsUSD.chemicals;
-    _expMat_meat = _stRec.ExportTonsRUB.meat + _stRec.ExportTonsUSD.meat;
-    _expMat_clothes = _stRec.ExportTonsRUB.clothes + _stRec.ExportTonsUSD.clothes;
-    _expMat_steel = _stRec.ExportTonsRUB.steel + _stRec.ExportTonsUSD.steel;
-    _expMat_alumina = _stRec.ExportTonsRUB.alumina + _stRec.ExportTonsUSD.alumina;
-    _expMat_fertiliser = _stRec.ExportTonsRUB.fertiliser + _stRec.ExportTonsUSD.fertiliser;
-    _expMat_prefabpanels = _stRec.ExportTonsRUB.prefabpanels + _stRec.ExportTonsUSD.prefabpanels;
-    _expMat_fertiliser_liquid = _stRec.ExportTonsRUB.fertiliser_liquid + _stRec.ExportTonsUSD.fertiliser_liquid;
-    _expMat_ecomponents = _stRec.ExportTonsRUB.ecomponents + _stRec.ExportTonsUSD.ecomponents;
-    _expMat_eletronics = _stRec.ExportTonsRUB.eletronics + _stRec.ExportTonsUSD.eletronics;
-    _expMat_mcomponents = _stRec.ExportTonsRUB.mcomponents + _stRec.ExportTonsUSD.mcomponents;
-    _expMat_plastics = _stRec.ExportTonsRUB.plastics + _stRec.ExportTonsUSD.plastics;
-    _expMat_explosives = _stRec.ExportTonsRUB.explosives + _stRec.ExportTonsUSD.explosives;
-    _expMat_eletric = _stRec.ExportTonsRUB.eletric + _stRec.ExportTonsUSD.eletric;
-    _expMat_nuclearfuel = _stRec.ExportTonsRUB.nuclearfuel + _stRec.ExportTonsUSD.nuclearfuel;
-    _expMat_nuclearfuelburned = _stRec.ExportTonsRUB.nuclearfuelburned + _stRec.ExportTonsUSD.nuclearfuelburned;
-    _expMat_yellowcake = _stRec.ExportTonsRUB.yellowcake + _stRec.ExportTonsUSD.yellowcake;
-    _expMat_uf6 = _stRec.ExportTonsRUB.uf6 + _stRec.ExportTonsUSD.uf6;
+    _expMat_rawbauxite = _stRec.ExportTonsRUB.rawbauxite + _stRec.ExportTonsUSD.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite;
+    _expMat_wood = _stRec.ExportTonsRUB.wood + _stRec.ExportTonsUSD.wood + _stRec.ExportInternationalTonsRUB.wood + _stRec.ExportInternationalTonsUSD.wood;
+    _expMat_rawgravel = _stRec.ExportTonsRUB.rawgravel + _stRec.ExportTonsUSD.rawgravel + _stRec.ExportInternationalTonsRUB.rawgravel + _stRec.ExportInternationalTonsUSD.rawgravel;
+    _expMat_plants = _stRec.ExportTonsRUB.plants + _stRec.ExportTonsUSD.plants + _stRec.ExportInternationalTonsRUB.plants + _stRec.ExportInternationalTonsUSD.plants;
+    _expMat_oil = _stRec.ExportTonsRUB.oil + _stRec.ExportTonsUSD.oil + _stRec.ExportInternationalTonsRUB.oil + _stRec.ExportInternationalTonsUSD.oil;
+    _expMat_rawcoal = _stRec.ExportTonsRUB.rawcoal + _stRec.ExportTonsUSD.rawcoal + _stRec.ExportInternationalTonsRUB.rawcoal + _stRec.ExportInternationalTonsUSD.rawcoal;
+    _expMat_rawiron = _stRec.ExportTonsRUB.rawiron + _stRec.ExportTonsUSD.rawiron + _stRec.ExportInternationalTonsRUB.rawiron + _stRec.ExportInternationalTonsUSD.rawiron;
+    _expMat_uranium = _stRec.ExportTonsRUB.uranium + _stRec.ExportTonsUSD.uranium + _stRec.ExportInternationalTonsRUB.uranium + _stRec.ExportInternationalTonsUSD.uranium;
+    _expMat_alcohol = _stRec.ExportTonsRUB.alcohol + _stRec.ExportTonsUSD.alcohol + _stRec.ExportInternationalTonsRUB.alcohol + _stRec.ExportInternationalTonsUSD.alcohol;
+    _expMat_bauxite = _stRec.ExportTonsRUB.bauxite + _stRec.ExportTonsUSD.bauxite + _stRec.ExportInternationalTonsRUB.bauxite + _stRec.ExportInternationalTonsUSD.bauxite;
+    _expMat_bitumen = _stRec.ExportTonsRUB.bitumen + _stRec.ExportTonsUSD.bitumen + _stRec.ExportInternationalTonsRUB.bitumen + _stRec.ExportInternationalTonsUSD.bitumen;
+    _expMat_bricks = _stRec.ExportTonsRUB.bricks + _stRec.ExportTonsUSD.bricks + _stRec.ExportInternationalTonsRUB.bricks + _stRec.ExportInternationalTonsUSD.bricks;
+    _expMat_boards = _stRec.ExportTonsRUB.boards + _stRec.ExportTonsUSD.boards + _stRec.ExportInternationalTonsRUB.boards + _stRec.ExportInternationalTonsUSD.boards;
+    _expMat_livestock = _stRec.ExportTonsRUB.livestock + _stRec.ExportTonsUSD.livestock + _stRec.ExportInternationalTonsRUB.livestock + _stRec.ExportInternationalTonsUSD.livestock;
+    _expMat_food = _stRec.ExportTonsRUB.food + _stRec.ExportTonsUSD.food + _stRec.ExportInternationalTonsRUB.food + _stRec.ExportInternationalTonsUSD.food;
+    _expMat_fabric = _stRec.ExportTonsRUB.fabric + _stRec.ExportTonsUSD.fabric + _stRec.ExportInternationalTonsRUB.fabric + _stRec.ExportInternationalTonsUSD.fabric;
+    _expMat_fuel = _stRec.ExportTonsRUB.fuel + _stRec.ExportTonsUSD.fuel + _stRec.ExportInternationalTonsRUB.fuel + _stRec.ExportInternationalTonsUSD.fuel;
+    _expMat_gravel = _stRec.ExportTonsRUB.gravel + _stRec.ExportTonsUSD.gravel + _stRec.ExportInternationalTonsRUB.gravel + _stRec.ExportInternationalTonsUSD.gravel;
+    _expMat_coal = _stRec.ExportTonsRUB.coal + _stRec.ExportTonsUSD.coal + _stRec.ExportInternationalTonsRUB.coal + _stRec.ExportInternationalTonsUSD.coal;
+    _expMat_iron = _stRec.ExportTonsRUB.iron + _stRec.ExportTonsUSD.iron + _stRec.ExportInternationalTonsRUB.iron + _stRec.ExportInternationalTonsUSD.iron;
+    _expMat_cement = _stRec.ExportTonsRUB.cement + _stRec.ExportTonsUSD.cement + _stRec.ExportInternationalTonsRUB.cement + _stRec.ExportInternationalTonsUSD.cement;
+    _expMat_aluminium = _stRec.ExportTonsRUB.aluminium + _stRec.ExportTonsUSD.aluminium + _stRec.ExportInternationalTonsRUB.aluminium + _stRec.ExportInternationalTonsUSD.aluminium;
+    _expMat_chemicals = _stRec.ExportTonsRUB.chemicals + _stRec.ExportTonsUSD.chemicals + _stRec.ExportInternationalTonsRUB.chemicals + _stRec.ExportInternationalTonsUSD.chemicals;
+    _expMat_meat = _stRec.ExportTonsRUB.meat + _stRec.ExportTonsUSD.meat + _stRec.ExportInternationalTonsRUB.meat + _stRec.ExportInternationalTonsUSD.meat;
+    _expMat_clothes = _stRec.ExportTonsRUB.clothes + _stRec.ExportTonsUSD.clothes + _stRec.ExportInternationalTonsRUB.clothes + _stRec.ExportInternationalTonsUSD.clothes;
+    _expMat_steel = _stRec.ExportTonsRUB.steel + _stRec.ExportTonsUSD.steel + _stRec.ExportInternationalTonsRUB.steel + _stRec.ExportInternationalTonsUSD.steel;
+    _expMat_alumina = _stRec.ExportTonsRUB.alumina + _stRec.ExportTonsUSD.alumina + _stRec.ExportInternationalTonsRUB.alumina + _stRec.ExportInternationalTonsUSD.alumina;
+    _expMat_fertiliser = _stRec.ExportTonsRUB.fertiliser + _stRec.ExportTonsUSD.fertiliser + _stRec.ExportInternationalTonsRUB.fertiliser + _stRec.ExportInternationalTonsUSD.fertiliser;
+    _expMat_prefabpanels = _stRec.ExportTonsRUB.prefabpanels + _stRec.ExportTonsUSD.prefabpanels + _stRec.ExportInternationalTonsRUB.prefabpanels + _stRec.ExportInternationalTonsUSD.prefabpanels;
+    _expMat_fertiliser_liquid = _stRec.ExportTonsRUB.fertiliser_liquid + _stRec.ExportTonsUSD.fertiliser_liquid + _stRec.ExportInternationalTonsRUB.fertiliser_liquid + _stRec.ExportInternationalTonsUSD.fertiliser_liquid;
+    _expMat_ecomponents = _stRec.ExportTonsRUB.ecomponents + _stRec.ExportTonsUSD.ecomponents + _stRec.ExportInternationalTonsRUB.ecomponents + _stRec.ExportInternationalTonsUSD.ecomponents;
+    _expMat_eletronics = _stRec.ExportTonsRUB.eletronics + _stRec.ExportTonsUSD.eletronics + _stRec.ExportInternationalTonsRUB.eletronics + _stRec.ExportInternationalTonsUSD.eletronics;
+    _expMat_mcomponents = _stRec.ExportTonsRUB.mcomponents + _stRec.ExportTonsUSD.mcomponents + _stRec.ExportInternationalTonsRUB.mcomponents + _stRec.ExportInternationalTonsUSD.mcomponents;
+    _expMat_plastics = _stRec.ExportTonsRUB.plastics + _stRec.ExportTonsUSD.plastics + _stRec.ExportInternationalTonsRUB.plastics + _stRec.ExportInternationalTonsUSD.plastics;
+    _expMat_explosives = _stRec.ExportTonsRUB.explosives + _stRec.ExportTonsUSD.explosives + _stRec.ExportInternationalTonsRUB.explosives + _stRec.ExportInternationalTonsUSD.explosives;
+    _expMat_eletric = _stRec.ExportTonsRUB.eletric + _stRec.ExportTonsUSD.eletric + _stRec.ExportInternationalTonsRUB.eletric + _stRec.ExportInternationalTonsUSD.eletric;
+    _expMat_nuclearfuel = _stRec.ExportTonsRUB.nuclearfuel + _stRec.ExportTonsUSD.nuclearfuel + _stRec.ExportInternationalTonsRUB.nuclearfuel + _stRec.ExportInternationalTonsUSD.nuclearfuel;
+    _expMat_nuclearfuelburned = _stRec.ExportTonsRUB.nuclearfuelburned + _stRec.ExportTonsUSD.nuclearfuelburned + _stRec.ExportInternationalTonsRUB.nuclearfuelburned + _stRec.ExportInternationalTonsUSD.nuclearfuelburned;
+    _expMat_yellowcake = _stRec.ExportTonsRUB.yellowcake + _stRec.ExportTonsUSD.yellowcake + _stRec.ExportInternationalTonsRUB.yellowcake + _stRec.ExportInternationalTonsUSD.yellowcake;
+    _expMat_uf6 = _stRec.ExportTonsRUB.uf6 + _stRec.ExportTonsUSD.uf6 + _stRec.ExportInternationalTonsRUB.uf6 + _stRec.ExportInternationalTonsUSD.uf6;
 
-    _expMat_waste_gravel = _stRec.ExportTonsRUB.waste_gravel + _stRec.ExportTonsUSD.waste_gravel;
-    _expMat_waste_steel = _stRec.ExportTonsRUB.waste_steel + _stRec.ExportTonsUSD.waste_steel;
-    _expMat_waste_aluminium = _stRec.ExportTonsRUB.waste_aluminium + _stRec.ExportTonsUSD.waste_aluminium;
-    _expMat_waste_plastic = _stRec.ExportTonsRUB.waste_plastic + _stRec.ExportTonsUSD.waste_plastic;
-    _expMat_waste_bio = _stRec.ExportTonsRUB.waste_bio + _stRec.ExportTonsUSD.waste_bio;
-    _expMat_waste_burnable = _stRec.ExportTonsRUB.waste_burnable + _stRec.ExportTonsUSD.waste_burnable;
-    _expMat_waste_toxic = _stRec.ExportTonsRUB.waste_toxic + _stRec.ExportTonsUSD.waste_toxic;
-    _expMat_waste_other = _stRec.ExportTonsRUB.waste_other + _stRec.ExportTonsUSD.waste_other;
-    _expMat_waste_ash = _stRec.ExportTonsRUB.waste_ash + _stRec.ExportTonsUSD.waste_ash;
-    _expMat_waste_mixed = _stRec.ExportTonsRUB.waste_mixed + _stRec.ExportTonsUSD.waste_mixed;
+    _expMat_waste_gravel = _stRec.ExportTonsRUB.waste_gravel + _stRec.ExportTonsUSD.waste_gravel + _stRec.ExportInternationalTonsRUB.waste_gravel + _stRec.ExportInternationalTonsUSD.waste_gravel;
+    _expMat_waste_steel = _stRec.ExportTonsRUB.waste_steel + _stRec.ExportTonsUSD.waste_steel + _stRec.ExportInternationalTonsRUB.waste_steel + _stRec.ExportInternationalTonsUSD.waste_steel;
+    _expMat_waste_aluminium = _stRec.ExportTonsRUB.waste_aluminium + _stRec.ExportTonsUSD.waste_aluminium + _stRec.ExportInternationalTonsRUB.waste_aluminium + _stRec.ExportInternationalTonsUSD.waste_aluminium;
+    _expMat_waste_plastic = _stRec.ExportTonsRUB.waste_plastic + _stRec.ExportTonsUSD.waste_plastic + _stRec.ExportInternationalTonsRUB.waste_plastic + _stRec.ExportInternationalTonsUSD.waste_plastic;
+    _expMat_waste_bio = _stRec.ExportTonsRUB.waste_bio + _stRec.ExportTonsUSD.waste_bio + _stRec.ExportInternationalTonsRUB.waste_bio + _stRec.ExportInternationalTonsUSD.waste_bio;
+    _expMat_waste_burnable = _stRec.ExportTonsRUB.waste_burnable + _stRec.ExportTonsUSD.waste_burnable + _stRec.ExportInternationalTonsRUB.waste_burnable + _stRec.ExportInternationalTonsUSD.waste_burnable;
+    _expMat_waste_toxic = _stRec.ExportTonsRUB.waste_toxic + _stRec.ExportTonsUSD.waste_toxic + _stRec.ExportInternationalTonsRUB.waste_toxic + _stRec.ExportInternationalTonsUSD.waste_toxic;
+    _expMat_waste_other = _stRec.ExportTonsRUB.waste_other + _stRec.ExportTonsUSD.waste_other + _stRec.ExportInternationalTonsRUB.waste_other + _stRec.ExportInternationalTonsUSD.waste_other;
+    _expMat_waste_ash = _stRec.ExportTonsRUB.waste_ash + _stRec.ExportTonsUSD.waste_ash + _stRec.ExportInternationalTonsRUB.waste_ash + _stRec.ExportInternationalTonsUSD.waste_ash;
+    _expMat_waste_mixed = _stRec.ExportTonsRUB.waste_mixed + _stRec.ExportTonsUSD.waste_mixed + _stRec.ExportInternationalTonsRUB.waste_mixed + _stRec.ExportInternationalTonsUSD.waste_mixed;
 
     // substruct production from waste
     _expMat_steel = _expMat_steel - _stRec.SpendFactories.waste_steel * 0.5277777778;
@@ -449,22 +449,22 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         _expMat_chemicals = _expMat_chemicals + _expMat_fertiliser_liquid * 0.01823529412;
     }
 
-    // fertiliser
-    if(_expMat_fertiliser > 0)
-    {
-        if(_expMat_fertiliser > _stRec.ResourcesProduced.fertiliser)
-        {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your export of fertiliser is bigger than your production. Where did you get it?",
-                "fail.png",
-                _vector);
-            returnVoid();
-        }
+    // // fertiliser
+    // if(_expMat_fertiliser > 0)
+    // {
+    //     if(_expMat_fertiliser > _stRec.ResourcesProduced.fertiliser)
+    //     {
+    //         Notification_CreateNewStringPic(
+    //             "You failed",
+    //             "You broke the rules. Your export of fertiliser is bigger than your production. Where did you get it?",
+    //             "fail.png",
+    //             _vector);
+    //         returnVoid();
+    //     }
 
-        _expMat_waste_bio = _expMat_waste_bio + _expMat_fertiliser * 1.2;
-        _expMat_chemicals = _expMat_chemicals + _expMat_fertiliser * 0.003;
-    }
+    //     _expMat_waste_bio = _expMat_waste_bio + _expMat_fertiliser * 1.2;
+    //     _expMat_chemicals = _expMat_chemicals + _expMat_fertiliser * 0.003;
+    // }
 
     // chemicals
     if(_expMat_chemicals > 0)
@@ -749,103 +749,103 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         }
     }
 
-    // waste_gravel
-    if(_expMat_waste_gravel > 0)
-    {
-        if(_expMat_waste_gravel > _stRec.ResourcesProduced.waste_gravel)
-        {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your export of construction waste is bigger than your production. Where did you get it?",
-                "fail.png",
-                _vector);
-            returnVoid();
-        }
-    }
+    // // waste_gravel
+    // if(_expMat_waste_gravel > 0)
+    // {
+    //     if(_expMat_waste_gravel > _stRec.ResourcesProduced.waste_gravel)
+    //     {
+    //         Notification_CreateNewStringPic(
+    //             "You failed",
+    //             "You broke the rules. Your export of construction waste is bigger than your production. Where did you get it?",
+    //             "fail.png",
+    //             _vector);
+    //         returnVoid();
+    //     }
+    // }
 
-    // waste_steel
-    if(_expMat_waste_steel > 0)
-    {
-        if(_expMat_waste_steel > _stRec.ResourcesProduced.waste_steel)
-        {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your export of iron waste is bigger than your production. Where did you get it?",
-                "fail.png",
-                _vector);
-            returnVoid();
-        }
-    }
+    // // waste_steel
+    // if(_expMat_waste_steel > 0)
+    // {
+    //     if(_expMat_waste_steel > _stRec.ResourcesProduced.waste_steel)
+    //     {
+    //         Notification_CreateNewStringPic(
+    //             "You failed",
+    //             "You broke the rules. Your export of iron waste is bigger than your production. Where did you get it?",
+    //             "fail.png",
+    //             _vector);
+    //         returnVoid();
+    //     }
+    // }
 
-    // waste_aluminium
-    if(_expMat_waste_aluminium > 0)
-    {
-        if(_expMat_waste_aluminium > _stRec.ResourcesProduced.waste_aluminium)
-        {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your export of aluminium waste is bigger than your production. Where did you get it?",
-                "fail.png",
-                _vector);
-            returnVoid();
-        }
-    }
+    // // waste_aluminium
+    // if(_expMat_waste_aluminium > 0)
+    // {
+    //     if(_expMat_waste_aluminium > _stRec.ResourcesProduced.waste_aluminium)
+    //     {
+    //         Notification_CreateNewStringPic(
+    //             "You failed",
+    //             "You broke the rules. Your export of aluminium waste is bigger than your production. Where did you get it?",
+    //             "fail.png",
+    //             _vector);
+    //         returnVoid();
+    //     }
+    // }
 
-    // waste_plastic
-    if(_expMat_waste_plastic > 0)
-    {
-        if(_expMat_waste_plastic > _stRec.ResourcesProduced.waste_plastic)
-        {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your export of plastic waste is bigger than your production. Where did you get it?",
-                "fail.png",
-                _vector);
-            returnVoid();
-        }
-    }
+    // // waste_plastic
+    // if(_expMat_waste_plastic > 0)
+    // {
+    //     if(_expMat_waste_plastic > _stRec.ResourcesProduced.waste_plastic)
+    //     {
+    //         Notification_CreateNewStringPic(
+    //             "You failed",
+    //             "You broke the rules. Your export of plastic waste is bigger than your production. Where did you get it?",
+    //             "fail.png",
+    //             _vector);
+    //         returnVoid();
+    //     }
+    // }
 
-    // waste_bio
-    if(_expMat_waste_bio > 0)
-    {
-        if(_expMat_waste_bio > _stRec.ResourcesProduced.waste_bio)
-        {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your export of bio waste is bigger than your production. Where did you get it?",
-                "fail.png",
-                _vector);
-            returnVoid();
-        }
-    }
+    // // waste_bio
+    // if(_expMat_waste_bio > 0)
+    // {
+    //     if(_expMat_waste_bio > _stRec.ResourcesProduced.waste_bio)
+    //     {
+    //         Notification_CreateNewStringPic(
+    //             "You failed",
+    //             "You broke the rules. Your export of bio waste is bigger than your production. Where did you get it?",
+    //             "fail.png",
+    //             _vector);
+    //         returnVoid();
+    //     }
+    // }
 
-    // waste_toxic
-    if(_expMat_waste_toxic > 0)
-    {
-        if(_expMat_waste_toxic > _stRec.ResourcesProduced.waste_toxic)
-        {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your export of hazardous waste is bigger than your production. Where did you get it?",
-                "fail.png",
-                _vector);
-            returnVoid();
-        }
-    }
+    // // waste_toxic
+    // if(_expMat_waste_toxic > 0)
+    // {
+    //     if(_expMat_waste_toxic > _stRec.ResourcesProduced.waste_toxic)
+    //     {
+    //         Notification_CreateNewStringPic(
+    //             "You failed",
+    //             "You broke the rules. Your export of hazardous waste is bigger than your production. Where did you get it?",
+    //             "fail.png",
+    //             _vector);
+    //         returnVoid();
+    //     }
+    // }
 
-    // waste_mixed
-    if(_expMat_waste_mixed > 0)
-    {
-        if(_expMat_waste_mixed > _stRec.ResourcesProduced.waste_mixed)
-        {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your export of mixed waste is bigger than your production. Where did you get it?",
-                "fail.png",
-                _vector);
-            returnVoid();
-        }
-    }
+    // // waste_mixed
+    // if(_expMat_waste_mixed > 0)
+    // {
+    //     if(_expMat_waste_mixed > _stRec.ResourcesProduced.waste_mixed)
+    //     {
+    //         Notification_CreateNewStringPic(
+    //             "You failed",
+    //             "You broke the rules. Your export of mixed waste is bigger than your production. Where did you get it?",
+    //             "fail.png",
+    //             _vector);
+    //         returnVoid();
+    //     }
+    // }
 
 
 

@@ -10,6 +10,16 @@ defineVariable(int, _numberOfActiveHotels);
 defineVariable(int, _numberOfActiveOrphanage);
 defineVariable(float, _importedPrefabs);
 defineVariable(int, _notEnoughtLoyaltyRequirement);
+defineVariable(int, _notEnoughtLoyaltyRequirementOnlyWarningDayOfYear);
+defineVariable(int, _notEnoughtLoyaltyRequirementOnlyWarningYear);
+
+defineVariable(float, _sumImport);
+defineVariable(float, _sumImportInternational);
+
+defineVariable(float, _sumExport);
+defineVariable(float, _sumExportInternational);
+
+
 defineVariable(int, _researchIncreaseNationalityCompleted);
 defineVariable(int, _researchIncreaseNationalityInProgress);
 
@@ -32,7 +42,8 @@ defineVariable(int, _messageAllowNato);
 defineVariable(int, _messageDisallowUSSR);
 
 
-defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: currentYear, int: firstStart)
+
+defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int: currentMonth, int: currentYear, int: firstStart)
 {
     if(firstStart ? 0)
     {
@@ -42,6 +53,9 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
         _messageTouristRestriction = 0;
         _messageAllowNato = 0;
         _messageDisallowUSSR = 0;
+
+        _notEnoughtLoyaltyRequirementOnlyWarningDayOfYear = 0;
+        _notEnoughtLoyaltyRequirementOnlyWarningYear = 0;
     }
 
     _vectorMainStory.x = 0;
@@ -51,7 +65,10 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     // Collect import/export statistics
     _MonthlyCheck_statRecord.GetPresent();
 
-    _importedPrefabs = _MonthlyCheck_statRecord.ImportTonsRUB.prefabpanels + _MonthlyCheck_statRecord.ImportTonsUSD.prefabpanels;
+    _importedPrefabs = _MonthlyCheck_statRecord.ImportTonsRUB.prefabpanels + 
+                        _MonthlyCheck_statRecord.ImportTonsUSD.prefabpanels + 
+                        _MonthlyCheck_statRecord.ImportInternationalTonsRUB.prefabpanels + 
+                        _MonthlyCheck_statRecord.ImportInternationalTonsUSD.prefabpanels;
 
     // Collect building information (don't iterrate everytime when we need info)
     Building_GetNumberOfBuildings(_numberOfBuildings);
@@ -108,22 +125,46 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
         _messageMinLoyalty = 1;
         Notification_CreateNewStringPic(
                 "New story event will start soon.",
-                "All your building needs to have loyalty set to minimum 50 percen from 01/09/1970. You need to have at least one orphanage and at least started research of 'Higher birth rate' in 31/12/1973.",
+                "All your building needs to have loyalty set to minimum 50 percent from 01/09/1970. You need to have at least one orphanage and at least started research of 'Higher birth rate' in 31/12/1973.",
                 "notification.png",
                 _vectorMainStory);
     }
 
-    if((currentYear > 1970 | (currentYear ? 1970 & currentMonth ? 9)) & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
+    if((currentYear > 1970 | (currentYear ? 1970 & currentMonth > 8)) & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
     {
         if(_notEnoughtLoyaltyRequirement > 0)
         {
-            Notification_CreateNewStringPic(
-                "You failed",
-                "You broke the rules. Your buildings don't have minumum loyalty set to 50 percen.",
-                "fail.png",
-                _vectorMainStory);
-            returnVoid();
+            // Give 2 days for fixing this situation, issue can ocure when you build new building.
+            if(
+                (_notEnoughtLoyaltyRequirementOnlyWarningYear ? currentYear & 1 < (currentDayOfYear - _notEnoughtLoyaltyRequirementOnlyWarningDayOfYear)) | 
+                ((_notEnoughtLoyaltyRequirementOnlyWarningYear + 1) ? currentYear & 363 > (_notEnoughtLoyaltyRequirementOnlyWarningDayOfYear - currentDayOfYear))
+            )
+            {
+                Notification_CreateNewStringPic(
+                        "You failed",
+                        "You broke the rules. Your buildings don't have minumum loyalty set to 50 percent.",
+                        "fail.png",
+                        _vectorMainStory);
+                returnVoid();
+            } else ()
+            {
+                if(_notEnoughtLoyaltyRequirementOnlyWarningDayOfYear ? 0 & _notEnoughtLoyaltyRequirementOnlyWarningYear ? 0)
+                {
+                    _notEnoughtLoyaltyRequirementOnlyWarningDayOfYear = currentDayOfYear;
+                    _notEnoughtLoyaltyRequirementOnlyWarningYear = currentYear;
 
+                    Notification_CreateNewStringPic(
+                        "You are near to fail quest.",
+                        "Some of you're buildings don't have minumum loyalty set to 50 percent. You have 2 days to fix it.",
+                        "warning.png",
+                        _vectorMainStory);
+                }
+
+            }
+        } else() 
+        {
+            _notEnoughtLoyaltyRequirementOnlyWarningDayOfYear = 0;
+            _notEnoughtLoyaltyRequirementOnlyWarningYear = 0;
         }
     }
 
@@ -184,7 +225,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     //Exports to Nato
     if(currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12))
     {
-        if((_MonthlyCheck_statRecord.ExportTonsUSD.heat +
+        _sumExport = _MonthlyCheck_statRecord.ExportTonsUSD.heat +
             _MonthlyCheck_statRecord.ExportTonsUSD.gravel +
             _MonthlyCheck_statRecord.ExportTonsUSD.rawgravel +
             _MonthlyCheck_statRecord.ExportTonsUSD.plants +
@@ -233,7 +274,60 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
             _MonthlyCheck_statRecord.ExportTonsUSD.waste_other +
             _MonthlyCheck_statRecord.ExportTonsUSD.waste_ash +
             _MonthlyCheck_statRecord.ExportTonsUSD.waste_mixed +
-            _MonthlyCheck_statRecord.ExportTonsUSD.service_material) > 0)
+            _MonthlyCheck_statRecord.ExportTonsUSD.service_material;
+
+        _sumExportInternational = _MonthlyCheck_statRecord.ExportInternationalTonsUSD.heat +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.gravel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.rawgravel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.plants +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.steel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.aluminium +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.prefabpanels +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.bricks +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.wood +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.oil +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.chemicals +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.coal +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.rawcoal +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.iron +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.rawiron +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.bauxite +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.rawbauxite +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.bitumen +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.boards +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.uranium +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.yellowcake +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.uf6 +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.nuclearfuel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.nuclearfuelburned +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.fuel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.fabric +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.alcohol +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.cement +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.alumina +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.food +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.clothes +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.meat +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.livestock +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.asphalt +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.concrete +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.water +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.usagewater +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.fertiliser_liquid +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_gravel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_steel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_aluminium +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_plastic +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_bio +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.fertiliser +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_burnable +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_toxic +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_other +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_ash +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_mixed +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.service_material;
+
+        if((_sumExport + _sumExportInternational) > 0)
         {
             Notification_CreateNewStringPic(
                 "You failed",
@@ -304,7 +398,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
     {
         _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(1, 1, 1991);
 
-        if((_MonthlyCheck_statRecord.ExportTonsRUB.heat +
+        _sumExport = _MonthlyCheck_statRecord.ExportTonsRUB.heat +
             _MonthlyCheck_statRecord.ExportTonsRUB.gravel +
             _MonthlyCheck_statRecord.ExportTonsRUB.rawgravel +
             _MonthlyCheck_statRecord.ExportTonsRUB.plants +
@@ -358,7 +452,66 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
             _MonthlyCheck_statRecord.ExportTonsRUB.waste_other +
             _MonthlyCheck_statRecord.ExportTonsRUB.waste_ash +
             _MonthlyCheck_statRecord.ExportTonsRUB.waste_mixed +
-            _MonthlyCheck_statRecord.ExportTonsRUB.service_material) > 0)
+            _MonthlyCheck_statRecord.ExportTonsRUB.service_material;
+
+        _sumExportInternational = _MonthlyCheck_statRecord.ExportInternationalTonsRUB.heat +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.gravel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.rawgravel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.plants +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.steel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.aluminium +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.prefabpanels +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.bricks +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.wood +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.oil +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.chemicals +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.coal +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.rawcoal +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.iron +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.rawiron +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.bauxite +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.rawbauxite +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.bitumen +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.boards +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.uranium +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.yellowcake +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.uf6 +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.nuclearfuel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.nuclearfuelburned +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.fuel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.fabric +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.alcohol +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.cement +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.alumina +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.food +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.clothes +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.meat +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.livestock +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.asphalt +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.concrete +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.ecomponents +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.mcomponents +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.plastics +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.eletronics +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.explosives +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.water +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.usagewater +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.fertiliser_liquid +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_gravel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_steel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_aluminium +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_plastic +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_bio +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.fertiliser +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_burnable +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_toxic +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_other +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_ash +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.waste_mixed +
+            _MonthlyCheck_statRecord.ExportInternationalTonsRUB.service_material;
+
+
+        if((_sumExport + _sumExportInternational) > 0)
         {
             Notification_CreateNewStringPic(
                 "You failed",
@@ -368,7 +521,7 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
             returnVoid();
         }
 
-        if((_MonthlyCheck_statRecord.ImportTonsRUB.heat +
+        _sumImport = _MonthlyCheck_statRecord.ImportTonsRUB.heat +
             _MonthlyCheck_statRecord.ImportTonsRUB.gravel +
             _MonthlyCheck_statRecord.ImportTonsRUB.rawgravel +
             _MonthlyCheck_statRecord.ImportTonsRUB.plants +
@@ -422,7 +575,65 @@ defineFunction(CheckMainStory, void, int: currentDay, int: currentMonth, int: cu
             _MonthlyCheck_statRecord.ImportTonsRUB.waste_other +
             _MonthlyCheck_statRecord.ImportTonsRUB.waste_ash +
             _MonthlyCheck_statRecord.ImportTonsRUB.waste_mixed +
-            _MonthlyCheck_statRecord.ImportTonsRUB.service_material) > 0)
+            _MonthlyCheck_statRecord.ImportTonsRUB.service_material;
+
+        _sumImportInternational = _MonthlyCheck_statRecord.ImportInternationalTonsRUB.heat +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.gravel +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.rawgravel +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.plants +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.steel +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.aluminium +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.prefabpanels +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.bricks +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.wood +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.oil +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.chemicals +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.coal +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.rawcoal +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.iron +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.rawiron +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.bauxite +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.rawbauxite +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.bitumen +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.boards +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.uranium +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.yellowcake +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.uf6 +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.nuclearfuel +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.nuclearfuelburned +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.fuel +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.fabric +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.alcohol +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.cement +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.alumina +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.food +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.clothes +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.meat +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.livestock +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.asphalt +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.concrete +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.ecomponents +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.mcomponents +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.plastics +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.eletronics + 
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.explosives +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.water +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.usagewater +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.fertiliser_liquid +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_gravel +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_steel +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_aluminium +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_plastic +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_bio +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.fertiliser +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_burnable +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_toxic +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_other +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_ash +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.waste_mixed +
+            _MonthlyCheck_statRecord.ImportInternationalTonsRUB.service_material;
+
+        if((_sumImport + _sumImportInternational) > 0)
         {
             Notification_CreateNewStringPic(
                 "You failed",

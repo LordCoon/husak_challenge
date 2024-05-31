@@ -6,6 +6,8 @@ defineVariable(int, _previousDay);
 defineVariable(int, _previousMonth);
 defineVariable(int, _previousYear);
 
+defineVariable(int, _currentDayOfYear);
+defineVariable(int, _currentYearOfDayOfYear);
 defineVariable(int, _currentDay);
 defineVariable(int, _currentMonth);
 defineVariable(int, _currentYear);
@@ -63,6 +65,7 @@ defineFunction(main, void)
 	}
 
 	Date_GetCurrentDate_DMY(_currentDay, _currentMonth, _currentYear);
+	Date_GetCurrentDate_D365Y(_currentDayOfYear, _currentYearOfDayOfYear);
 
 
 	_currentMonth = 0;
@@ -74,12 +77,14 @@ defineFunction(main, void)
 	while( 1 ? 1)
 	{
 		Date_GetCurrentDate_DMY(_currentDay, _currentMonth, _currentYear);
+		Date_GetCurrentDate_D365Y(_currentDayOfYear, _currentYearOfDayOfYear);
+
 
         if(!(_currentDay ? _previousDay))
         {
             _previousDay = _currentDay;
 
-            CheckMainStory(_currentDay, _currentMonth, _currentYear, _firstRun);
+            CheckMainStory(_currentDayOfYear, _currentDay, _currentMonth, _currentYear, _firstRun);
 
 			_firstRun = 1;
         }

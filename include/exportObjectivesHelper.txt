@@ -839,6 +839,13 @@ defineFunction(UpdateExportObjectiveAll, void)
         _windowHelperFloat = _currentExportObjective.target;
         strcat(_windowMessage, _windowHelperFloat);
 
+         // Výpočet a zobrazení procent
+        strcat(_windowMessage, " (");
+        _windowHelperFloat = _currentExportObjective.currentValue / _currentExportObjective.target * 100;
+        strcat(_windowMessage, _windowHelperFloat);
+        strcat(_windowMessage, " %%");
+        strcat(_windowMessage, ") ");
+
         strcat(_windowMessage, NEWLINE);
 
         _previousExportGroupId = _currentExportObjective.groupNameId;

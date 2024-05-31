@@ -23,8 +23,14 @@ defineVariable(int, _currentDay);
 defineVariable(int, _currentMonth);
 defineVariable(int, _currentYear);
 
+defineVariable(StatRecord, _MonthlyCheck_statRecord);
 
-// defineArray(char[200][2], objectives_2_text);
+defineVariable(float, _sumImport);
+defineVariable(float, _sumImportInternational);
+
+defineVariable(float, _sumExport);
+defineVariable(float, _sumExportInternational);
+
 
 
 
@@ -38,37 +44,165 @@ defineFunction(main, void)
     _vectorWindow.z = 0;
 	InitConstants();
 
-    _testInt = 150;
 
-    // Scenario_ObjectiveDestroy("exportObjectives-primary");
+    _MonthlyCheck_statRecord.GetPresent();
 
-    strcpy(_testString, "fggdf");
 
-    strcat(_testString, "[fon=FontMedium2]Export Objectives");
+    // Log_PrintWarning("Alumina");
+    // _testFloat = _MonthlyCheck_statRecord.ImportTonsUSD.alumina;
+    // Log_PrintInfo(_testFloat);
+
+    //  Log_PrintWarning("Alumina interna");
+    // _testFloat = _MonthlyCheck_statRecord.ImportInternationalTonsUSD.alumina;
+    // Log_PrintInfo(_testFloat);
+
+
+    _sumExport = _MonthlyCheck_statRecord.ExportTonsUSD.heat +
+            _MonthlyCheck_statRecord.ExportTonsUSD.gravel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.rawgravel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.plants +
+            _MonthlyCheck_statRecord.ExportTonsUSD.steel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.aluminium +
+            _MonthlyCheck_statRecord.ExportTonsUSD.prefabpanels +
+            _MonthlyCheck_statRecord.ExportTonsUSD.bricks +
+            _MonthlyCheck_statRecord.ExportTonsUSD.wood +
+            _MonthlyCheck_statRecord.ExportTonsUSD.oil +
+            _MonthlyCheck_statRecord.ExportTonsUSD.chemicals +
+            _MonthlyCheck_statRecord.ExportTonsUSD.coal +
+            _MonthlyCheck_statRecord.ExportTonsUSD.rawcoal +
+            _MonthlyCheck_statRecord.ExportTonsUSD.iron +
+            _MonthlyCheck_statRecord.ExportTonsUSD.rawiron +
+            _MonthlyCheck_statRecord.ExportTonsUSD.bauxite +
+            _MonthlyCheck_statRecord.ExportTonsUSD.rawbauxite +
+            _MonthlyCheck_statRecord.ExportTonsUSD.bitumen +
+            _MonthlyCheck_statRecord.ExportTonsUSD.boards +
+            _MonthlyCheck_statRecord.ExportTonsUSD.uranium +
+            _MonthlyCheck_statRecord.ExportTonsUSD.yellowcake +
+            _MonthlyCheck_statRecord.ExportTonsUSD.uf6 +
+            _MonthlyCheck_statRecord.ExportTonsUSD.nuclearfuel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.nuclearfuelburned +
+            _MonthlyCheck_statRecord.ExportTonsUSD.fuel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.fabric +
+            _MonthlyCheck_statRecord.ExportTonsUSD.alcohol +
+            _MonthlyCheck_statRecord.ExportTonsUSD.cement +
+            _MonthlyCheck_statRecord.ExportTonsUSD.alumina +
+            _MonthlyCheck_statRecord.ExportTonsUSD.food +
+            _MonthlyCheck_statRecord.ExportTonsUSD.clothes +
+            _MonthlyCheck_statRecord.ExportTonsUSD.meat +
+            _MonthlyCheck_statRecord.ExportTonsUSD.livestock +
+            _MonthlyCheck_statRecord.ExportTonsUSD.asphalt +
+            _MonthlyCheck_statRecord.ExportTonsUSD.concrete +
+            _MonthlyCheck_statRecord.ExportTonsUSD.water +
+            _MonthlyCheck_statRecord.ExportTonsUSD.usagewater +
+            _MonthlyCheck_statRecord.ExportTonsUSD.fertiliser_liquid +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_gravel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_steel +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_aluminium +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_plastic +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_bio +
+            _MonthlyCheck_statRecord.ExportTonsUSD.fertiliser +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_burnable +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_toxic +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_other +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_ash +
+            _MonthlyCheck_statRecord.ExportTonsUSD.waste_mixed +
+            _MonthlyCheck_statRecord.ExportTonsUSD.service_material;
+
+        _sumExportInternational = _MonthlyCheck_statRecord.ExportInternationalTonsUSD.heat +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.gravel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.rawgravel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.plants +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.steel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.aluminium +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.prefabpanels +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.bricks +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.wood +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.oil +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.chemicals +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.coal +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.rawcoal +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.iron +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.rawiron +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.bauxite +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.rawbauxite +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.bitumen +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.boards +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.uranium +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.yellowcake +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.uf6 +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.nuclearfuel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.nuclearfuelburned +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.fuel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.fabric +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.alcohol +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.cement +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.alumina +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.food +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.clothes +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.meat +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.livestock +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.asphalt +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.concrete +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.water +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.usagewater +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.fertiliser_liquid +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_gravel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_steel +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_aluminium +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_plastic +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_bio +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.fertiliser +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_burnable +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_toxic +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_other +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_ash +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.waste_mixed +
+            _MonthlyCheck_statRecord.ExportInternationalTonsUSD.service_material;
+
+
+
+    _testFloat = _sumExport + _sumExportInternational;
+
+    Log_PrintWarning("All export");
+
+    strcpy(_testString, "All export : ");
+    strcat(_testString, _testFloat);
+
+    Window_ShowCharArray(_testString);
+
+    // Log_PrintInfo(_testFloat);
+
+    // _testInt = 150;
+
+    // // Scenario_ObjectiveDestroy("exportObjectives-primary");
+
+    // strcpy(_testString, "fggdf");
+
+    // strcat(_testString, "[fon=FontMedium2]Export Objectives");
+    // // strcat(_testString, NEWLINE);
     // strcat(_testString, NEWLINE);
-    strcat(_testString, NEWLINE);
 
-    // strcat(_testString, "Which was never working before");
+    // // strcat(_testString, "Which was never working before");
+
+    // // strcat(_testString, NEWLINE);
+    // strcat(_testString, "[col=red] [IM=resources/plants.png] ");
+    // // strcat(_testString, TAB);
+    // _testString1 = "Plants: ";
+    // strcat(_testString, _testString1);
+    // strcat(_testString, _testInt);
+    // strcat(_testString, " / 3000");
 
     // strcat(_testString, NEWLINE);
-    strcat(_testString, "[col=red] [IM=resources/plants.png] ");
-    // strcat(_testString, TAB);
-    _testString1 = "Plants: ";
-    strcat(_testString, _testString1);
-    strcat(_testString, _testInt);
-    strcat(_testString, " / 3000");
 
-    strcat(_testString, NEWLINE);
+    // // strcat(_testString, TAB);
+    // strcat(_testString, "[IM=resources/wood.png] ");
+    // strcat(_testString, "[col=red]Wood:0 / 100 000");
 
-    // strcat(_testString, TAB);
-    strcat(_testString, "[IM=resources/wood.png] ");
-    strcat(_testString, "[col=red]Wood:0 / 100 000");
-
-    Scenario_WindowWithImageLeft(
-            "Test notification",
-            _testString,
-            "notification.png",
-            3);
+    // Scenario_WindowWithImageLeft(
+    //         "Test notification",
+    //         _testString,
+    //         "notification.png",
+    //         3);
 
     // Notification_CreateNewStringPic(
     //         "Test warning",
