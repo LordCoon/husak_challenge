@@ -35,6 +35,7 @@ defineVariable(int, j);
 defineVariable(vec3, _vectorMainStory);
 
 defineVariable(int, _messageMinLoyalty);
+defineVariable(int, _messageResearchChildBirtdth);
 defineVariable(int, _messagePeopleNeedLeft);
 defineVariable(int, _messageMinServed);
 defineVariable(int, _messageTouristRestriction);
@@ -53,6 +54,7 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
         _messageTouristRestriction = 0;
         _messageAllowNato = 0;
         _messageDisallowUSSR = 0;
+        _messageResearchChildBirtdth = 0;
 
         _notEnoughtLoyaltyRequirementOnlyWarningDayOfYear = 0;
         _notEnoughtLoyaltyRequirementOnlyWarningYear = 0;
@@ -130,6 +132,17 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
                 _vectorMainStory);
     }
 
+    // Research
+    if(_messageResearchChildBirtdth ? 0 & currentYear ? 1973 & currentMonth ? 9)
+    {
+        _messageResearchChildBirtdth = 1;
+        Notification_CreateNewStringPic(
+                "New story event will start soon.",
+                "You need to have at least one orphanage and at least started research of 'Higher birth rate' in 31/12/1973.",
+                "notification.png",
+                _vectorMainStory);
+    }
+
     if((currentYear > 1970 | (currentYear ? 1970 & currentMonth > 8)) & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
     {
         if(_notEnoughtLoyaltyRequirement > 0)
@@ -184,7 +197,6 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
         Research_IsCompleted("increase_natality", _researchIncreaseNationalityCompleted);
         Research_CurrentlyResearched("increase_natality", _researchIncreaseNationalityInProgress);
 
-        // Not able to get research status.
         if(!(_researchIncreaseNationalityCompleted ? 1) & !(_researchIncreaseNationalityInProgress ? 1))
         {
             Notification_CreateNewStringPic(

@@ -157,9 +157,13 @@ defineVariable(float, _wholeExportStatsExportById);
 
 defineFunction(GetExportById, float, int: resourceUniqueIdExport)
 {
+    if(resourceUniqueIdExport ? RESOURCE_RAWBAUXITE )
+    { 
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.rawbauxite + _statRecord.ExportTonsUSD.rawbauxite + _statRecord.ExportInternationalTonsRUB.rawbauxite + _statRecord.ExportInternationalTonsUSD.rawbauxite;
+    }
     if(resourceUniqueIdExport ? RESOURCE_WOOD )
     { 
-        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.wood + _statRecord.ExportTonsUSD.wood + _statRecord.ExportInternationalTonsRUB.wood + _statRecord.ExportInternationalTonsUSD.wood + _statRecord.ExportInternationalTonsRUB.wood + _statRecord.ExportInternationalTonsUSD.wood;
+        _wholeExportStatsExportById = _statRecord.ExportTonsRUB.wood + _statRecord.ExportTonsUSD.wood + _statRecord.ExportInternationalTonsRUB.wood + _statRecord.ExportInternationalTonsUSD.wood;
     }
     if(resourceUniqueIdExport ? RESOURCE_RAWGRAVEL )
     { 

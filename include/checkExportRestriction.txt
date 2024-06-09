@@ -63,7 +63,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
     _stRec.GetFromPresentToDate_DMY(1,1,1960);
 
     // Sum USD and RUB exports
-    _expMat_rawbauxite = _stRec.ExportTonsRUB.rawbauxite + _stRec.ExportTonsUSD.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite;
+    _expMat_rawbauxite = _stRec.ExportTonsRUB.rawbauxite + _stRec.ExportTonsUSD.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite;
     _expMat_wood = _stRec.ExportTonsRUB.wood + _stRec.ExportTonsUSD.wood + _stRec.ExportInternationalTonsRUB.wood + _stRec.ExportInternationalTonsUSD.wood;
     _expMat_rawgravel = _stRec.ExportTonsRUB.rawgravel + _stRec.ExportTonsUSD.rawgravel + _stRec.ExportInternationalTonsRUB.rawgravel + _stRec.ExportInternationalTonsUSD.rawgravel;
     _expMat_plants = _stRec.ExportTonsRUB.plants + _stRec.ExportTonsUSD.plants + _stRec.ExportInternationalTonsRUB.plants + _stRec.ExportInternationalTonsUSD.plants;
