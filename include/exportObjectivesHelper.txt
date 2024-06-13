@@ -39,7 +39,7 @@ defineVariable(float, _currentExportObjectiveCurrentValue);
 defineVariable(StatRecord, _statRecord);
 
 defineVariable(char, NEWLINE);
-defineArray(char[4000], _windowMessage);
+defineArray(char[5000], _windowMessage);
 defineVariable(float, _windowHelperFloat);
 
 defineVariable(int, _helperI);
@@ -794,7 +794,14 @@ defineFunction(UpdateExportObjectiveAll, void)
     _previousExportGroupId = 1000;
     strcpy(_windowMessage, "[fon=FontMedium]You can see all of your exports here.");
     strcat(_windowMessage, NEWLINE);
-    strcat(_windowMessage, "[fon=FontMedium2] [col=red]All not completed exports has red color. [col=black]Completed exports has black color. [col=black]Same apply to whole group name. ");
+    strcat(_windowMessage, "[fon=FontMedium2] [col=black]All not started exports has black color.");
+    strcat(_windowMessage, NEWLINE);
+    strcat(_windowMessage, "[fon=FontMedium2] [col=blue]All started exports has blue color.");
+    strcat(_windowMessage, NEWLINE);
+    strcat(_windowMessage, "[fon=FontMedium2] [col=0xff026800]All completed exports has green color.");
+    strcat(_windowMessage, NEWLINE);
+    strcat(_windowMessage, "[col=black]When you complete export of all resources from group, color will be changed to green.");
+    strcat(_windowMessage, NEWLINE);
 
 
     for (_helperI = 0, _helperI < _globalIndexExportObjective, _helperI = _helperI + 1)
@@ -812,27 +819,35 @@ defineFunction(UpdateExportObjectiveAll, void)
             
             if(!(_currentExportObjectiveGroup.count ? _currentExportObjectiveGroup.completedCount))
             {
-                strcat(_windowMessage, "[col=red] ");
+                strcat(_windowMessage, "[col=black] ");
             }else()
             {
-                strcat(_windowMessage, "[col=black] ");
+                strcat(_windowMessage, "[col=0xff026800] ");
             }
 
             strcat(_windowMessage, _currentExportGroupName);
             strcat(_windowMessage, NEWLINE);
         }
 
-        if(!(_currentExportObjective.isDone ? 1))
-        {
-            strcat(_windowMessage, "[col=red] ");
-        }else()
+        if(!(_currentExportObjective.isDone ? 1) & _currentExportObjective.currentValue ? 0)
         {
             strcat(_windowMessage, "[col=black] ");
+        }
+
+        if(!(_currentExportObjective.isDone ? 1) & _currentExportObjective.currentValue > 0 )
+        {
+            strcat(_windowMessage, "[col=blue] ");
+        }
+        
+        if(_currentExportObjective.isDone ? 1)
+        {
+            strcat(_windowMessage, "[col=0xff026800] ");
         }
 
         strcat(_windowMessage, " [IM=");
         strcat(_windowMessage, _currentExportObjectiveImageName);
         strcat(_windowMessage, "] ");
+        // strcat(_windowMessage, "");
        
 
         strcat(_windowMessage, _currentExportObjectiveName);
