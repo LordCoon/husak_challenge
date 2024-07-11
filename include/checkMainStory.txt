@@ -65,7 +65,7 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
     _vectorMainStory.z = 0;
 
     // Collect import/export statistics
-    _MonthlyCheck_statRecord.GetPresent();
+    _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(1960, 1, 1);
 
     _importedPrefabs = _MonthlyCheck_statRecord.ImportTonsRUB.prefabpanels + 
                         _MonthlyCheck_statRecord.ImportTonsUSD.prefabpanels + 
@@ -408,7 +408,7 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
 
     if(currentYear > 1990)
     {
-        _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(1, 1, 1991);
+        _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(1, 1, 1990);
 
         _sumExport = _MonthlyCheck_statRecord.ExportTonsRUB.heat +
             _MonthlyCheck_statRecord.ExportTonsRUB.gravel +

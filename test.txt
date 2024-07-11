@@ -45,7 +45,7 @@ defineFunction(main, void)
 	InitConstants();
 
 
-    _MonthlyCheck_statRecord.GetPresent();
+    _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(1,1,1960);
 
 
     // Log_PrintWarning("Alumina");

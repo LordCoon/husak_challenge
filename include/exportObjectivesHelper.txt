@@ -511,7 +511,7 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
     }
     if(resourceUniqueIdName ? RESOURCE_PLANTS )
     { 
-        _nameExportNameById = "Plants";
+        _nameExportNameById = "Crops";
     }
     if(resourceUniqueIdName ? RESOURCE_OIL )
     { 
@@ -639,7 +639,7 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
     }
     if(resourceUniqueIdName ? RESOURCE_ELETRIC )
     { 
-        _nameExportNameById = "Eletric";
+        _nameExportNameById = "Electricity";
     }
     if(resourceUniqueIdName ? RESOURCE_NUCLEARFUEL )
     { 
