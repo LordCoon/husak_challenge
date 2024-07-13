@@ -408,7 +408,7 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
 
     if(currentYear > 1990)
     {
-        _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(1, 1, 1990);
+        _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(1, 1, 1991);
 
         _sumExport = _MonthlyCheck_statRecord.ExportTonsRUB.heat +
             _MonthlyCheck_statRecord.ExportTonsRUB.gravel +
@@ -524,7 +524,7 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
 
 
         if((_sumExport + _sumExportInternational) > 0)
-        {
+        {   
             Notification_CreateNewStringPic(
                 "You failed",
                 "You broke the rules. You cannot export products to USSR after 01/01/1991.",
@@ -649,7 +649,7 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. You cannot export products to USSR after 01/01/1991.",
+                "You broke the rules. You cannot import products from USSR after 01/01/1991.",
                 "fail.png",
                 _vectorMainStory);
             returnVoid();
