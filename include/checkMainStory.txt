@@ -58,6 +58,8 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
 
         _notEnoughtLoyaltyRequirementOnlyWarningDayOfYear = 0;
         _notEnoughtLoyaltyRequirementOnlyWarningYear = 0;
+
+        _researchIncreaseNationalityCompleted = 0;
     }
 
     _vectorMainStory.x = 0;
@@ -181,6 +183,11 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
         }
     }
 
+    if(!(_researchIncreaseNationalityCompleted ? 1) & (currentYear < 1974 | (currentYear ? 1974 & currentMonth ? 1)))
+    {
+        Research_IsCompleted("increase_natality", _researchIncreaseNationalityCompleted);
+    }
+
     // Husak Children
     if(currentYear ? 1974 & currentMonth ? 1)
     {
@@ -194,7 +201,6 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
 
         }
 
-        Research_IsCompleted("increase_natality", _researchIncreaseNationalityCompleted);
         Research_CurrentlyResearched("increase_natality", _researchIncreaseNationalityInProgress);
 
         if(!(_researchIncreaseNationalityCompleted ? 1) & !(_researchIncreaseNationalityInProgress ? 1))
@@ -224,7 +230,7 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
     }
 
     // Import prefabs
-    if(_importedPrefabs > 85)
+    if(_importedPrefabs > 85.1)
     {
         Notification_CreateNewStringPic(
             "You failed",

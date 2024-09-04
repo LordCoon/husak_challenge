@@ -499,7 +499,7 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
 
     if(resourceUniqueIdName ? RESOURCE_RAWBAUXITE )
     { 
-        _nameExportNameById = "Bauxite ore";
+        _nameExportNameById = "Raw bauxite";
     }
     if(resourceUniqueIdName ? RESOURCE_WOOD )
     { 
@@ -507,7 +507,7 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
     }
     if(resourceUniqueIdName ? RESOURCE_RAWGRAVEL )
     { 
-        _nameExportNameById = "Gravel ore";
+        _nameExportNameById = "Quarried stone";
     }
     if(resourceUniqueIdName ? RESOURCE_PLANTS )
     { 
@@ -527,7 +527,7 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
     }
     if(resourceUniqueIdName ? RESOURCE_URANIUM )
     { 
-        _nameExportNameById = "Uranium";
+        _nameExportNameById = "Uranium ore";
     }
     if(resourceUniqueIdName ? RESOURCE_ALCOHOL )
     { 
@@ -583,7 +583,7 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
     }
     if(resourceUniqueIdName ? RESOURCE_ALUMINIUM )
     { 
-        _nameExportNameById = "Aluminium";
+        _nameExportNameById = "Aluminum";
     }
     if(resourceUniqueIdName ? RESOURCE_CHEMICALS )
     { 
@@ -603,11 +603,11 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
     }
     if(resourceUniqueIdName ? RESOURCE_ALUMINA )
     { 
-        _nameExportNameById = "Alumina";
+        _nameExportNameById = "Aluminium oxid";
     }
     if(resourceUniqueIdName ? RESOURCE_FERTILISER )
     { 
-        _nameExportNameById = "Fertiliser";
+        _nameExportNameById = "Fertilizer";
     }
     if(resourceUniqueIdName ? RESOURCE_PREFABPANELS )
     { 
@@ -615,15 +615,15 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
     }
     if(resourceUniqueIdName ? RESOURCE_FERTILISERLIQUID )
     { 
-        _nameExportNameById = "Liquid fertiliser";
+        _nameExportNameById = "Liquid fertilizer";
     }
     if(resourceUniqueIdName ? RESOURCE_ECOMPONENTS )
     { 
-        _nameExportNameById = "Eletronic components";
+        _nameExportNameById = "Electronic components";
     }
     if(resourceUniqueIdName ? RESOURCE_ELETRONICS )
     { 
-        _nameExportNameById = "Eletronics";
+        _nameExportNameById = "Electronics";
     }
     if(resourceUniqueIdName ? RESOURCE_MCOMPONENTS )
     { 
@@ -639,7 +639,7 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
     }
     if(resourceUniqueIdName ? RESOURCE_ELETRIC )
     { 
-        _nameExportNameById = "Electricity";
+        _nameExportNameById = "Power";
     }
     if(resourceUniqueIdName ? RESOURCE_NUCLEARFUEL )
     { 
@@ -647,7 +647,7 @@ defineFunction(GetExportNameById, string, int: resourceUniqueIdName)
     }
     if(resourceUniqueIdName ? RESOURCE_NUCLEARFUELBURNED )
     { 
-        _nameExportNameById = "Burned nuclear fuel";
+        _nameExportNameById = "Nuclear waste";
     }
     if(resourceUniqueIdName ? RESOURCE_YELLOWCAKE )
     { 
@@ -690,7 +690,7 @@ defineFunction(GetExportGroupNameById, string, int: resourceGroupUniqueIdName)
 
     if(resourceGroupUniqueIdName ? RESOURCE_GROUP_ELECTRICITY)
     { 
-        _nameExportGroupNameById = "Electricity";
+        _nameExportGroupNameById = "Power";
     }
 
     if(resourceGroupUniqueIdName ? RESOURCE_GROUP_NUCLEAR)

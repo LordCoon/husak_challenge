@@ -146,7 +146,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your export of eletronics is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of electronics is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -164,7 +164,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your export of eletronic components or products from them is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of electronic components or products from them is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -245,7 +245,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your export of burned nuclear fuel is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of nuclear waste is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -325,7 +325,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your export of aluminium or products from it is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of aluminum or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -342,7 +342,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your export of alumina or products from it is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of aluminium oxid or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -376,7 +376,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your export of bauxite ore or products from it is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of raw bauxite or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -440,7 +440,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your export of liquid fertiliser is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of liquid fertilizer is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();
@@ -728,7 +728,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
         {
             Notification_CreateNewStringPic(
                 "You failed",
-                "You broke the rules. Your export of gravel ore or products from it is bigger than your production. Where did you get it?",
+                "You broke the rules. Your export of quarried stone or products from it is bigger than your production. Where did you get it?",
                 "fail.png",
                 _vector);
             returnVoid();

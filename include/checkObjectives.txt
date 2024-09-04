@@ -46,7 +46,7 @@ defineFunction(CheckObjectives, void)
 	AddExportObjective(RESOURCE_GROUP_ADVANCED_PRODUCTS, "advancedproducts", 10000.0, RESOURCE_PLASTICS);
 	AddExportObjective(RESOURCE_GROUP_ADVANCED_PRODUCTS, "advancedproducts", 25000.0, RESOURCE_EXPLOSIVES);
 
-	// Objectives_CreateNewString("electricity", "Electricity");
+	// Objectives_CreateNewString("electricity", "Power");
 	AddExportObjective(RESOURCE_GROUP_ELECTRICITY, "electricity", 1000000.0, RESOURCE_ELETRIC);
 
 	// Objectives_CreateNewString("nuclear", "Nuclear");
