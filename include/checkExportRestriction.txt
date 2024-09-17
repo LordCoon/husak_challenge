@@ -655,8 +655,6 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
                 _vector);
             returnVoid();
         }
-
-        _expMat_oil = _expMat_oil + _expMat_fuel * 2;
     }
 
     // bitumen
@@ -671,8 +669,19 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
                 _vector);
             returnVoid();
         }
+    }
 
-        _expMat_oil = _expMat_oil + _expMat_bitumen * 3.333333333;
+    // bitumen + fuel oil needs
+    if(_expMat_fuel > 0 | _expMat_bitumen > 0)
+    {
+        if((_expMat_fuel * 2) > (_expMat_bitumen * 3.333333333))
+        {
+            _expMat_oil = _expMat_oil + _expMat_fuel * 2;
+        }
+        else()
+        {
+            _expMat_oil = _expMat_oil + _expMat_bitumen * 3.333333333;
+        }
     }
 
     // coal
