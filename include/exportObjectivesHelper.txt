@@ -7,6 +7,7 @@ defineStruct(ExportObjective, 200)
 	defineStructVariable(ExportObjective, int, uniqueId);
 	defineStructVariable(ExportObjective, int, isDone);
 	defineStructVariable(ExportObjective, int, currentValue);
+	defineStructVariable(ExportObjective, int, lastYear);
 };
 
 defineStruct(ExportObjectiveGroup, 201)
@@ -36,11 +37,17 @@ defineVariable(string, _currentExportObjectiveImageName);
 defineVariable(string, _currentExportGroupName);
 defineVariable(string, _currentExportObjectiveName);
 defineVariable(float, _currentExportObjectiveCurrentValue);
+defineVariable(float, _currentExportObjectiveLastYearValue);
 defineVariable(StatRecord, _statRecord);
 
+defineVariable(int, _currentDayOfYear);
+defineVariable(int, _currentYear);
+defineVariable(int, _previousYear);
+
 defineVariable(char, NEWLINE);
-defineArray(char[5000], _windowMessage);
+defineArray(char[7000], _windowMessage);
 defineVariable(float, _windowHelperFloat);
+defineVariable(int, _windowHelperInt);
 
 defineVariable(int, _helperI);
 
@@ -726,6 +733,18 @@ defineFunction(UpdateExportObjective, void, int: globalIndexUpdateExport)
     returnVoid();
 };
 
+defineFunction(UpdateExportObjectiveForLastYear, void, int: globalIndexUpdateExportLastYear)
+{
+    _currentExportObjective = _exportObjectives[globalIndexUpdateExportLastYear];
+
+    _currentExportObjectiveLastYearValue = GetExportById(_currentExportObjective.uniqueId);
+    _currentExportObjective.lastYear = _currentExportObjectiveLastYearValue;
+    _exportObjectives[globalIndexUpdateExportLastYear].lastYear = _currentExportObjectiveLastYearValue;
+
+
+    returnVoid();
+};
+
 
 defineFunction(AddExportObjective, void, int: groupNameId, string: name, float: target, int: uniqueId)
 {
@@ -764,10 +783,20 @@ defineFunction(AddExportObjective, void, int: groupNameId, string: name, float: 
 
 defineFunction(UpdateExportObjectiveAll, void)
 {
+
+    Date_GetCurrentDate_D365Y(_currentDayOfYear, _currentYear);
+    _previousYear = _currentYear - 1;
+
 	_statRecord.GetFromPresentToDate_DMY(1,1,1960);
     for (_helperI = 0, _helperI < _globalIndexExportObjective, _helperI = _helperI + 1)
     {
         UpdateExportObjective(_helperI);
+    }
+
+    _statRecord.GetFromDateToDate_D365Y(0, _previousYear,365, _previousYear);
+    for (_helperI = 0, _helperI < _globalIndexExportObjective, _helperI = _helperI + 1)
+    {
+        UpdateExportObjectiveForLastYear(_helperI);
     }
 
     for (_helperI = 0, _helperI < _globalIndexExportObjective, _helperI = _helperI + 1)
@@ -864,6 +893,32 @@ defineFunction(UpdateExportObjectiveAll, void)
         strcat(_windowMessage, _windowHelperFloat);
         strcat(_windowMessage, " %%");
         strcat(_windowMessage, ") ");
+        
+        // Calculate last year export
+        _windowHelperFloat = _currentExportObjective.lastYear;
+        if(_windowHelperFloat > 0)
+        {
+            strcat(_windowMessage, "[");
+            strcat(_windowMessage, _windowHelperFloat);
+            strcat(_windowMessage, " in ");
+            strcat(_windowMessage, _previousYear);
+
+            if(!(_currentExportObjective.isDone ? 1))
+            {
+                strcat(_windowMessage, " -- (finished in ");
+                _windowHelperFloat = (_currentExportObjective.target - _currentExportObjective.currentValue) / _currentExportObjective.lastYear;
+
+                strcat(_windowMessage, _windowHelperFloat);
+                if(_windowHelperFloat > 1)
+                {
+                    strcat(_windowMessage, " years)");
+                } else()
+                {
+                    strcat(_windowMessage, " year)");
+                }
+            }
+            strcat(_windowMessage, "]");
+        }
 
         strcat(_windowMessage, NEWLINE);
 
