@@ -60,7 +60,7 @@ defineFunction(CheckExportRestriction, void, int: showSuccessMessage)
     _vector.y = 0;
     _vector.z = 0;
 
-    _stRec.GetFromPresentToDate_DMY(1,1,1960);
+    _stRec.GetFromPresentToDate_DMY(1,1,1930);
 
     // Sum USD and RUB exports
     _expMat_rawbauxite = _stRec.ExportTonsRUB.rawbauxite + _stRec.ExportTonsUSD.rawbauxite + _stRec.ExportInternationalTonsRUB.rawbauxite + _stRec.ExportInternationalTonsUSD.rawbauxite;
