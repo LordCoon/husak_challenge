@@ -369,7 +369,7 @@ defineFunction(CheckMainStory, void, int: currentDayOfYear, int: currentDay, int
 
     if(((currentYear > 1968) | (currentYear ? 1968 & currentMonth > 8) | (currentYear ? 1968 & currentMonth ? 8 & currentDay > 20) ) & (currentYear < 1989 | (currentYear ? 1989 & currentMonth < 12)))
     {
-        _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(20, 8, 1968);
+        _MonthlyCheck_statRecord.GetFromPresentToDate_DMY(1, 9, 1968);
 
         if(_MonthlyCheck_statRecord.Tourism_ToursitEnteredUSD > 0)
         {
